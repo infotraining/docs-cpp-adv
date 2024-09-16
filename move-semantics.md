@@ -106,3 +106,150 @@ std::string&& rref_fname = fname; // ERROR - rvalue reference cannot be bound to
 ```{important}
 Teoretycznie możliwe jest tworzenie referencji typu ``const T&&``. Są one poprawne składniowo, ale nie mają sensu.
 ```
+
+## Implementacja semantyki przenoszenia
+
+### Przeciążanie funkcji za pomocą referencji rvalue
+
+Przy pomocy lvalue referencji i  rvalue referencji możemy przeciążać funkcje. W ten sposób możemy zaimplementować funkcje, które przyjmują obiekty tymczasowe (rvalue) i obiekty, które będą dalej używane (lvalue).
+
+```{code-block} cpp
+template <typename T>
+class vector
+{
+public:
+    void push_back(const T& item);  // accepts lvalue - inserts a copy of item into a vector
+
+    void push_back(T&& item);       // accepts rvalue - moves item into container
+};
+
+// ...
+
+void create_and_insert(vector<string>& coll)
+{
+    string str = "text";
+
+    coll.push_back(str); // coll.push_back(const string&) - inserts a copy of str (lvalue)
+                         // str is used later
+
+    coll.push_back(str + str); // coll.push_back(string&&) - moves temporary object into container
+
+    coll.push_back("text");    //coll.push_back(string&&) - moves temporary object into container
+
+    coll.push_back(std::move(str));  // coll.push_back(string&&) - moves expiring str into container
+                                     // str is no longer used
+}
+```
+
+### Implementacja semantyki przenoszenia w klasach
+
+Aby zaimplementować semantykę przenoszenia dla klasy należy zapewnić jej:
+
+* konstruktor przenoszący - przyjmujący jako argument **rvalue reference**
+* przenoszący operator przypisania - przyjmujący jako argument **rvalue reference**
+
+```{important}
+Konstruktor przenoszący i przenoszący operator przypisania są nowymi specjalnymi funkcjami składowymi klas w C++11.
+```
+
+#### Funkcje specjalne klas w C++11
+
+Od C++11 istnieje sześć specjalnych funkcji składowych klasy:
+
+* konstruktor domyślny - ``X();``
+* destruktor - ``~X();``
+* konstruktor kopiujący - ``X(const X&);``
+* kopiujący operator przypisania - ``X& operator=(const X&);``
+* konstruktor przenoszący - ``X(X&&);``
+* przenoszący operator przypisania - ``X& operator=(X&&);``
+
+```{important}
+Klasa wspiera semantykę przenoszenia, jeśli posiada konstruktor przenoszący i przenoszący operator przypisania.
+```
+
+### Implementacja konstruktora przenoszącego
+
+Implementacja konstruktora przenoszącego powinna przenieść zasoby obiektu tymczasowego do obiektu docelowego i pozostawić obiekt tymczasowy w poprawnym, ale nieokreślonym stanie.
+
+Implementując przenoszący operator przypisania należy najpierw zwolnić zasoby obiektu docelowego, a następnie przenieść zasoby obiektu źródłowego do obiektu docelowego.
+
+```{code-block} cpp
+class DataSet
+{
+private:
+    std::string name_;
+    int* data_;
+    size_t size_;
+public: 
+    DataSet(std::string name, std::initializer_list<int> data)
+        : name_(name), data_(new int[data.size()]), size_(data.size())
+    {
+        std::copy(data.begin(), data.end(), data_);
+    }
+
+    ~DataSet()
+    {
+        delete[] data_;
+    }
+
+    // move constructor
+    DataSet(DataSet&& source)
+        : name_(std::move(source.name_)) // move string using its move constructor
+        , data_(source.data_) // copy pointer from source.data_ to data_
+        , size_(source.size_) // copy size from source.size_ to size_
+    {
+        source.data_ = nullptr; // set source.data_ to nullptr - no longer owns the resource
+        source.size_ = 0; 
+    }
+
+    // move assignment operator
+    DataSet& operator=(DataSet&& source)
+    {
+        if (this != &source)
+        {
+            delete[] data_; // release the resource
+
+            name_ = std::move(source.name_); // move string using its move constructor
+            data_ = source.data_; // copy pointer from source.data_ to data_
+            size_ = source.size_; // copy size from source.size_ to size_
+
+            source.data_ = nullptr; // set source.data_ to nullptr - no longer owns the resource
+            source.size_ = 0;
+        }
+        return *this;
+    }
+
+    //... rest of the class
+};
+```
+
+#### Implementacja z std::exchange()
+
+Przy samodzielnej implementacji konstruktora przenoszącego i przenoszącego operatora przypisania można skorzystać z funkcji ``std::exchange()`` z biblioteki standardowej C++.
+
+```{code-block} cpp
+#include <utility>
+
+class DataSet
+{
+    DataSet(DataSet&& source)
+        : name_(std::std::move(source.name_)); 
+        , data_(std::exchange(source.data_, nullptr)) // move pointer from source.data_ to data_  and set source.data_ to nullptr
+        , size_(std::exchange(source.size_, 0)) // move size from source.size_ to size_ and set source.size_ to 0
+    {
+    }
+
+    DataSet& operator=(DataSet&& source)
+    {
+        if (this != &source)
+        {
+            delete[] data_; // release the resource
+
+            name_ = std::move(source.name_); // move string using its move constructor
+            data_ = std::exchange(source.data_, nullptr); // move pointer from source.data_ to data_  and set source.data_ to nullptr
+            size_ = std::exchange(source.size_, 0); // move size from source.size_ to size_ and set source.size_ to 0
+        }
+        return *this;
+    }
+};
+```
