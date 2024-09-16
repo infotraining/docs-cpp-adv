@@ -401,6 +401,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a></li>
 </ul>
             </nav>
         </div>
@@ -631,7 +632,7 @@ takiej operacji.</p></li>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
 
-<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move constructor</span>
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move assignment operator</span>
 <span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_</span>
 <span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_</span>
 
@@ -654,7 +655,7 @@ takiej operacji.</p></li>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
 <span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">));</span><span class="w"> </span>
-<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">))</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_  and set source.data_ to nullptr</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">))</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_ and set source.data_ to nullptr</span>
 <span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="c1">// move size from source.size_ to size_ and set source.size_ to 0</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">    </span><span class="p">}</span>
@@ -665,7 +666,7 @@ takiej operacji.</p></li>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
 
-<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move constructor</span>
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move assignment operator</span>
 <span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_  and set source.data_ to nullptr</span>
 <span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// move size from source.size_ to size_ and set source.size_ to 0</span>
 <span class="w">        </span><span class="p">}</span>
@@ -961,6 +962,107 @@ takiej operacji.</p></li>
 <p>Funkcja <code class="docutils literal notranslate"><span class="pre">std::forward()</span></code> działa jak warunkowe rzutowanie na <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code>, gdy dedukowanym parametrem szablonu jest typ nie będący referencją.</p>
 </section>
 </section>
+<section id="noexcept">
+<h2>noexcept<a class="headerlink" href="#noexcept" title="Link to this heading">#</a></h2>
+<p>Słowo kluczowe <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> może być użyte</p>
+<ul class="simple">
+<li><p>w deklaracji funkcji - aby określić, że funkcja nie może rzucić wyjątku</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">vector</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">iterator</span><span class="w"> </span><span class="n">begin</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// it can&#39;t throw an exception</span>
+<span class="w">    </span><span class="n">iterator</span><span class="w"> </span><span class="nf">end</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// the same as noexcept - it can&#39;t throw an exception</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>jako operator - który zwraca <code class="docutils literal notranslate"><span class="pre">true</span></code> jeśli podane jako parametr wyrażenie zostało zadeklarowane, że nie może rzucić wyjątku</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// it can&#39;t throw an exception</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">();</span><span class="w">                        </span><span class="c1">// it can throw an exception</span>
+<span class="p">};</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="k">noexcept</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">().</span><span class="n">swap</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&amp;&gt;</span><span class="p">())),</span><span class="w"> </span><span class="s">&quot;Gadget::swap() must be noexcept&quot;</span><span class="p">);</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="k">noexcept</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">().</span><span class="n">use</span><span class="p">()),</span><span class="w"> </span><span class="s">&quot;Gadget::use() can throw an exception&quot;</span><span class="p">);</span>
+
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">(</span><span class="k">noexcept</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span><span class="w"> </span><span class="c1">// it can&#39;t throw an exception if x.swap(y) can&#39;t throw an exception</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">noexcept</span></code> zastępuje specyfikację rzucanych wyjątków z funkcji z C++03</p>
+<ul>
+<li><p>nie ma narzutu w czasie wykonania programu</p></li>
+<li><p>jeśli funkcja zadeklarowana jako <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> rzuci wyjątek wywoływana jest funkcja <code class="docutils literal notranslate"><span class="pre">std::terminate()</span></code></p></li>
+</ul>
+</li>
+<li><p>Umożliwia optymalizację wydajności - np. implementacja <code class="docutils literal notranslate"><span class="pre">push_back()</span></code> w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie może rzucić wyjątku</p></li>
+<li><p>Biblioteka <strong>Type Traits</strong> definiuje pomocnicze funkcje, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_constructible_v&lt;T&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_assignable_v&lt;T&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>Przykład implementacji konstruktora przenoszącego i przenoszącego operatora przypisania z użyciem <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>:</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w"> </span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()]),</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">data_</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">DataSet</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move constructor</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">))</span><span class="w"> </span><span class="c1">// move ctor of std::string is noexcept</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_ cannot throw - noexcept</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_ cannot throw - noexcept</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr cannot throw - noexcept</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">  </span><span class="c1">// set source.size_ to 0 cannot throw - noexcept</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move assignment operator</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_nothrow_move_assignable_v</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
+
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move assignment operator</span>
+<span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_ - noexcept</span>
+<span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_ - noexcept</span>
+
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr - noexcept</span>
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.size_ to 0 - noexcept</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">//... rest of the class</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1043,6 +1145,7 @@ takiej operacji.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a></li>
 </ul>
   </nav></div>
 
