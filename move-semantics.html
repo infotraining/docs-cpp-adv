@@ -401,7 +401,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-i-noexcept">Funkcje specjalne i noexcept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17">noexcept w specyfikacji typu funkcji (od C++17)</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -1004,13 +1008,15 @@ takiej operacji.</p></li>
 <li><p>jeśli funkcja zadeklarowana jako <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> rzuci wyjątek wywoływana jest funkcja <code class="docutils literal notranslate"><span class="pre">std::terminate()</span></code></p></li>
 </ul>
 </li>
-<li><p>Umożliwia optymalizację wydajności - np. implementacja <code class="docutils literal notranslate"><span class="pre">push_back()</span></code> w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie może rzucić wyjątku</p></li>
-<li><p>Biblioteka <strong>Type Traits</strong> definiuje pomocnicze funkcje, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_constructible_v&lt;T&gt;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_assignable_v&lt;T&gt;</span></code></p></li>
 </ul>
-</li>
+<section id="funkcje-specjalne-i-noexcept">
+<h3>Funkcje specjalne i noexcept<a class="headerlink" href="#funkcje-specjalne-i-noexcept" title="Link to this heading">#</a></h3>
+<p>Wprowadzenie <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> do C++ umożliwia optymalizację wydajności - np. implementacja <code class="docutils literal notranslate"><span class="pre">push_back()</span></code> w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie rzuci wyjątku.</p>
+<p>Implementując konstruktor przenoszący i przenoszący operator przypisania warto przeanalizować pisany kod i jeżeli tylko można dodać specyfikator <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>.
+W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal notranslate"><span class="pre">type_traits</span></code>. Dostarcza ona klasy cech, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:
+* <code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_constructible_v&lt;T&gt;</span></code>
+* <code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_assignable_v&lt;T&gt;</span></code></p>
+<ul class="simple">
 <li><p>Przykład implementacji konstruktora przenoszącego i przenoszącego operatora przypisania z użyciem <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>:</p></li>
 </ul>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
@@ -1062,6 +1068,43 @@ takiej operacji.</p></li>
 <span class="p">};</span>
 </pre></div>
 </div>
+</section>
+<section id="noexcept-w-specyfikacji-typu-funkcji-od-c-17">
+<h3>noexcept w specyfikacji typu funkcji (od C++17)<a class="headerlink" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Od C++17 <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> jest częścią specyfikacji typu funkcji</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// foo is noexcept</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">bar</span><span class="p">();</span><span class="w"> </span><span class="c1">// bar is not noexcept</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">foo</span><span class="p">),</span><span class="w"> </span><span class="k">decltype</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo and bar have different types&quot;</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ptr_safe</span><span class="p">)()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK</span>
+<span class="n">ptr_safe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bar</span><span class="p">;</span><span class="w"> </span><span class="c1">// ERROR - bar is not noexcept</span>
+</pre></div>
+</div>
+</li>
+<li><p>W przypadku nadpisywania wirtualnych funkcji <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> w klasach pochodnych, specyfikacja <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> musi być zgodna z deklaracją funkcji w klasie bazowej</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">// f is noexcept</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Base</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Derived1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">// f is noexcept</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Derived2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">// ERROR - f is declared as noexcept in the base class</span>
+<span class="w">                         </span><span class="c1">// and must be declared as noexcept in the derived class</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -1145,7 +1188,11 @@ takiej operacji.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-i-noexcept">Funkcje specjalne i noexcept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17">noexcept w specyfikacji typu funkcji (od C++17)</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
