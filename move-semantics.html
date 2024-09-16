@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Wstęp do TDD &#8212; Book title</title>
+    <title>Semantyka przenoszenia (Move semantics) &#8212; Zaawansowane programowanie w C++</title>
   
   
   
@@ -63,10 +63,9 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tdd';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'move-semantics';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Szkolenie" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -153,8 +152,8 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Book title - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Book title - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
   
   
 </a></div>
@@ -164,14 +163,11 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="index.html">
-                    Szkolenie
+                    Zaawansowane programowanie w języku C++
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Wstęp do TDD</a></li>
-</ul>
-
+        
     </div>
 </nav></div>
     </div>
@@ -224,7 +220,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/infotraining/docs-template" target="_blank"
+      <li><a href="https://github.com/infotraining/docs-cpp-adv" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -241,7 +237,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/infotraining/docs-template/issues/new?title=Issue%20on%20page%20%2Ftdd.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Fmove-semantics.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -271,7 +267,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/tdd.md" target="_blank"
+      <li><a href="_sources/move-semantics.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -355,7 +351,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Wstęp do TDD</h1>
+    <h1>Semantyka przenoszenia (Move semantics)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -365,9 +361,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testy-programisty">Testy programisty</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-prawa-tdd">Trzy prawa TDD</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Semantyka przenoszenia (<em>Move semantics</em>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motywacja-dla-semantyki-przenoszenia">Motywacja dla semantyki przenoszenia</a></li>
 </ul>
+
             </nav>
         </div>
     </div>
@@ -378,43 +375,25 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="wstep-do-tdd">
-<h1>Wstęp do TDD<a class="headerlink" href="#wstep-do-tdd" title="Permalink to this heading">#</a></h1>
-<p><strong>Test-Driven Development (TDD)</strong> to technika tworzenia oprogramowania sterowana przez testy:</p>
-<ul class="simple">
-<li><p>Utrzymujemy kompletny zestaw testów programisty (Programmer Tests)</p></li>
-<li><p>Kod nie powinien trafić do produkcji, jeśli nie ma powiązanych testów</p></li>
-<li><p>Najpierw piszemy testy</p></li>
-<li><p>Testy określają, jaki kod powinniśmy napisać</p></li>
-</ul>
-<section id="testy-programisty">
-<h2>Testy programisty<a class="headerlink" href="#testy-programisty" title="Permalink to this heading">#</a></h2>
-<p>Testy programisty służą do sprawdzenia, czy klasa wykazuje prawidłowe zachowanie. Są tworzone przez programistę, który pisze kod do przetestowania.</p>
-<p>Podobne do testów jednostkowych, ale tworzone z innego powodu:</p>
-<ul class="simple">
-<li><p>Testy jednostkowe tworzone są w celu sprawdzenia, czy napisany już kod działa</p></li>
-<li><p>Testy programisty definiują, co to znaczy, że kod działa</p></li>
-</ul>
-<p>Testy programisty nazywane są w ten sposób również w celu odróżnienia od testów tworzonych przez klienta, których zadaniem jest sprawdzenie, czy system działa prawidłowo z punktu widzenia użytkownika.</p>
-<p>Używanie TDD oznacza teoretycznie, że dysponujemy kompletnym zestawem testów. Dzieje się tak, ponieważ nie może istnieć kod, jeśli nie istnieje test, który ten kod powinien przejść. Piszemy test, a potem (i nie wcześniej) piszemy kod, który jest testowany przez ten test. W systemie nie powinien istnieć kod, który nie został napisany w odpowiedzi na test.</p>
-<p>Jeśli mamy do zaimplementowania jakiś fragment funkcjonalności, to najpierw tworzymy kod, który sprawdzi, czy ta funkcjonalność działa zgodnie z wymaganiami, a dopiero potem implementujemy samą funkcjonalność. Tworzymy test, a następnie tylko tyle kodu, żeby test mógł przejść.</p>
-<p>Testy określają, jaki kod powinniśmy napisać. Pisząc tylko kod wymagany do przejścia testu ograniczamy ilość kodu do napisania. Do weryfikacji testu tworzymy najprostszy, działający kod.</p>
+  <section id="semantyka-przenoszenia-move-semantics">
+<h1>Semantyka przenoszenia (<em>Move semantics</em>)<a class="headerlink" href="#semantyka-przenoszenia-move-semantics" title="Permalink to this heading">#</a></h1>
 </section>
-<section id="trzy-prawa-tdd">
-<h2>Trzy prawa TDD<a class="headerlink" href="#trzy-prawa-tdd" title="Permalink to this heading">#</a></h2>
-<p>TDD zakłada pisanie testów jednostkowych na początku, przed napisanie kodu produkcyjnego.</p>
-<p>Możemy zdefiniować trzy podstawowe prawa TDD:</p>
-<ol class="arabic simple">
-<li><p>Nie można zacząć pisać kodu produkcyjnego przed zakończeniem pisania testu jednostkowego, który nie jest spełniony.</p></li>
-<li><p>Kod testu jednostkowego powinien być tylko tak długi, aby wystarczył do niespełnienia testu, a błędna kompilacja jest jednocześnie nieudanym testem.</p></li>
-<li><p>Nie można pisać większej ilości kodu produkcyjnego, niż jest wymagana do przejścia testu jednostkowego.</p></li>
-</ol>
-<p>Te trzy prawa zamykają się w cyklu, który trwa prawdopodobnie kilkadziesiąt sekund. Testy i kod produkcyjny są pisane razem, przy czym testy są pisane kilka sekund wcześniej niż kod produkcyjny.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Kod testów jest tak samo ważny, jak kod produkcyjny.</p>
-</div>
-</section>
+<section id="motywacja-dla-semantyki-przenoszenia">
+<h1>Motywacja dla semantyki przenoszenia<a class="headerlink" href="#motywacja-dla-semantyki-przenoszenia" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Optymalizacja wydajności:</p>
+<ul>
+<li><p>unikanie zbędnego kopiowania obiektów tymczasowych (<em>temporary objects</em>)</p></li>
+<li><p>możliwość wskazania, że obiekt nie będzie dalej używany - jego czas życia
+wygasa (<em>expiring object</em>)</p></li>
+</ul>
+</li>
+<li><p>Implementacja obiektów, które kontrolują zasoby systemowe (np. pamięć, uchwyty do plików, muteksy, itp.). Takie obiektu, nie powinny być kopiowane, ale powinny umożliwiać transfer prawa własności do zasobu:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">auto_ptr&lt;T&gt;</span></code> w C++98 symulował semantykę przenoszenia za pomocą konstruktora kopiującego i operatora przypisania</p></li>
+</ul>
+</li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -447,15 +426,6 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="index.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Szkolenie</p>
-      </div>
-    </a>
 </div>
                 </footer>
               
@@ -471,9 +441,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testy-programisty">Testy programisty</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trzy-prawa-tdd">Trzy prawa TDD</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Semantyka przenoszenia (<em>Move semantics</em>)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motywacja-dla-semantyki-przenoszenia">Motywacja dla semantyki przenoszenia</a></li>
 </ul>
+
   </nav></div>
 
 </div></div>

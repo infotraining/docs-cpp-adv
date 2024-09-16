@@ -1,3 +1,3 @@
-# Szkolenie
+# Zaawansowane programowanie w języku C++
 
-Materiały do szkolenia [Test-Driven Development w C++](https://www.infotraining.pl/szkolenie/c-plus-plus/tdd)
+Materiały do szkolenia [Zaawansowane programowanie w języku C++](https://www.infotraining.pl/szkolenie/c-plus-plus/zaawansowane)
