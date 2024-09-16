@@ -1,0 +1,766 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Inteligentne wskaźniki - Smart Pointers &#8212; Zaawansowane programowanie w C++</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3d148d41" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'smart-pointers';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Semantyka przenoszenia (Move semantics)" href="move-semantics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Zaawansowane programowanie w języku C++
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia (<em>Move semantics</em>)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inteligentne wskaźniki - Smart Pointers</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Fsmart-pointers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/smart-pointers.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Inteligentne wskaźniki - Smart Pointers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zarzadzanie-zasobami-w-c-raii">Zarządzanie zasobami w C++ - RAII</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mechanizm-wyjatkow-a-zasoby">Mechanizm wyjątków a zasoby</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raii-resource-acquisition-is-initialization">RAII - Resource Acquisition Is Initialization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#klasy-raii">Klasy RAII</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kopiowanie-obiektow-raii">Kopiowanie obiektów RAII</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inteligentne-wskazniki">Inteligentne wskaźniki</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="inteligentne-wskazniki-smart-pointers">
+<h1>Inteligentne wskaźniki - Smart Pointers<a class="headerlink" href="#inteligentne-wskazniki-smart-pointers" title="Link to this heading">#</a></h1>
+<section id="zarzadzanie-zasobami-w-c-raii">
+<h2>Zarządzanie zasobami w C++ - RAII<a class="headerlink" href="#zarzadzanie-zasobami-w-c-raii" title="Link to this heading">#</a></h2>
+<section id="mechanizm-wyjatkow-a-zasoby">
+<h3>Mechanizm wyjątków a zasoby<a class="headerlink" href="#mechanizm-wyjatkow-a-zasoby" title="Link to this heading">#</a></h3>
+<p>Jawne zarządzanie zasobami w C++ jest trudne, ponieważ wymaga ręcznego zarządzania zasobami. W przypadku wystąpienia wyjątku, zasoby mogą nie zostać zwolnione, co prowadzi do wycieków zasobów.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">leaky_send</span><span class="p">(</span><span class="n">Data</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open_port</span><span class="p">(</span><span class="n">destination</span><span class="p">);</span>
+<span class="w">    </span><span class="n">some_mutex</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">send</span><span class="p">(</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// it may throw</span>
+<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w">      </span><span class="c1">// it may throw</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">some_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span><span class="w"> </span><span class="c1">// leaks if send() throws</span>
+<span class="w">    </span><span class="n">close_port</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w">  </span><span class="c1">// leaks if send() throws</span>
+<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">          </span><span class="c1">// leaks if send() throws</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="raii-resource-acquisition-is-initialization">
+<h3>RAII - Resource Acquisition Is Initialization<a class="headerlink" href="#raii-resource-acquisition-is-initialization" title="Link to this heading">#</a></h3>
+<p>Technika łączy przejęcie i zwolnienie zasobu z inicjalizacją zmiennych lokalnych i ich automatyczną destrukcją.</p>
+<ul class="simple">
+<li><p>Pozyskanie zasobu jest połączone z konstrukcją, a zwolnienie z automatyczną destrukcją obiektu.</p></li>
+<li><p>Ponieważ wywołanie destruktora dla obiektu lokalnego następuje automatycznie, jest zagwarantowane, że zasób zostanie zwolniony od razu, gdy skończy się czas życia zmiennej.</p></li>
+<li><p>Mechanizm ten działa również przy wystąpieniu wyjątku.</p></li>
+<li><p>RAII jest kluczową koncepcją przy pisaniu kodu odpornego na wycieki zasobów.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">safe_send</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Port</span><span class="w"> </span><span class="n">port</span><span class="p">{</span><span class="n">destination</span><span class="p">};</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lk</span><span class="p">{</span><span class="n">some_mutex</span><span class="p">};</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="n">send</span><span class="p">(</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// it may throw</span>
+<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w">   </span><span class="c1">// it may throw</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// automatically unlocks some_mutex, closes the port and deletes the pointer in data</span>
+</pre></div>
+</div>
+<section id="klasy-raii">
+<h4>Klasy RAII<a class="headerlink" href="#klasy-raii" title="Link to this heading">#</a></h4>
+<p>Klasa RAII to klasa, która pozyskuje zasób w konstruktorze a w destruktorze go zwalnia:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Port</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PortHandle</span><span class="w"> </span><span class="n">port_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Port</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">port_</span><span class="p">{</span><span class="n">open_port</span><span class="p">(</span><span class="n">destination</span><span class="p">)}</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="o">~</span><span class="n">Port</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">close_port</span><span class="p">(</span><span class="n">port_</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">operator</span><span class="w"> </span><span class="n">PortHandle</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">port_</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// port handles can&#39;t usually be cloned</span>
+<span class="w">    </span><span class="c1">// so disable copying and assignment if necessary</span>
+<span class="w">    </span><span class="n">Port</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Port</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Port</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Port</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">lock_guard</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtx_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">lock_guard</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&amp;</span><span class="w"> </span><span class="n">mtx</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mtx_</span><span class="p">{</span><span class="n">mtx</span><span class="p">}</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">mtx_</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">lock_guard</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">mtx_</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">lock_guard</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">lock_guard</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span>
+<span class="w">    </span><span class="n">lock_guard</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">lock_guard</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="kopiowanie-obiektow-raii">
+<h4>Kopiowanie obiektów RAII<a class="headerlink" href="#kopiowanie-obiektow-raii" title="Link to this heading">#</a></h4>
+<p>Klasy implementujące RAII posiadają destruktor, dlatego należy określić sposób zachowania obiektów przy ich kopiowaniu.
+Możliwe są następujące strategie:</p>
+<ul class="simple">
+<li><p>Całkowite blokowanie kopiowania oraz transferu prawa własności</p></li>
+<li><p>Blokowanie kopiowania przy jednoczesnym umożliwieniu transferu prawa własności do zasobu</p></li>
+<li><p>Zezwolenie na kopiowanie obiektów - obiekty współdzielą prawo własności z wykorzystaniem licznika referencji</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="inteligentne-wskazniki">
+<h2>Inteligentne wskaźniki<a class="headerlink" href="#inteligentne-wskazniki" title="Link to this heading">#</a></h2>
+<p>Inteligentne wskaźniki umożliwiają wygodne zarządzanie obiektami, które zostały zaalokowane na stercie za pomocą operatora <code class="docutils literal notranslate"><span class="pre">new</span></code>.
+Przejmują odpowiedzialność za wywołanie destruktora dla zarządzanego obiektu oraz zwolnienie pamięci - poprzez wywołanie operatora <code class="docutils literal notranslate"><span class="pre">delete</span></code>.
+Inteligentne wskaźniki w C++11 umożliwiają reprezentację prawa własności do zaalokowanego zasobu.
+Przeciążając operatory <code class="docutils literal notranslate"><span class="pre">operator*</span></code> oraz <code class="docutils literal notranslate"><span class="pre">operator-&gt;</span></code> umożliwiają korzystanie z nich w taki sam sposób, jak wskaźników natywnych.</p>
+<p>Dostępne implementacje inteligentnych wskaźników w bibliotece standardowej C++ oraz w bibliotece Boost.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Klasa wskaźnika</p></th>
+<th class="head text-center"><p>Kopiowanie</p></th>
+<th class="head text-center"><p>Transfer prawa własności</p></th>
+<th class="head text-center"><p>Licznik referencji</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">std::auto_ptr&lt;T&gt;</span></code></p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;T&gt;</span></code></p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p>wewnętrzny</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">boost::scoped_ptr&lt;T&gt;</span></code></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">boost::shared_ptr&lt;T&gt;</span></code></p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p>wewnętrzny</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">boost::intrusive_ptr&lt;T&gt;</span></code></p></td>
+<td class="text-center"><p>o</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p>zewnętrzny</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="std-unique-ptr">
+<h2>std::unique_ptr<T><a class="headerlink" href="#std-unique-ptr" title="Link to this heading">#</a></h2>
+<p>Klasa szablonowa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> służy do zapewnienia właściwego usuwania przydzielanego dynamicznie obiektu.</p>
+<p>Implementuje RAII - destruktor inteligentnego wskaźnika usuwa wskazywany obiekt. Wskaźnik <code class="docutils literal notranslate"><span class="pre">unique_ptr</span></code> nie może być ani kopiowany ani przypisywany, może być jednakże przenoszony.</p>
+<p>Przeniesienie prawa własności odbywa się zgodnie z <em>move semantics</em> w C++11 - wymaga dla referencji do lvalue jawnego transferu przy pomocy funkcji <code class="docutils literal notranslate"><span class="pre">std::move()</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr_gadget</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Gadget</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipod&quot;</span><span class="p">});</span>
+<span class="w">    </span><span class="n">ptr_gadget</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w"> </span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">other_ptr_gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ptr_gadget</span><span class="p">);</span>
+<span class="w">    </span><span class="n">other_ptr_gadget</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// allocated Gadget is automatically deleted</span>
+</pre></div>
+</div>
+<p>Od C++14 dostępna jest funkcja <code class="docutils literal notranslate"><span class="pre">std::make_unique()</span></code> ułatwiająca tworzenie obiektów z wykorzystaniem <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">ptr_gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipod&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="semantyka-przenoszenia-dla-std-unique-ptr-t">
+<h3>Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code><a class="headerlink" href="#semantyka-przenoszenia-dla-std-unique-ptr-t" title="Link to this heading">#</a></h3>
+<p>Obiekt <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> nie może być kopiowany. Ale dzięki semantyce przenoszenia, może być stosowany tam, gdzie zgodne ze standardem C++03 niekopiowalne obiekty nie mogły działać:</p>
+<ul class="simple">
+<li><p>może być zwracany z funkcji</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">create_gadget</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id_gen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">++</span><span class="n">id_gen</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">ptr_gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gadget#&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ptr_gadget</span><span class="o">-&gt;</span><span class="n">is_valid</span><span class="p">());</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ptr_gadget</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_gadget</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
+<span class="w">    </span><span class="n">gadget</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>może być przekazywany przez wartość (przenoszony) do funkcji jako parametr <em>sink</em></p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">sink</span><span class="p">(</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gadget</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
+<span class="w">        </span><span class="n">gadget</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// sink takes ownership - deletes the object pointed by gadget</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_gadget</span><span class="p">();</span>
+
+<span class="n">sink</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">gadget</span><span class="p">));</span><span class="w">      </span><span class="c1">// explicitly moving into sink</span>
+<span class="n">sink</span><span class="p">(</span><span class="n">create_gadget</span><span class="p">());</span><span class="w">   </span><span class="c1">// implicit move</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>może być przechowywany w kontenerach STL (w standardzie C++11)</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">gadgets</span><span class="p">;</span>
+
+<span class="n">gadgets</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;smartwatch&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// implicit move to the container</span>
+<span class="n">gadgets</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">create_gadget</span><span class="p">());</span><span class="w"> </span><span class="c1">// implicit move to the container</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">665</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;smartphone&quot;</span><span class="p">);</span>
+<span class="n">gadgets</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">gadget</span><span class="p">));</span><span class="w"> </span><span class="c1">// explicit move to the container</span>
+
+<span class="k">for</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">gadgets</span><span class="p">)</span>
+<span class="w">    </span><span class="n">g</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+
+<span class="n">gadgets</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"> </span><span class="c1">// elements are automatically destroyed</span>
+</pre></div>
+</div>
+</section>
+<section id="wskazniki-klas-pochodnych">
+<h3>Wskaźniki klas pochodnych<a class="headerlink" href="#wskazniki-klas-pochodnych" title="Link to this heading">#</a></h3>
+<p>Wskaźnik do klasy pochodnej może zostać przypisany do wskaźnika do klasy bazowej (<em>upcasting</em>). Daje to możliwość stosowania polimorfizmu z wykorzystaniem funkcji wirtualnych.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Gadget</span><span class="o">*</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SuperGadget</span><span class="p">();</span>
+<span class="n">g</span><span class="o">-&gt;</span><span class="n">do_something</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Odpowiednik z użyciem <code class="docutils literal notranslate"><span class="pre">unique_ptr</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">SuperGadget</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">g</span><span class="o">-&gt;</span><span class="n">do_something</span><span class="p">();</span>
+
+<span class="c1">//explicit conversion - hard to miss it</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">another_g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">SuperGadget</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="move-semantics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Semantyka przenoszenia (<em>Move semantics</em>)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zarzadzanie-zasobami-w-c-raii">Zarządzanie zasobami w C++ - RAII</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mechanizm-wyjatkow-a-zasoby">Mechanizm wyjątków a zasoby</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raii-resource-acquisition-is-initialization">RAII - Resource Acquisition Is Initialization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#klasy-raii">Klasy RAII</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kopiowanie-obiektow-raii">Kopiowanie obiektów RAII</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inteligentne-wskazniki">Inteligentne wskaźniki</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Krystian Piękoś - Infotraining
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
