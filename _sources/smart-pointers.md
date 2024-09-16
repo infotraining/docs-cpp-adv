@@ -16,8 +16,8 @@ void leaky_send(Data* data, const std::string& destination)
     may_throw();      // it may throw
     
     some_mutex.unlock(); // leaks if send() throws
-    close_port(port);  // leaks if send() throws
-    delete data;          // leaks if send() throws
+    close_port(port);    // leaks if send() throws
+    delete data;         // leaks if send() throws
 }
 ```
 
@@ -38,7 +38,7 @@ void safe_send(std::unique_ptr<Data> data, const std::string& destination)
     
     // ...
     send(port, data); // it may throw
-    may_throw();   // it may throw
+    may_throw();      // it may throw
 } // automatically unlocks some_mutex, closes the port and deletes the pointer in data
 ```
 
@@ -208,4 +208,115 @@ g->do_something();
 
 //explicit conversion - hard to miss it
 auto another_g = std::unique_ptr<Gadget>{ std::make_unique<SuperGadget>() };
+```
+
+### Dealokatory
+
+Używając wskaźnika `std::unique_ptr` można zdefiniować własny dealokator, który będzie odpowiedzialny za prawidłowe zwolnienie zasobu. Umożliwia to
+kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub wymagającymi specjalnej obsługi w fazie destrukcji.
+
+Aby użyć własnego dealokatora należy podać jego typ jako drugi parametr szablonu `std::unique_ptr<T, Dealloc>` oraz przekazać instancję dealokatora jako drugi parametr konstruktora:
+
+```{code-block} cpp
+void f() 
+{
+    std::unique_ptr<FILE, int(*)(FILE*)> file{fopen("test.txt"), &fclose};
+
+    std::vector<char> buffer(1024);
+    read_file_to_buffer(file.get(), vec.data(), vec.size());
+
+    // rest of the code
+} // fclose() is called for an opened file
+```
+
+```{important}
+Dealokator dla `unique_ptr` wywoływany jest tylko, jeśli wewnętrzny wskaźnik jest rózny od `nullptr`!
+```
+
+### Idiom PIMPL
+
+Wskaźnik `std::unique_ptr` świetnie nadaje się do stosowania tam, gdzie wcześniej stosowane były wskaźniki zwykłe albo obiekty typu `std::auto_ptr` (obecnie mający status *deprecated*), np. do implementacji idiomu PIMPL
+
+#### PIMPL - Private Implementation:
+
+* minimalizuje zależności na etapie kompilacji
+* separuje interfejs od implementacji
+* ukrywa implementację przed klientem
+
+
+Plik ``bitmap.hpp``:
+********************
+
+```{code-block} cpp
+class Bitmap
+{
+public:
+    // rest of the interface...
+    
+    ~Bitmap(); // must be only declared
+private:
+    class Impl; // forward declaration
+
+    std::unique_ptr<Impl> pimpl_; // pointer to implementation
+};
+```
+
+Plik ``bitmap.cpp``:
+******************
+
+```{code-block} cpp
+#include "bitmap.hpp"
+
+class Bitmap::Impl
+{
+    std::vector<Pixel> pixels_;
+    int width_;
+    int height_;
+};
+
+Bitmap::Bitmap() : pimpl_ {std::make_unique<Impl>()}
+{
+    // implementation details...
+}
+
+Bitmap::~Bitmap() = default; // important! after defintion of Bitmap::Impl()
+```
+
+### Specjalizacja ``std::unique_ptr<T[]>``
+
+Klasa ``std::unique_ptr<T[]>`` jest specjalizacją szablonu `std::unique_ptr` dla tablic obiektów typu `T`.
+
+* Klasa ta stanowi lepszą alternatywę dla klasycznych tablic przydzielanych dynamicznie.
+* Zgodnie z zasadą RAII, klasa `std::unique_ptr<T[]>` automatycznie zwalnia pamięć po tablicy przy wyjściu z zakresu.
+* Oferuje przeciążony operator indeksowania (`operator[]`) umożliwiający stosowanie naturalnej składni odwołań do elementów tablicy.
+* Destruktor wykorzystuje operator `delete []` aby automatycznie usunąć wskazywaną tablicę.
+
+```{important}
+Klasa `std::unique_ptr<T[]>` jest użyteczna w przypadku gdy wywołujemy kod *legacy* korzystający z tablic alokowanych dynamicznie.
+
+Gdy chcemy użyć tablicy w nowym kodzie, zalecane jest użycie kontenerów STL, takich jak `std::vector<T>`.
+```
+
+```{code-block} cpp
+namespace LegacyCode 
+{
+    int* create_buffer(size_t size)
+    {
+        return new int[size];
+    }
+}
+
+void use_legacy_buffers()
+{
+    const size_t size = 1024;
+
+    std::unique_ptr<int[]> buffer{create_buffer(size)};
+
+    for(size_t i = 0; i < size; ++i)
+        buffer[i] = i;
+
+    may_throw();
+    
+    // rest of the code
+} // buffer is automatically deleted
 ```

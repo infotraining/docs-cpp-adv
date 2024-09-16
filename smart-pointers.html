@@ -390,6 +390,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealokatory">Dealokatory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idiom-pimpl">Idiom PIMPL</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pimpl-private-implementation">PIMPL - Private Implementation:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-std-unique-ptr-t">Specjalizacja <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -419,8 +425,8 @@ document.write(`
 <span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w">      </span><span class="c1">// it may throw</span>
 <span class="w">    </span>
 <span class="w">    </span><span class="n">some_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span><span class="w"> </span><span class="c1">// leaks if send() throws</span>
-<span class="w">    </span><span class="n">close_port</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w">  </span><span class="c1">// leaks if send() throws</span>
-<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">          </span><span class="c1">// leaks if send() throws</span>
+<span class="w">    </span><span class="n">close_port</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w">    </span><span class="c1">// leaks if send() throws</span>
+<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w">         </span><span class="c1">// leaks if send() throws</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -441,7 +447,7 @@ document.write(`
 <span class="w">    </span>
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="w">    </span><span class="n">send</span><span class="p">(</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// it may throw</span>
-<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w">   </span><span class="c1">// it may throw</span>
+<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w">      </span><span class="c1">// it may throw</span>
 <span class="p">}</span><span class="w"> </span><span class="c1">// automatically unlocks some_mutex, closes the port and deletes the pointer in data</span>
 </pre></div>
 </div>
@@ -636,6 +642,111 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 </pre></div>
 </div>
 </section>
+<section id="dealokatory">
+<h3>Dealokatory<a class="headerlink" href="#dealokatory" title="Link to this heading">#</a></h3>
+<p>Używając wskaźnika <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> można zdefiniować własny dealokator, który będzie odpowiedzialny za prawidłowe zwolnienie zasobu. Umożliwia to
+kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub wymagającymi specjalnej obsługi w fazie destrukcji.</p>
+<p>Aby użyć własnego dealokatora należy podać jego typ jako drugi parametr szablonu <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T,</span> <span class="pre">Dealloc&gt;</span></code> oraz przekazać instancję dealokatora jako drugi parametr konstruktora:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">FILE</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">FILE</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">file</span><span class="p">{</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;test.txt&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fclose</span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buffer</span><span class="p">(</span><span class="mi">1024</span><span class="p">);</span>
+<span class="w">    </span><span class="n">read_file_to_buffer</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+<span class="w">    </span><span class="c1">// rest of the code</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// fclose() is called for an opened file</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Dealokator dla <code class="docutils literal notranslate"><span class="pre">unique_ptr</span></code> wywoływany jest tylko, jeśli wewnętrzny wskaźnik jest rózny od <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>!</p>
+</div>
+</section>
+<section id="idiom-pimpl">
+<h3>Idiom PIMPL<a class="headerlink" href="#idiom-pimpl" title="Link to this heading">#</a></h3>
+<p>Wskaźnik <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> świetnie nadaje się do stosowania tam, gdzie wcześniej stosowane były wskaźniki zwykłe albo obiekty typu <code class="docutils literal notranslate"><span class="pre">std::auto_ptr</span></code> (obecnie mający status <em>deprecated</em>), np. do implementacji idiomu PIMPL</p>
+<section id="pimpl-private-implementation">
+<h4>PIMPL - Private Implementation:<a class="headerlink" href="#pimpl-private-implementation" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>minimalizuje zależności na etapie kompilacji</p></li>
+<li><p>separuje interfejs od implementacji</p></li>
+<li><p>ukrywa implementację przed klientem</p></li>
+</ul>
+<p>Plik <code class="docutils literal notranslate"><span class="pre">bitmap.hpp</span></code>:</p>
+<hr class="docutils" />
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Bitmap</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="c1">// rest of the interface...</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="o">~</span><span class="n">Bitmap</span><span class="p">();</span><span class="w"> </span><span class="c1">// must be only declared</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">Impl</span><span class="p">;</span><span class="w"> </span><span class="c1">// forward declaration</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Impl</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pimpl_</span><span class="p">;</span><span class="w"> </span><span class="c1">// pointer to implementation</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Plik <code class="docutils literal notranslate"><span class="pre">bitmap.cpp</span></code>:</p>
+<hr class="docutils" />
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;bitmap.hpp&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Bitmap</span><span class="o">::</span><span class="n">Impl</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Pixel</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pixels_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">width_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">height_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">Bitmap</span><span class="o">::</span><span class="n">Bitmap</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">pimpl_</span><span class="w"> </span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Impl</span><span class="o">&gt;</span><span class="p">()}</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// implementation details...</span>
+<span class="p">}</span>
+
+<span class="n">Bitmap</span><span class="o">::~</span><span class="n">Bitmap</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"> </span><span class="c1">// important! after defintion of Bitmap::Impl()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="specjalizacja-std-unique-ptr-t">
+<h3>Specjalizacja <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code><a class="headerlink" href="#specjalizacja-std-unique-ptr-t" title="Link to this heading">#</a></h3>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code> jest specjalizacją szablonu <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> dla tablic obiektów typu <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
+<ul class="simple">
+<li><p>Klasa ta stanowi lepszą alternatywę dla klasycznych tablic przydzielanych dynamicznie.</p></li>
+<li><p>Zgodnie z zasadą RAII, klasa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code> automatycznie zwalnia pamięć po tablicy przy wyjściu z zakresu.</p></li>
+<li><p>Oferuje przeciążony operator indeksowania (<code class="docutils literal notranslate"><span class="pre">operator[]</span></code>) umożliwiający stosowanie naturalnej składni odwołań do elementów tablicy.</p></li>
+<li><p>Destruktor wykorzystuje operator <code class="docutils literal notranslate"><span class="pre">delete</span> <span class="pre">[]</span></code> aby automatycznie usunąć wskazywaną tablicę.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code> jest użyteczna w przypadku gdy wywołujemy kod <em>legacy</em> korzystający z tablic alokowanych dynamicznie.</p>
+<p>Gdy chcemy użyć tablicy w nowym kodzie, zalecane jest użycie kontenerów STL, takich jak <code class="docutils literal notranslate"><span class="pre">std::vector&lt;T&gt;</span></code>.</p>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">LegacyCode</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="nf">create_buffer</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">use_legacy_buffers</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buffer</span><span class="p">{</span><span class="n">create_buffer</span><span class="p">(</span><span class="n">size</span><span class="p">)};</span>
+
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// rest of the code</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// buffer is automatically deleted</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -707,6 +818,12 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealokatory">Dealokatory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idiom-pimpl">Idiom PIMPL</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pimpl-private-implementation">PIMPL - Private Implementation:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-std-unique-ptr-t">Specjalizacja <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code></a></li>
 </ul>
 </li>
 </ul>
