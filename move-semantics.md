@@ -209,7 +209,7 @@ public:
         {
             delete[] data_; // release the resource
 
-            name_ = std::move(source.name_); // move string using its move constructor
+            name_ = std::move(source.name_); // move string using its move assignment operator
             data_ = source.data_; // copy pointer from source.data_ to data_
             size_ = source.size_; // copy size from source.size_ to size_
 
@@ -234,7 +234,7 @@ class DataSet
 {
     DataSet(DataSet&& source)
         : name_(std::std::move(source.name_)); 
-        , data_(std::exchange(source.data_, nullptr)) // move pointer from source.data_ to data_  and set source.data_ to nullptr
+        , data_(std::exchange(source.data_, nullptr)) // move pointer from source.data_ to data_ and set source.data_ to nullptr
         , size_(std::exchange(source.size_, 0)) // move size from source.size_ to size_ and set source.size_ to 0
     {
     }
@@ -245,7 +245,7 @@ class DataSet
         {
             delete[] data_; // release the resource
 
-            name_ = std::move(source.name_); // move string using its move constructor
+            name_ = std::move(source.name_); // move string using its move assignment operator
             data_ = std::exchange(source.data_, nullptr); // move pointer from source.data_ to data_  and set source.data_ to nullptr
             size_ = std::exchange(source.size_, 0); // move size from source.size_ to size_ and set source.size_ to 0
         }
@@ -549,3 +549,102 @@ int main()
 ```
 
 Funkcja `std::forward()` działa jak warunkowe rzutowanie na `T&&`, gdy dedukowanym parametrem szablonu jest typ nie będący referencją.
+
+## noexcept
+
+Słowo kluczowe ``noexcept`` może być użyte
+
+* w deklaracji funkcji - aby określić, że funkcja nie może rzucić wyjątku
+
+```{code-block} cpp
+template <typename T>
+class vector
+{
+public:
+    iterator begin() noexcept; // it can't throw an exception
+    iterator end() noexcept(true); // the same as noexcept - it can't throw an exception
+};
+```
+
+* jako operator - który zwraca ``true`` jeśli podane jako parametr wyrażenie zostało zadeklarowane, że nie może rzucić wyjątku
+
+```{code-block} cpp
+struct Gadget
+{
+    void swap(Gadget& other) noexcept; // it can't throw an exception
+    void use();                        // it can throw an exception
+};
+
+static_assert(noexcept(std::declval<Gadget>().swap(std::declval<Gadget&>())), "Gadget::swap() must be noexcept");
+static_assert(!noexcept(std::declval<Gadget>().use()), "Gadget::use() can throw an exception");
+
+
+template <typename T>
+void swap(T& x, T& y) noexcept(noexcept(x.swap(y))) // it can't throw an exception if x.swap(y) can't throw an exception
+{
+    x.swap(y);
+}
+```
+
+* `noexcept` zastępuje specyfikację rzucanych wyjątków z funkcji z C++03
+
+  * nie ma narzutu w czasie wykonania programu
+  * jeśli funkcja zadeklarowana jako ``noexcept`` rzuci wyjątek wywoływana jest funkcja ``std::terminate()``
+
+* Umożliwia optymalizację wydajności - np. implementacja ``push_back()`` w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie może rzucić wyjątku
+
+* Biblioteka **Type Traits** definiuje pomocnicze funkcje, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:
+    * `std::is_nothrow_move_constructible_v<T>`
+    * `std::is_nothrow_move_assignable_v<T>`
+
+
+* Przykład implementacji konstruktora przenoszącego i przenoszącego operatora przypisania z użyciem ``noexcept``:
+
+```{code-block} cpp
+class DataSet
+{
+private:
+    std::string name_;
+    int* data_;
+    size_t size_;
+public: 
+    DataSet(std::string name, std::initializer_list<int> data)
+        : name_(name), data_(new int[data.size()]), size_(data.size())
+    {
+        std::copy(data.begin(), data.end(), data_);
+    }
+
+    ~DataSet()
+    {
+        delete[] data_;
+    }
+
+    // move constructor
+    DataSet(DataSet&& source) noexcept
+        : name_(std::move(source.name_)) // move ctor of std::string is noexcept
+        , data_(source.data_) // copy pointer from source.data_ to data_ cannot throw - noexcept
+        , size_(source.size_) // copy size from source.size_ to size_ cannot throw - noexcept
+    {
+        source.data_ = nullptr; // set source.data_ to nullptr cannot throw - noexcept
+        source.size_ = 0;  // set source.size_ to 0 cannot throw - noexcept
+    }
+
+    // move assignment operator
+    DataSet& operator=(DataSet&& source) noexcept(std::is_nothrow_move_assignable_v<std::string>)
+    {
+        if (this != &source)
+        {
+            delete[] data_; // release the resource
+
+            name_ = std::move(source.name_); // move string using its move assignment operator
+            data_ = source.data_; // copy pointer from source.data_ to data_ - noexcept
+            size_ = source.size_; // copy size from source.size_ to size_ - noexcept
+
+            source.data_ = nullptr; // set source.data_ to nullptr - noexcept
+            source.size_ = 0; // set source.size_ to 0 - noexcept
+        }
+        return *this;
+    }
+
+    //... rest of the class
+};
