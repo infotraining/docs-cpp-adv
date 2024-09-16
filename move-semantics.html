@@ -379,6 +379,18 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motywacja-dla-semantyki-przenoszenia">Motywacja dla semantyki przenoszenia</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lvalues-i-rvalues">lvalues i rvalues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencje-rvalue-rvalue-references">Referencje rvalue - <em>rvalue references</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia">Implementacja semantyki przenoszenia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue">Przeciążanie funkcji za pomocą referencji rvalue</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia-w-klasach">Implementacja semantyki przenoszenia w klasach</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-klas-w-c-11">Funkcje specjalne klas w C++11</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-konstruktora-przenoszacego">Implementacja konstruktora przenoszącego</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-z-std-exchange">Implementacja z std::exchange()</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -509,6 +521,152 @@ takiej operacji.</p></li>
 <p>Teoretycznie możliwe jest tworzenie referencji typu <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">T&amp;&amp;</span></code>. Są one poprawne składniowo, ale nie mają sensu.</p>
 </div>
 </section>
+<section id="implementacja-semantyki-przenoszenia">
+<h2>Implementacja semantyki przenoszenia<a class="headerlink" href="#implementacja-semantyki-przenoszenia" title="Link to this heading">#</a></h2>
+<section id="przeciazanie-funkcji-za-pomoca-referencji-rvalue">
+<h3>Przeciążanie funkcji za pomocą referencji rvalue<a class="headerlink" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue" title="Link to this heading">#</a></h3>
+<p>Przy pomocy lvalue referencji i  rvalue referencji możemy przeciążać funkcje. W ten sposób możemy zaimplementować funkcje, które przyjmują obiekty tymczasowe (rvalue) i obiekty, które będą dalej używane (lvalue).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">vector</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">push_back</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span><span class="w">  </span><span class="c1">// accepts lvalue - inserts a copy of item into a vector</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">push_back</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span><span class="w">       </span><span class="c1">// accepts rvalue - moves item into container</span>
+<span class="p">};</span>
+
+<span class="c1">// ...</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">create_and_insert</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">coll</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// coll.push_back(const string&amp;) - inserts a copy of str (lvalue)</span>
+<span class="w">                         </span><span class="c1">// str is used later</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// coll.push_back(string&amp;&amp;) - moves temporary object into container</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">);</span><span class="w">    </span><span class="c1">//coll.push_back(string&amp;&amp;) - moves temporary object into container</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">str</span><span class="p">));</span><span class="w">  </span><span class="c1">// coll.push_back(string&amp;&amp;) - moves expiring str into container</span>
+<span class="w">                                     </span><span class="c1">// str is no longer used</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="implementacja-semantyki-przenoszenia-w-klasach">
+<h3>Implementacja semantyki przenoszenia w klasach<a class="headerlink" href="#implementacja-semantyki-przenoszenia-w-klasach" title="Link to this heading">#</a></h3>
+<p>Aby zaimplementować semantykę przenoszenia dla klasy należy zapewnić jej:</p>
+<ul class="simple">
+<li><p>konstruktor przenoszący - przyjmujący jako argument <strong>rvalue reference</strong></p></li>
+<li><p>przenoszący operator przypisania - przyjmujący jako argument <strong>rvalue reference</strong></p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Konstruktor przenoszący i przenoszący operator przypisania są nowymi specjalnymi funkcjami składowymi klas w C++11.</p>
+</div>
+<section id="funkcje-specjalne-klas-w-c-11">
+<h4>Funkcje specjalne klas w C++11<a class="headerlink" href="#funkcje-specjalne-klas-w-c-11" title="Link to this heading">#</a></h4>
+<p>Od C++11 istnieje sześć specjalnych funkcji składowych klasy:</p>
+<ul class="simple">
+<li><p>konstruktor domyślny - <code class="docutils literal notranslate"><span class="pre">X();</span></code></p></li>
+<li><p>destruktor - <code class="docutils literal notranslate"><span class="pre">~X();</span></code></p></li>
+<li><p>konstruktor kopiujący - <code class="docutils literal notranslate"><span class="pre">X(const</span> <span class="pre">X&amp;);</span></code></p></li>
+<li><p>kopiujący operator przypisania - <code class="docutils literal notranslate"><span class="pre">X&amp;</span> <span class="pre">operator=(const</span> <span class="pre">X&amp;);</span></code></p></li>
+<li><p>konstruktor przenoszący - <code class="docutils literal notranslate"><span class="pre">X(X&amp;&amp;);</span></code></p></li>
+<li><p>przenoszący operator przypisania - <code class="docutils literal notranslate"><span class="pre">X&amp;</span> <span class="pre">operator=(X&amp;&amp;);</span></code></p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Klasa wspiera semantykę przenoszenia, jeśli posiada konstruktor przenoszący i przenoszący operator przypisania.</p>
+</div>
+</section>
+</section>
+<section id="implementacja-konstruktora-przenoszacego">
+<h3>Implementacja konstruktora przenoszącego<a class="headerlink" href="#implementacja-konstruktora-przenoszacego" title="Link to this heading">#</a></h3>
+<p>Implementacja konstruktora przenoszącego powinna przenieść zasoby obiektu tymczasowego do obiektu docelowego i pozostawić obiekt tymczasowy w poprawnym, ale nieokreślonym stanie.</p>
+<p>Implementując przenoszący operator przypisania należy najpierw zwolnić zasoby obiektu docelowego, a następnie przenieść zasoby obiektu źródłowego do obiektu docelowego.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w"> </span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()]),</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">data_</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">DataSet</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move constructor</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">))</span><span class="w"> </span><span class="c1">// move string using its move constructor</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr - no longer owns the resource</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move assignment operator</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
+
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move constructor</span>
+<span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_</span>
+<span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_</span>
+
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr - no longer owns the resource</span>
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">//... rest of the class</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<section id="implementacja-z-std-exchange">
+<h4>Implementacja z std::exchange()<a class="headerlink" href="#implementacja-z-std-exchange" title="Link to this heading">#</a></h4>
+<p>Przy samodzielnej implementacji konstruktora przenoszącego i przenoszącego operatora przypisania można skorzystać z funkcji <code class="docutils literal notranslate"><span class="pre">std::exchange()</span></code> z biblioteki standardowej C++.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">));</span><span class="w"> </span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">))</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_  and set source.data_ to nullptr</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="c1">// move size from source.size_ to size_ and set source.size_ to 0</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
+
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move constructor</span>
+<span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_  and set source.data_ to nullptr</span>
+<span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// move size from source.size_ to size_ and set source.size_ to 0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -569,6 +727,18 @@ takiej operacji.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motywacja-dla-semantyki-przenoszenia">Motywacja dla semantyki przenoszenia</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lvalues-i-rvalues">lvalues i rvalues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencje-rvalue-rvalue-references">Referencje rvalue - <em>rvalue references</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia">Implementacja semantyki przenoszenia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue">Przeciążanie funkcji za pomocą referencji rvalue</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia-w-klasach">Implementacja semantyki przenoszenia w klasach</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-klas-w-c-11">Funkcje specjalne klas w C++11</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-konstruktora-przenoszacego">Implementacja konstruktora przenoszącego</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-z-std-exchange">Implementacja z std::exchange()</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
