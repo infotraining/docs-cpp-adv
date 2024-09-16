@@ -591,12 +591,14 @@ void swap(T& x, T& y) noexcept(noexcept(x.swap(y))) // it can't throw an excepti
   * nie ma narzutu w czasie wykonania programu
   * jeśli funkcja zadeklarowana jako ``noexcept`` rzuci wyjątek wywoływana jest funkcja ``std::terminate()``
 
-* Umożliwia optymalizację wydajności - np. implementacja ``push_back()`` w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie może rzucić wyjątku
+### Funkcje specjalne i noexcept
 
-* Biblioteka **Type Traits** definiuje pomocnicze funkcje, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:
+Wprowadzenie `noexcept` do C++ umożliwia optymalizację wydajności - np. implementacja `push_back()` w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie rzuci wyjątku.
+
+Implementując konstruktor przenoszący i przenoszący operator przypisania warto przeanalizować pisany kod i jeżeli tylko można dodać specyfikator `noexcept`.
+W pisaniu funkcji pomocna może być biblioteka `type_traits`. Dostarcza ona klasy cech, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:
     * `std::is_nothrow_move_constructible_v<T>`
     * `std::is_nothrow_move_assignable_v<T>`
-
 
 * Przykład implementacji konstruktora przenoszącego i przenoszącego operatora przypisania z użyciem ``noexcept``:
 
@@ -648,3 +650,39 @@ public:
 
     //... rest of the class
 };
+```
+
+### noexcept w specyfikacji typu funkcji (od C++17)
+
+* Od C++17 `noexcept` jest częścią specyfikacji typu funkcji
+
+    ```{code-block} cpp
+    void foo() noexcept; // foo is noexcept
+    void bar(); // bar is not noexcept
+
+    static_assert(!std::is_same_v<decltype(foo), decltype(bar)>, "foo and bar have different types");
+
+    void (*ptr_safe)() noexcept = foo; // OK
+    ptr_safe = bar; // ERROR - bar is not noexcept
+    ```
+
+* W przypadku nadpisywania wirtualnych funkcji `noexcept` w klasach pochodnych, specyfikacja `noexcept` musi być zgodna z deklaracją funkcji w klasie bazowej
+    
+    ```{code-block} cpp
+    struct Base
+    {
+        virtual void f() noexcept {} // f is noexcept
+        virtual ~Base() noexcept = default;
+    };
+    
+    struct Derived1 : Base
+    {
+        void f() noexcept override {} // f is noexcept
+    };
+    
+    struct Derived2 : Base
+    {
+        void f() override {} // ERROR - f is declared as noexcept in the base class
+                             // and must be declared as noexcept in the derived class
+    };
+    ```
