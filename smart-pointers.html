@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Inteligentne wskaźniki - Smart Pointers &#8212; Zaawansowane programowanie w C++</title>
+    <title>Inteligentne wskaźniki &#8212; Zaawansowane programowanie w C++</title>
   
   
   
@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3d148d41" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=53f2e2eb" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'smart-pointers';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Semantyka przenoszenia (Move semantics)" href="move-semantics.html" />
+    <link rel="prev" title="Semantyka przenoszenia" href="move-semantics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,8 +180,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia (<em>Move semantics</em>)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inteligentne wskaźniki - Smart Pointers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inteligentne wskaźniki</a></li>
 </ul>
 
     </div>
@@ -367,7 +367,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Inteligentne wskaźniki - Smart Pointers</h1>
+    <h1>Inteligentne wskaźniki</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,16 +386,30 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inteligentne-wskazniki">Inteligentne wskaźniki</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inteligentne wskaźniki</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr">Semantyka przenoszenia dla std::unique_ptr<t></t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealokatory">Dealokatory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idiom-pimpl">Idiom PIMPL</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pimpl-private-implementation">PIMPL - Private Implementation:</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-std-unique-ptr-t">Specjalizacja <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-std-unique-ptr-t-dla-tablic">Specjalizacja std::unique_ptr&lt;T[]&gt; dla tablic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-shared-ptr">std::shared_ptr</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przydatne-metody-z-interfejsu-shared-ptr">Przydatne metody z interfejsu shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcja-std-make-shared">Funkcja std::make_shared<t>()</t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Dealokatory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr">Rzutowania między wskaźnikami std::shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr">Zależności cykliczne między wskaźnikami std::shared_ptr</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this">Tworzenie wskaźnika std::shared_ptr ze wskaźnika this</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-weak-ptr">std::weak_ptr</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych">Przechowywanie std::weak_ptr w kontenerach asocjacyjnych</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zastosowanie-std-weak-ptr">Zastosowanie std::weak_ptr</a></li>
 </ul>
 </li>
 </ul>
@@ -409,8 +423,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="inteligentne-wskazniki-smart-pointers">
-<h1>Inteligentne wskaźniki - Smart Pointers<a class="headerlink" href="#inteligentne-wskazniki-smart-pointers" title="Link to this heading">#</a></h1>
+  <section id="inteligentne-wskazniki">
+<h1>Inteligentne wskaźniki<a class="headerlink" href="#inteligentne-wskazniki" title="Link to this heading">#</a></h1>
 <section id="zarzadzanie-zasobami-w-c-raii">
 <h2>Zarządzanie zasobami w C++ - RAII<a class="headerlink" href="#zarzadzanie-zasobami-w-c-raii" title="Link to this heading">#</a></h2>
 <section id="mechanizm-wyjatkow-a-zasoby">
@@ -498,8 +512,8 @@ Możliwe są następujące strategie:</p>
 </section>
 </section>
 </section>
-<section id="inteligentne-wskazniki">
-<h2>Inteligentne wskaźniki<a class="headerlink" href="#inteligentne-wskazniki" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h2>Inteligentne wskaźniki<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Inteligentne wskaźniki umożliwiają wygodne zarządzanie obiektami, które zostały zaalokowane na stercie za pomocą operatora <code class="docutils literal notranslate"><span class="pre">new</span></code>.
 Przejmują odpowiedzialność za wywołanie destruktora dla zarządzanego obiektu oraz zwolnienie pamięci - poprzez wywołanie operatora <code class="docutils literal notranslate"><span class="pre">delete</span></code>.
 Inteligentne wskaźniki w C++11 umożliwiają reprezentację prawa własności do zaalokowanego zasobu.
@@ -571,8 +585,8 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">ptr_gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipod&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<section id="semantyka-przenoszenia-dla-std-unique-ptr-t">
-<h3>Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code><a class="headerlink" href="#semantyka-przenoszenia-dla-std-unique-ptr-t" title="Link to this heading">#</a></h3>
+<section id="semantyka-przenoszenia-dla-std-unique-ptr">
+<h3>Semantyka przenoszenia dla std::unique_ptr<T><a class="headerlink" href="#semantyka-przenoszenia-dla-std-unique-ptr" title="Link to this heading">#</a></h3>
 <p>Obiekt <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> nie może być kopiowany. Ale dzięki semantyce przenoszenia, może być stosowany tam, gdzie zgodne ze standardem C++03 niekopiowalne obiekty nie mogły działać:</p>
 <ul class="simple">
 <li><p>może być zwracany z funkcji</p></li>
@@ -709,8 +723,8 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </div>
 </section>
 </section>
-<section id="specjalizacja-std-unique-ptr-t">
-<h3>Specjalizacja <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code><a class="headerlink" href="#specjalizacja-std-unique-ptr-t" title="Link to this heading">#</a></h3>
+<section id="specjalizacja-std-unique-ptr-t-dla-tablic">
+<h3>Specjalizacja std::unique_ptr&lt;T[]&gt; dla tablic<a class="headerlink" href="#specjalizacja-std-unique-ptr-t-dla-tablic" title="Link to this heading">#</a></h3>
 <p>Klasa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code> jest specjalizacją szablonu <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> dla tablic obiektów typu <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
 <ul class="simple">
 <li><p>Klasa ta stanowi lepszą alternatywę dla klasycznych tablic przydzielanych dynamicznie.</p></li>
@@ -746,6 +760,359 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 <span class="p">}</span><span class="w"> </span><span class="c1">// buffer is automatically deleted</span>
 </pre></div>
 </div>
+</section>
+</section>
+<section id="std-shared-ptr">
+<h2>std::shared_ptr<a class="headerlink" href="#std-shared-ptr" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;T&gt;</span></code> jest szablonem nieingerencyjnego wskaźnika zliczającego odniesienia do wskazywanych obiektów.</p>
+<p>Działanie:</p>
+<ul class="simple">
+<li><p>konstruktor tworzy licznik odniesień i inicjuje go wartością 1</p></li>
+<li><p>konstruktor kopiujący lub kopiujący operator przypisania inkrementują licznik odniesień</p></li>
+<li><p>destruktor zmniejsza licznik odniesień, jeżeli wartość spada do 0, to obiekt jest zwalniany poprzez wywołanie dealokatora (domyślnie jest nim operator <code class="docutils literal notranslate"><span class="pre">delete</span></code>)</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassert&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;map&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* implementation */</span><span class="w"> </span><span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">gadgets</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">using_gadgets</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipad&quot;</span><span class="p">);</span><span class="w">  </span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// reference counter = 1</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p1</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy of shared_ptr</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w">     </span><span class="c1">// reference counter = 2</span>
+
+<span class="w">        </span><span class="n">gadgets</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="s">&quot;ipad&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">));</span><span class="w"> </span><span class="c1">// copy of shared_ptr to a std container</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w">                      </span><span class="c1">// reference counter == 3</span>
+
+<span class="w">        </span><span class="n">p2</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w">  </span><span class="c1">// destruction of p2 decrements reference counter</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// reference counter = 2</span>
+<span class="p">}</span><span class="w">  </span><span class="c1">// destruction of p1 decrements reference counter = 1</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">using_gadgets</span><span class="p">();</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">gadgets</span><span class="p">[</span><span class="s">&quot;ipad&quot;</span><span class="p">].</span><span class="n">use_count</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// reference counter = 1</span>
+
+<span class="w">    </span><span class="n">gadgets</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"> </span><span class="c1">// reference counter = 0 - gadget is removed</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="przydatne-metody-z-interfejsu-shared-ptr">
+<h3>Przydatne metody z interfejsu shared_ptr<T><a class="headerlink" href="#przydatne-metody-z-interfejsu-shared-ptr" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T*</span> <span class="pre">get()</span> <span class="pre">const</span></code></p>
+<ul>
+<li><p>zwraca przechowywany wskaźnik.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">reset()</span></code></p>
+<ul>
+<li><p>zwalnia prawo własności do zarządzanego obiektu.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">template</span> <span class="pre">&lt;typename</span> <span class="pre">Y*&gt;</span> <span class="pre">void</span> <span class="pre">reset(Y*</span> <span class="pre">ptr)</span></code></p>
+<ul>
+<li><p>zamienia obiekt zarządzany na obiekt wskazywany przez <code class="docutils literal notranslate"><span class="pre">ptr</span></code>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">unique()</span> <span class="pre">const</span></code></p>
+<ul>
+<li><p>zwraca <code class="docutils literal notranslate"><span class="pre">true</span></code>, jeśli obiekt <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> jest jedynym właścicielem przechowywanego wskaźnika.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">use_count()</span> <span class="pre">const</span></code></p>
+<ul>
+<li><p>zwraca wartość licznika odwołań do wskaźnika przechowywanego w obiekcie <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code>. Przydatna w diagnostyce.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">swap(shared_ptr&lt;T&gt;&amp;</span> <span class="pre">other)</span></code></p>
+<ul>
+<li><p>wymienia wskaźniki między dwoma obiektami <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code>. Wymienia wskaźniki oraz liczniki odwołań.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">explicit</span> <span class="pre">operator</span> <span class="pre">bool()</span> <span class="pre">const</span></code></p>
+<ul>
+<li><p>umożliwia konwersję do wartości logicznej, np. <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(p</span> <span class="pre">&amp;&amp;</span> <span class="pre">p-&gt;is_valid())</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="funkcja-std-make-shared">
+<h3>Funkcja std::make_shared<T>()<a class="headerlink" href="#funkcja-std-make-shared" title="Link to this heading">#</a></h3>
+<p>Używanie <code class="docutils literal notranslate"><span class="pre">std::shared_ptr``</span> <span class="pre">eliminuje</span> <span class="pre">konieczność</span> <span class="pre">jawnego</span> <span class="pre">stosowanie</span> <span class="pre">operatora</span> <span class="pre">``delete``</span>&#160; <span class="pre">Aby</span> <span class="pre">uniknąć</span> <span class="pre">także</span> <span class="pre">używania</span> <span class="pre">operatora</span> <span class="pre">``new``</span> <span class="pre">należy</span> <span class="pre">stosować</span> <span class="pre">funkcję</span> <span class="pre">pomocniczą</span> <span class="pre">``make_shared()``,</span> <span class="pre">która</span> <span class="pre">pełni</span> <span class="pre">rolę</span> <span class="pre">fabryki</span> <span class="pre">wskaźników</span> </code>std::shared_ptr``. Funkcja przekazuje (przez <em>perfect forwarding</em>) swoj parametry do konstruktora obiektu typu <code class="docutils literal notranslate"><span class="pre">T</span></code>, który jest alokowany na stercie.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Gadget</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">id_</span><span class="p">{</span><span class="n">id</span><span class="p">},</span><span class="w"> </span><span class="n">name_</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">name</span><span class="p">)}</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="w">    </span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">id_</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipad&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Stosowanie funkcji <code class="docutils literal notranslate"><span class="pre">std::make_shared&lt;Gadget&gt;(1,</span> <span class="pre">&quot;ipad&quot;)</span></code> jest wydajniejsze niż konstrukcja <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;Gadget&gt;(new</span> <span class="pre">Gadget(1,</span> <span class="pre">&quot;ipad&quot;))</span></code>, ponieważ alokowany jest tylko jeden segment pamięci, w którym umieszczany jest wskazywany obiekt oraz blok kontrolny z licznikami odniesień.</p></li>
+<li><p>Stosowanie <code class="docutils literal notranslate"><span class="pre">std::make_shared()</span></code> jest również bezpieczniejsze, ponieważ eliminuje możliwość wycieku pamięci w przypadku wystąpienia wyjątku podczas alokacji pamięci dla obiektu.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">may_throw</span><span class="p">();</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">bad</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">f</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">{</span><span class="k">new</span><span class="w"> </span><span class="n">Gadget</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wearable&quot;</span><span class="p">)},</span><span class="w"> </span><span class="n">may_throw</span><span class="p">());</span><span class="w"> </span><span class="c1">// potential memory leak</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">ok</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">f</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wearable&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">may_throw</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Dealokatory<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Niekiedy pojawia się potrzeba zastosowania wskaźnika <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> do kontroli zasobu takiego typu, że jego zwolnienie nie sprowadza się do prostego wywołania operatora <code class="docutils literal notranslate"><span class="pre">delete</span></code>.
+Takie przypadki <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> obsługuje przy pomocy dealokatorów użytkownika.</p>
+<p>Dealokator jest:</p>
+<ul class="simple">
+<li><p>obiektem funkcyjnym odpowiedzialnym za zwolnienie zasobu, kiedy liczba referencji spadnie do zera.</p></li>
+<li><p>przekazywany jako drugi argument konstruktora <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code>.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FileCloser</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="k">operator</span><span class="p">()(</span><span class="kt">FILE</span><span class="o">*</span><span class="w"> </span><span class="n">file</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="w">            </span><span class="n">fclose</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">use_device</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">FILE</span><span class="o">&gt;</span><span class="w"> </span><span class="n">safe_file</span><span class="p">(</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;+rw&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">FileCloser</span><span class="p">{});</span>
+
+<span class="w">    </span><span class="n">may_throw</span><span class="p">();</span><span class="w"> </span><span class="c1">// może wylecieć wyjątek</span>
+
+<span class="w">    </span><span class="c1">//... rest of the code</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// FileCloser::operator() is called for the file - file is closed</span>
+</pre></div>
+</div>
+</section>
+<section id="rzutowania-miedzy-wskaznikami-std-shared-ptr">
+<h3>Rzutowania między wskaźnikami std::shared_ptr<T><a class="headerlink" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr" title="Link to this heading">#</a></h3>
+<p>Problemy związane z rzutowaniami między wskaźnikami <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> rozwiązują trzy funkcje szablonowe:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">template&lt;class</span> <span class="pre">T,</span> <span class="pre">class</span> <span class="pre">U&gt;</span> <span class="pre">shared_ptr&lt;T&gt;</span> <span class="pre">static_pointer_cast(shared_ptr&lt;U&gt;</span> <span class="pre">const</span> <span class="pre">&amp;</span> <span class="pre">r)</span></code></p>
+<ul>
+<li><p>Jeśli <code class="docutils literal notranslate"><span class="pre">r</span></code> jest pusty, zwraca pusty <code class="docutils literal notranslate"><span class="pre">shared_ptr&lt;T&gt;</span></code></p></li>
+<li><p>W innym przypadku <code class="docutils literal notranslate"><span class="pre">shared_ptr&lt;T&gt;</span></code> przechowuje kopię <code class="docutils literal notranslate"><span class="pre">static_cast&lt;T*&gt;(r.get())</span></code> i współdzieli prawo własności z <code class="docutils literal notranslate"><span class="pre">r</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">template&lt;class</span> <span class="pre">T,</span> <span class="pre">class</span> <span class="pre">U&gt;</span> <span class="pre">shared_ptr&lt;T&gt;</span> <span class="pre">const_pointer_cast(shared_ptr&lt;U&gt;</span> <span class="pre">const</span> <span class="pre">&amp;r)</span></code></p>
+<ul>
+<li><p>Jeśli <code class="docutils literal notranslate"><span class="pre">r</span></code> jest pusty, zwraca pusty <code class="docutils literal notranslate"><span class="pre">shared_ptr&lt;T&gt;</span></code></p></li>
+<li><p>W innym przypadku <code class="docutils literal notranslate"><span class="pre">shared_ptr&lt;T&gt;</span></code> przechowuje kopię <code class="docutils literal notranslate"><span class="pre">const_cast&lt;T*&gt;(r.get())</span></code> i współdzieli prawo własności z <code class="docutils literal notranslate"><span class="pre">r</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">template&lt;class</span> <span class="pre">T,</span> <span class="pre">class</span> <span class="pre">U&gt;</span> <span class="pre">shared_ptr&lt;T&gt;</span> <span class="pre">dynamic_pointer_cast(shared_ptr&lt;U&gt;</span> <span class="pre">const</span> <span class="pre">&amp;</span> <span class="pre">r)</span></code></p>
+<ul>
+<li><p>Jeśli <code class="docutils literal notranslate"><span class="pre">dynamic_cast&lt;T*&gt;(r.get())</span></code> zwraca wartość różną od <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>, zwracany jest obiekt <code class="docutils literal notranslate"><span class="pre">shared_ptr&lt;T&gt;</span></code>, który współdzieli prawo własności do <code class="docutils literal notranslate"><span class="pre">r</span></code></p></li>
+<li><p>W przeciwnym wypadku zwracany jest pusty <code class="docutils literal notranslate"><span class="pre">shared_ptr&lt;T&gt;</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="w"> </span>
+<span class="p">{</span><span class="w">  </span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Base</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Derived</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">Base</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">bar</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="c1">// downcasting</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">pd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">dynamic_pointer_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pb</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
+<span class="w">        </span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">bar</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr">
+<h3>Zależności cykliczne między wskaźnikami std::shared_ptr<a class="headerlink" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr" title="Link to this heading">#</a></h3>
+<p>Problemem dla wskaźników <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> są zależności cykliczne, które powodują wycieki zasobów (pamięci).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Cyclic</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Cyclic</span><span class="o">&gt;</span><span class="w"> </span><span class="n">self</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Cyclic</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">memory_leak</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Cyclic</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Cyclic</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">self</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Cykle muszą być przerywane za pomocą wskaźników <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code></p>
+</div>
+</section>
+<section id="tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this">
+<h3>Tworzenie wskaźnika std::shared_ptr ze wskaźnika this<a class="headerlink" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this" title="Link to this heading">#</a></h3>
+<p>Niekiedy istnieje konieczność utworzenia inteligentnego wskaźnika <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> ze wskaźnika <code class="docutils literal notranslate"><span class="pre">this</span></code>.
+Oznacza to, że obiekt danej klasy będzie zarządzany za pośrednictwem inteligentnego wskaźnika.
+W ogólności rozwiązaniem problemu konwersji <code class="docutils literal notranslate"><span class="pre">this</span></code> do <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> jest użycie wskaźnika typu <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code>, który jest obserwatorem wskaźników <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> (pozwala na obserwowanie wskazywanego obiektu bez ingerowania w wartość licznika odwołań).
+Zdefiniowanie w klasie składowej typu <code class="docutils literal notranslate"><span class="pre">weak_ptr</span></code> i zainicjowanie jej wartością <code class="docutils literal notranslate"><span class="pre">this</span></code> umożliwia późniejsze pozyskiwanie wskaźników <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code>.
+Aby nie trzeba było za każdym razem pisać tego samego kodu, można wykorzystać dziedziczenie po pomocniczej klasie <code class="docutils literal notranslate"><span class="pre">std::enable_shared_from_this</span></code>.</p>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">enable_shared_from_this&lt;T&gt;</span></code> umożliwia obiektowi typu <code class="docutils literal notranslate"><span class="pre">T</span></code>, który jest zarządzany przez instancję <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;T&gt;</span></code> bezpieczne tworzenie dodatkowych wskaźników typu <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;T&gt;</span></code>, które współdzielą prawo własności do zarządzanego obiektu.</p>
+<p>Przykład nieprawidłowego generowania instancji <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> ze wskaźnika <code class="docutils literal notranslate"><span class="pre">this</span></code>:</p>
+<hr class="docutils" />
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">do_stuff</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// using p</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">call_do_stuff</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">do_stuff</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">call_do_stuff</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Prawidłowe tworzenie instancji <code class="docutils literal notranslate"><span class="pre">std::shared_ptr``</span> <span class="pre">ze</span> <span class="pre">wskaźnika</span> </code>this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">do_stuff</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// using p</span>
+<span class="p">}</span>
+
+<span class="c1">// ...</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">A</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_shared_from_this</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">call_do_stuff</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">do_stuff</span><span class="p">(</span><span class="n">shared_from_this</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">call_do_stuff</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="std-weak-ptr">
+<h2>std::weak_ptr<a class="headerlink" href="#std-weak-ptr" title="Link to this heading">#</a></h2>
+<p>Najbardziej znanym problemem, związanym ze wskaźnikami opartymi na zliczaniu odniesień, są odniesienia cykliczne.
+Występują one w sytuacji, gdy kilka obiektów trzyma wskaźniki do siebie nawzajem, przez co licznik odniesień nie spada do zera i wskazywane obiekty nie są nigdy kasowane.
+Rozwiązaniem tego problemu jest zastosowanie słabych wskaźników – obiektów <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code>.</p>
+<p>Wskaźnik typu <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> obserwuje wskazywany obiekt, ale nie ma kontroli nad czasem jego życia i nie może zmieniać jego licznika odniesień.</p>
+<p>Nie udostępnia operatorów dereferencji. Aby mieć dostęp do wskazywanego obiektu konieczne jest dokonanie konwersji do <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code>.</p>
+<p>Gdy wskazywany obiekt został już skasowany konwersja na <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> daje w wynik:</p>
+<ul>
+<li><p>wskaźnik pusty - w przypadku metody <code class="docutils literal notranslate"><span class="pre">lock()</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr_g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipad&quot;</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">weak_g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ptr_g</span><span class="p">;</span><span class="w"> </span>
+<span class="n">assert</span><span class="p">(</span><span class="n">ptr_g</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// reference counter = 1</span>
+
+<span class="n">ptr_g</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span><span class="w">  </span><span class="c1">// reference counter = 0, gadget is deleted</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">temp_g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weak_g</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp_g</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">temp_g</span><span class="o">-&gt;</span><span class="n">use</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>zgłasza wyjątek <code class="docutils literal notranslate"><span class="pre">std::bad_weak_ptr</span></code>  - w przypadku konstruktora <code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;T&gt;(const</span> <span class="pre">std::weak_ptr&lt;T&gt;&amp;)</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ptr_g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipad&quot;</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">weak_g</span><span class="p">;</span>
+
+<span class="n">weak_g_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ptr_g</span><span class="p">;</span><span class="w"> </span><span class="c1">// reference counter = 1</span>
+<span class="n">ptr_g</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span><span class="w">   </span><span class="c1">// gadget is destroyed</span>
+
+<span class="k">try</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">temp_g</span><span class="p">(</span><span class="n">weak_g</span><span class="p">);</span><span class="w"> </span><span class="c1">// throws std::bad_weak_ptr</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">bad_weak_ptr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<section id="przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych">
+<h3>Przechowywanie std::weak_ptr w kontenerach asocjacyjnych<a class="headerlink" href="#przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych" title="Link to this heading">#</a></h3>
+<p>Aby przechować wskaźniki <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> w kontenerach asocjacyjnych należy klasy <code class="docutils literal notranslate"><span class="pre">std::owner_less</span></code> jako parameteru definiującego sposób porównania
+wskaźników.</p>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">std::owner_less</span></code> dostarcza implementację umożliwiającą porównanie wskaźników <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> oraz <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> na podstawie prawa własności, a nie wartości
+przechowywanych wskaźników. Dwa wskaźniki są uznane za równoważne tylko wtedy, gdy oba są puste lub oba zarządzają tym samym obiektem (współdzielą blok kontrolny).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Key</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* implementation */</span><span class="w"> </span><span class="p">};</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Value</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* implementation */</span><span class="w"> </span><span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">owner_less</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">my_map</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">owner_less</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Key</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">my_set</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="zastosowanie-std-weak-ptr">
+<h3>Zastosowanie std::weak_ptr<a class="headerlink" href="#zastosowanie-std-weak-ptr" title="Link to this heading">#</a></h3>
+<p>Wskaźniki <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> stosuje się do:</p>
+<ul class="simple">
+<li><p>zrywania cyklicznych zależności dla <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code></p></li>
+<li><p>współużytkowania zasobu bez przejmowania odpowiedzialności za zarządzanie nim</p></li>
+<li><p>eliminowania ryzykownych operacji na wiszących wskaźnikach</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -786,7 +1153,7 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Semantyka przenoszenia (<em>Move semantics</em>)</p>
+        <p class="prev-next-title">Semantyka przenoszenia</p>
       </div>
     </a>
 </div>
@@ -814,16 +1181,30 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inteligentne-wskazniki">Inteligentne wskaźniki</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inteligentne wskaźniki</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T&gt;</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr">Semantyka przenoszenia dla std::unique_ptr<t></t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealokatory">Dealokatory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idiom-pimpl">Idiom PIMPL</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pimpl-private-implementation">PIMPL - Private Implementation:</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-std-unique-ptr-t">Specjalizacja <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-std-unique-ptr-t-dla-tablic">Specjalizacja std::unique_ptr&lt;T[]&gt; dla tablic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-shared-ptr">std::shared_ptr</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przydatne-metody-z-interfejsu-shared-ptr">Przydatne metody z interfejsu shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcja-std-make-shared">Funkcja std::make_shared<t>()</t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Dealokatory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr">Rzutowania między wskaźnikami std::shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr">Zależności cykliczne między wskaźnikami std::shared_ptr</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this">Tworzenie wskaźnika std::shared_ptr ze wskaźnika this</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-weak-ptr">std::weak_ptr</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych">Przechowywanie std::weak_ptr w kontenerach asocjacyjnych</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zastosowanie-std-weak-ptr">Zastosowanie std::weak_ptr</a></li>
 </ul>
 </li>
 </ul>

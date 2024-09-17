@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Semantyka przenoszenia (Move semantics) &#8212; Zaawansowane programowanie w C++</title>
+    <title>Semantyka przenoszenia &#8212; Zaawansowane programowanie w C++</title>
   
   
   
@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3d148d41" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=53f2e2eb" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'move-semantics';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Inteligentne wskaźniki - Smart Pointers" href="smart-pointers.html" />
+    <link rel="next" title="Inteligentne wskaźniki" href="smart-pointers.html" />
     <link rel="prev" title="Zaawansowane programowanie w języku C++" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -181,8 +181,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semantyka przenoszenia (<em>Move semantics</em>)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki - Smart Pointers</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semantyka przenoszenia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
 </ul>
 
     </div>
@@ -368,7 +368,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Semantyka przenoszenia (Move semantics)</h1>
+    <h1>Semantyka przenoszenia</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -399,7 +399,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding">Perfect forwarding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-collapsing">Reference collapsing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mechanizm-dedukcji-typow-w-szablonach">Mechanizm dedukcji typów w szablonach</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-reference-aka-forwarding-reference">Universal reference aka forwarding reference:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-reference-aka-forwarding-reference">Universal reference aka forwarding reference</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
 </ul>
 </li>
@@ -419,8 +419,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="semantyka-przenoszenia-move-semantics">
-<h1>Semantyka przenoszenia (<em>Move semantics</em>)<a class="headerlink" href="#semantyka-przenoszenia-move-semantics" title="Link to this heading">#</a></h1>
+  <section id="semantyka-przenoszenia">
+<h1>Semantyka przenoszenia<a class="headerlink" href="#semantyka-przenoszenia" title="Link to this heading">#</a></h1>
 <section id="motywacja-dla-semantyki-przenoszenia">
 <h2>Motywacja dla semantyki przenoszenia<a class="headerlink" href="#motywacja-dla-semantyki-przenoszenia" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -611,7 +611,7 @@ takiej operacji.</p></li>
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size_</span><span class="p">;</span>
 <span class="k">public</span><span class="o">:</span><span class="w"> </span>
 <span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
-<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()]),</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">name</span><span class="p">)),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()]),</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">data_</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
@@ -890,7 +890,7 @@ takiej operacji.</p></li>
 </div>
 </section>
 <section id="universal-reference-aka-forwarding-reference">
-<h3>Universal reference aka forwarding reference:<a class="headerlink" href="#universal-reference-aka-forwarding-reference" title="Link to this heading">#</a></h3>
+<h3>Universal reference aka forwarding reference<a class="headerlink" href="#universal-reference-aka-forwarding-reference" title="Link to this heading">#</a></h3>
 <p>Referencja rvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> użyta w kontekście dedukcji typu dla argumentu funkcji szablonowej ma szczególne zastosowanie:</p>
 <ul class="simple">
 <li><p>dla argumentów lvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> zamienia się w <code class="docutils literal notranslate"><span class="pre">T&amp;</span></code> - wiąże się z wartościami lvalue</p></li>
@@ -1154,7 +1154,7 @@ W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal no
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inteligentne wskaźniki - Smart Pointers</p>
+        <p class="prev-next-title">Inteligentne wskaźniki</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1195,7 +1195,7 @@ W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal no
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding">Perfect forwarding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-collapsing">Reference collapsing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mechanizm-dedukcji-typow-w-szablonach">Mechanizm dedukcji typów w szablonach</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-reference-aka-forwarding-reference">Universal reference aka forwarding reference:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-reference-aka-forwarding-reference">Universal reference aka forwarding reference</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
 </ul>
 </li>
