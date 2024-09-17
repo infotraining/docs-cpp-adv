@@ -1,4 +1,4 @@
-# Semantyka przenoszenia (*Move semantics*)
+# Semantyka przenoszenia
 
 ## Motywacja dla semantyki przenoszenia
 
@@ -182,7 +182,7 @@ private:
     size_t size_;
 public: 
     DataSet(std::string name, std::initializer_list<int> data)
-        : name_(name), data_(new int[data.size()]), size_(data.size())
+        : name_(std::move(name)), data_(new int[data.size()]), size_(data.size())
     {
         std::copy(data.begin(), data.end(), data_);
     }
@@ -467,7 +467,7 @@ foo(str);  // argument is lvalue : f<std::string&>(std::string& &&) -> f<string&
 f(std::string("Hello")); // argument is rvalue : f<string>(string&&)
 ```
 
-### Universal reference aka forwarding reference:
+### Universal reference aka forwarding reference
 
 Referencja rvalue `T&&` użyta w kontekście dedukcji typu dla argumentu funkcji szablonowej ma szczególne zastosowanie:
 
