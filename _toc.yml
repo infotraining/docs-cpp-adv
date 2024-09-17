@@ -3,3 +3,4 @@ root: index
 chapters:
 - file: move-semantics
 - file: smart-pointers
+- file: templates
