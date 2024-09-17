@@ -25,10 +25,15 @@ p {
   font-size: 1.1em !important;
 }
 
-/* p + ul.simple
+ol li > p + ul.simple
+{
+  margin-top: 0.4rem !important;
+}
+
+p + ul.simple
 {
   margin-top: -1rem !important;
-} */
+}
 
 img {
   margin-top: 2em;

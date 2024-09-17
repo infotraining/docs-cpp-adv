@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Szablony &#8212; Zaawansowane programowanie w C++</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3a962a81" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'templates';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Inteligentne wskaźniki" href="smart-pointers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Zaawansowane programowanie w języku C++
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Szablony</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Ftemplates.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/templates.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Szablony</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#szablony-funkcji">Szablony funkcji</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dedukcja-typow-argumentow-szablonu">Dedukcja typów argumentów szablonu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-instancji-szablonu">Tworzenie instancji szablonu</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fazy-kompilacji-szablonu">Fazy kompilacji szablonu</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-funkcji-szablonowych">Specjalizacja funkcji szablonowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#polaczenie-przeciazania-szablonow-specjalizacji-i-przeciazania-funkcji">Połączenie przeciążania szablonów, specjalizacji i przeciążania funkcji</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeciazanie-szablonow">Przeciążanie szablonów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adres-wygenerowanej-funkcji">Adres wygenerowanej funkcji</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-szablonu-dla-wartosci-zwracanych-przez-funkcje">Parametry szablonu dla wartości zwracanych przez funkcję</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parametr-szablonu-okreslajacy-zwracany-typ">Parametr szablonu określający zwracany typ</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dedukcja-typu-zwracanego-z-funkcji-c-14">Dedukcja typu zwracanego z funkcji (C++14)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#uzycie-klasy-cech-type-traits">Użycie klasy cech (<em>type traits</em>)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#domyslne-parametry-szablonu">Domyślne parametry szablonu</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="szablony">
+<h1>Szablony<a class="headerlink" href="#szablony" title="Link to this heading">#</a></h1>
+<p>Szablony implementują koncepcję <strong>programowania generycznego</strong> (<em>generic programming</em>) - programowania używającego typów danych jako parametrów.</p>
+<p>Szablony zapewniają mechanizm, za pomocą którego funkcje lub klasy mogą być implementowane dla ogólnych typów danych (nawet takich, które jeszcze nie istnieją).</p>
+<ul class="simple">
+<li><p>zastosowanie szablonów klas umożliwia parametryzację kontenerów ze względu na typ elementów, które są w nich przechowywane</p></li>
+<li><p>szablony funkcji umożliwiają implementację algorytmów działających w ogólny sposób dla różnych struktur danych</p></li>
+</ul>
+<p>W szczególnych przypadkach implementacja szablonów klas lub funkcji może być wyspecjalizowana dla pewnych typów.</p>
+<p>Parametry szablonów mogą być:</p>
+<ul class="simple">
+<li><p>typami</p></li>
+<li><p>stałymi typów całkowitych lub wyliczeniowych znanymi w chwili kompilacji</p></li>
+<li><p>szablonami</p></li>
+</ul>
+<section id="szablony-funkcji">
+<h2>Szablony funkcji<a class="headerlink" href="#szablony-funkcji" title="Link to this heading">#</a></h2>
+<p><strong>Szablon funkcji</strong> - funkcja, której typy argumentów lub typ zwracanej wartości zostały sparametryzowane.</p>
+<p>Składnia definicji szablonu funkcji:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">&lt;</span><span class="n">comma_separated_list_of_parameters</span><span class="o">&gt;</span>
+<span class="n">return_type</span> <span class="n">function_name</span><span class="p">(</span><span class="n">list_of_args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">//...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Przykład definicji szablonu funkcji <code class="docutils literal notranslate"><span class="pre">max_value()</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Użycie szablonu funkcji <code class="docutils literal notranslate"><span class="pre">max_value()</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">result1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">);</span>
+
+<span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.50</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.14</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">result2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w"> </span><span class="c1">// max_value&lt;double&gt;(x, y)</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;mathematics&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;math&quot;</span><span class="p">;</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">max_value</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;mathematics&quot;</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="dedukcja-typow-argumentow-szablonu">
+<h3>Dedukcja typów argumentów szablonu<a class="headerlink" href="#dedukcja-typow-argumentow-szablonu" title="Link to this heading">#</a></h3>
+<p>W momencie wywołania funkcji szablonowej <code class="docutils literal notranslate"><span class="pre">max_value()</span></code> następuje proces dedukcji tych typów argumentów szablonu, które nie zostały podane w ostrych nawiasach <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code>. Typy argumentów szablonu dedukowane są na podstawie typu argumentów funkcji.</p>
+<p>Reguły dedukcji typów dla szablonów funkcji:</p>
+<ul class="simple">
+<li><p>Każdy parametr funkcji może brać udział (lub nie) w procesie dedukcji parametru szablonu</p></li>
+<li><p>Wszystkie dedukcje są przeprowadzane niezależnie od siebie</p></li>
+<li><p>Na zakończenie procesu dedukcji kompilator sprawdza, czy każdy parametr szablonu został wydedukowany i czy nie ma konfliktów między wydedukowanymi parametrami</p></li>
+<li><p>Każdy parametr funkcji, który bierze udział w procesie dedukcji musi ściśle pasować do typu argumentu funkcji - niejawne konwersje są zabronione</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">U</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// void f(T, U) [T = int, U = int]</span>
+<span class="w">    </span><span class="n">g</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// void g(T, T) [T = int]</span>
+<span class="w">    </span><span class="n">g</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2u</span><span class="p">);</span><span class="w"> </span><span class="c1">// error: no matching function for call to g(int, unsigned int)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>W przypadku, gdy w procesie dedukcji wykryte zostaną konflikty:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">short</span><span class="w"> </span><span class="nf">f</span><span class="p">();</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="n">f</span><span class="p">(),</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="c1">// ERROR - no matching function</span>
+</pre></div>
+</div>
+<p>istnieją dwa rozwiązania:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// #1</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">val1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">()),</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK</span>
+
+<span class="c1">// #2</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">val2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">(),</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK</span>
+</pre></div>
+</div>
+</section>
+<section id="tworzenie-instancji-szablonu">
+<h3>Tworzenie instancji szablonu<a class="headerlink" href="#tworzenie-instancji-szablonu" title="Link to this heading">#</a></h3>
+<p>Koncepcja szablonów wykracza poza zwykły model kompilacji (konsolidacji). Cały kod szablonu powinien być umieszczony w jednym pliku nagłówkowym. Dołączając następnie zawartość pliku nagłówkowego do kodu aplikacji umożliwiamy generację i kompilację kodu dla konkretnych typów.</p>
+<p>Tworzenie <strong>instancji szablonu</strong> - proces, w którym na podstawie szablonu generowany jest kod, który zostanie skompilowany.</p>
+<p>Utworzenie instancji szablonu jest możliwe tylko wtedy, gdy dla typu podanego jako argument szablonu zdefiniowane są wszystkie operacje używane przez szablon, np. operatory <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, wywołania konkretnych metod, itp.</p>
+<section id="fazy-kompilacji-szablonu">
+<h4>Fazy kompilacji szablonu<a class="headerlink" href="#fazy-kompilacji-szablonu" title="Link to this heading">#</a></h4>
+<p>Proces kompilacji szablonu przebiega w dwóch fazach:</p>
+<ol class="arabic simple">
+<li><p>Na etapie definicji szablonu, ale bez tworzenia jego instancji kod jest sprawdzany pod względem poprawności bez uwzględniania parametrów szablonu:</p>
+<ul class="simple">
+<li><p>wykrywane są błędy składniowe</p></li>
+<li><p>wykrywane jest użycie nieznanych nazw (typów, funkcji, itp. ), które nie zależą od parametru szablonu</p></li>
+<li><p>sprawdzane są statyczne asercje, które nie zależą od parametru szablonu</p></li>
+</ul>
+</li>
+<li><p>Podczas tworzenia instancji szablonu, kod szablonu jest jeszcze raz sprawdzany. W szczególności sprawdzane są części, które zależą od parametrów szablonu.</p></li>
+</ol>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">undeclared</span><span class="p">();</span><span class="w">   </span><span class="c1">// first-phase compile-time error if undeclared() unknown</span>
+<span class="w">    </span><span class="n">undeclared</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="w">  </span><span class="c1">// second-phase compile-time error if undeclared(T) unknown</span>
+<span class="w">    </span><span class="k">static_assert</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;int too small&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// always fails if sizeof(int)&lt;=10</span>
+<span class="w">    </span><span class="k">static_assert</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;T too small&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// fails if instantiated for T with size &lt;=10                              </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="specjalizacja-funkcji-szablonowych">
+<h3>Specjalizacja funkcji szablonowych<a class="headerlink" href="#specjalizacja-funkcji-szablonowych" title="Link to this heading">#</a></h3>
+<p>W specjalnych przypadkach istnieje możliwość zdefiniowania funkcji specjalizowanej.</p>
+<p>Zdefiniujmy najpierw pierwszy szablon funkcji:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_greater</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Jeśli wywołamy ten szablon dla literałów znakowych <code class="docutils literal notranslate"><span class="pre">&quot;abc&quot;</span></code> i <code class="docutils literal notranslate"><span class="pre">&quot;def&quot;</span></code> utworzona zostanie instancja szablonu, która porówna
+adresy przechowywane we wskaźnikach a nie tekst. Aby zapewnić prawidłowe porównanie c-łańcuchów musimy dostarczyć specjalizowaną wersję szablonu dla parametru <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char*</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;&gt;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_greater</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">is_grater</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// wywołanie funkcji szablonowej</span>
+
+<span class="n">is_greater</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;g&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// wywołanie funkcji specjalizowanej dla const char*</span>
+</pre></div>
+</div>
+<p>Ponieważ podawanie typu specjalizowanego w ostrych nawiasach jest redundantne można specjalizację szablonu funkcji
+zapisać w sposób następujący:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;&gt;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_greater</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>W praktyce zamiast stosować jawną specjalizację szablonu funkcji można wykorzystać przeciążenie funkcji <code class="docutils literal notranslate"><span class="pre">is_greater()</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">is_greater</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="polaczenie-przeciazania-szablonow-specjalizacji-i-przeciazania-funkcji">
+<h4>Połączenie przeciążania szablonów, specjalizacji i przeciążania funkcji<a class="headerlink" href="#polaczenie-przeciazania-szablonow-specjalizacji-i-przeciazania-funkcji" title="Link to this heading">#</a></h4>
+<p>Przykład wykorzystania specjalizacji lub przeciążenia szablonu funkcji:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">);</span><span class="w"> </span><span class="c1">// basic template sqrt&lt;T&gt;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span><span class="w">   </span><span class="c1">// specialization of template sqrt&lt;float&gt;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">complex</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">complex</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">);</span><span class="w"> </span><span class="c1">// overloaded template sqrt for complex&lt;T&gt; arguments</span>
+
+<span class="kt">double</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="w"> </span><span class="c1">// overloaded function sqrt(double)</span>
+
+<span class="c1">//...</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w">	</span><span class="c1">// sqrt&lt;int&gt;(int) </span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">);</span><span class="w"> </span><span class="c1">// sqrt(double) </span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="n">z</span><span class="p">);</span><span class="w">	</span><span class="c1">// sqrt&lt;double&gt;(complex&lt;double&gt;)</span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.14f</span><span class="p">);</span><span class="w"> </span><span class="c1">// sqrt&lt;float&gt;(float)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="przeciazanie-szablonow">
+<h3>Przeciążanie szablonów<a class="headerlink" href="#przeciazanie-szablonow" title="Link to this heading">#</a></h3>
+<p>W programie może obok siebie istnieć mając tę samą nazwę:</p>
+<ul class="simple">
+<li><p>kilka szablonów funkcji – byle produkowały funkcje o odmiennych argumentach,</p></li>
+<li><p>funkcje, o argumentach takich, że mogłyby zostać wyprodukowane przez któryś z szablonów (funkcje specjalizowane),</p></li>
+<li><p>funkcje o argumentach takich, że nie mógłby ich wyprodukować żaden z istniejących szablonów (zwykłe przeładowanie).</p></li>
+</ul>
+</section>
+<section id="adres-wygenerowanej-funkcji">
+<h3>Adres wygenerowanej funkcji<a class="headerlink" href="#adres-wygenerowanej-funkcji" title="Link to this heading">#</a></h3>
+<p>Możliwe jest pobranie adresu funkcji wygenerowanej na podstawie szablonu.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;funkcja szablonowa f(T*)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">h</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="kt">int</span><span class="o">*</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;h( void (*pf)(int*)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">h</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">);</span><span class="w">    </span><span class="c1">// przekazanie adresu funkcji wygenerowanej</span>
+<span class="w">                </span><span class="c1">// na podstawie szablonu</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="parametry-szablonu-dla-wartosci-zwracanych-przez-funkcje">
+<h3>Parametry szablonu dla wartości zwracanych przez funkcję<a class="headerlink" href="#parametry-szablonu-dla-wartosci-zwracanych-przez-funkcje" title="Link to this heading">#</a></h3>
+<p>W przypadku, gdy funkcja szablonowa ma zwrócić typ inny niż typy argumentów (lub przynajmniej rozważana jest taka możliwość) możemy
+zastosować następujące rozwiązania:</p>
+<section id="parametr-szablonu-okreslajacy-zwracany-typ">
+<h4>Parametr szablonu określający zwracany typ<a class="headerlink" href="#parametr-szablonu-okreslajacy-zwracany-typ" title="Link to this heading">#</a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">TReturn</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T1</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T2</span><span class="o">&gt;</span>
+<span class="n">TReturn</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="n">T1</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Ponieważ nie ma związku pomiędzy typami argumentów a typem zwracanym, wywołując szablon należy określić jawnie typ zwracany.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">max_value</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mf">7.2</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="dedukcja-typu-zwracanego-z-funkcji-c-14">
+<h4>Dedukcja typu zwracanego z funkcji (C++14)<a class="headerlink" href="#dedukcja-typu-zwracanego-z-funkcji-c-14" title="Link to this heading">#</a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T1</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T2</span><span class="o">&gt;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">multiply</span><span class="p">(</span><span class="n">T1</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="uzycie-klasy-cech-type-traits">
+<h4>Użycie klasy cech (<em>type traits</em>)<a class="headerlink" href="#uzycie-klasy-cech-type-traits" title="Link to this heading">#</a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;type_traits&gt;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T1</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T2</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">common_type_t</span><span class="o">&lt;</span><span class="n">T1</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="p">(</span><span class="n">T1</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="domyslne-parametry-szablonu">
+<h3>Domyślne parametry szablonu<a class="headerlink" href="#domyslne-parametry-szablonu" title="Link to this heading">#</a></h3>
+<p>Definiują parametry szablonu, możemy określić dla nich wartości domyślne. Mogą one odwoływać się do wcześniej zdefiniowanych parametrów szablonu.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;type_traits&gt;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T1</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">         </span><span class="k">typename</span><span class="w"> </span><span class="nc">TResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">common_type_t</span><span class="o">&lt;</span><span class="n">T1</span><span class="p">,</span><span class="n">T2</span><span class="o">&gt;&gt;</span>
+<span class="n">TResult</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="n">T1</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Wywołując szablon funkcji możemy pominąć argumenty z domyślnymi wartościami:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">val_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">3.14</span><span class="p">);</span><span class="w"> </span><span class="c1">// ::max&lt;int, double, double&gt;</span>
+</pre></div>
+</div>
+<p>lub jawnie podać odpowiedni argument:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">val_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_value</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">short</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"> </span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="smart-pointers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Inteligentne wskaźniki</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#szablony-funkcji">Szablony funkcji</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dedukcja-typow-argumentow-szablonu">Dedukcja typów argumentów szablonu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-instancji-szablonu">Tworzenie instancji szablonu</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fazy-kompilacji-szablonu">Fazy kompilacji szablonu</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specjalizacja-funkcji-szablonowych">Specjalizacja funkcji szablonowych</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#polaczenie-przeciazania-szablonow-specjalizacji-i-przeciazania-funkcji">Połączenie przeciążania szablonów, specjalizacji i przeciążania funkcji</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeciazanie-szablonow">Przeciążanie szablonów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adres-wygenerowanej-funkcji">Adres wygenerowanej funkcji</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-szablonu-dla-wartosci-zwracanych-przez-funkcje">Parametry szablonu dla wartości zwracanych przez funkcję</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parametr-szablonu-okreslajacy-zwracany-typ">Parametr szablonu określający zwracany typ</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dedukcja-typu-zwracanego-z-funkcji-c-14">Dedukcja typu zwracanego z funkcji (C++14)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#uzycie-klasy-cech-type-traits">Użycie klasy cech (<em>type traits</em>)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#domyslne-parametry-szablonu">Domyślne parametry szablonu</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Krystian Piękoś - Infotraining
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
