@@ -4,3 +4,5 @@ chapters:
 - file: move-semantics
 - file: smart-pointers
 - file: templates
+- file: policy-based-design
+- file: type-traits
