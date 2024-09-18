@@ -784,3 +784,4 @@ voi foo()
     typename T::template A<0>();
 }
 ```
+
