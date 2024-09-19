@@ -6,3 +6,4 @@ chapters:
 - file: templates
 - file: policy-based-design
 - file: type-traits
+- file: template-techniques
