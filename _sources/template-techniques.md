@@ -1,4 +1,4 @@
-# Szablony - zaawansowane techniki
+# Szablony - techniki programowania
 
 ## Tag dispatching
 
