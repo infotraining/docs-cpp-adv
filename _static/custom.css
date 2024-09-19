@@ -138,3 +138,7 @@ dt {
     position: absolute;
   }
 }
+
+.table tbody tr:hover {
+  background-color: #a6e6c9 !important;
+}
