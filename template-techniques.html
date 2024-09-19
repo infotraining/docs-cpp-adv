@@ -1,0 +1,990 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Szablony - zaawansowane techniki &#8212; Zaawansowane programowanie w C++</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d2cda268" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'template-techniques';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Type traits" href="type-traits.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Zaawansowane programowanie w języku C++
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type-traits.html">Type traits</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Szablony - zaawansowane techniki</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Ftemplate-techniques.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/template-techniques.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Szablony - zaawansowane techniki</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tag-dispatching">Tag dispatching</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cechy-iteratorow">Cechy iteratorów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sfinae-enable-if">SFINAE + enable_if</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sfinae">SFINAE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#szablon-enable-if">Szablon enable_if</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cechy-typow-i-enable-if">Cechy typów i enable_if</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#domyslne-argumenty-szablonow-funkcji">Domyślne argumenty szablonów funkcji</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ograniczenia-w-szablonach-klas">Ograniczenia w szablonach klas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sfinae-i-przeciazone-konstruktory">SFINAE i przeciążone konstruktory</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crtp">CRTP</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="szablony-zaawansowane-techniki">
+<h1>Szablony - zaawansowane techniki<a class="headerlink" href="#szablony-zaawansowane-techniki" title="Link to this heading">#</a></h1>
+<section id="tag-dispatching">
+<h2>Tag dispatching<a class="headerlink" href="#tag-dispatching" title="Link to this heading">#</a></h2>
+<p>Czasami pożądane jest dostarczenie wyspecjalizowanych implementacji
+dla wybranej funkcji lub klasy w celu poprawy wydajności lub uniknięcia problemów.</p>
+<p>Przykładem może być implementacja funkcji <code class="docutils literal notranslate"><span class="pre">advance()</span></code>, która przesuwa
+iterator <code class="docutils literal notranslate"><span class="pre">it</span></code> o zadaną <code class="docutils literal notranslate"><span class="pre">n</span></code> ilość kroków.</p>
+<p>Generyczna implementacja może operować na dowolnym typie iteratora:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">InputIterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance</span><span class="p">(</span><span class="n">InputIterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">        </span><span class="o">++</span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="o">--</span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Nie jest to implementacja optymalna dla iteratorów o swobodnym dostępie (np. <code class="docutils literal notranslate"><span class="pre">vector&lt;int&gt;::iterator</span></code>).</p>
+<p>Optymalizacja funkcji polega na utworzeniu grupy funkcji pomocniczych, które mogą być dopasowane do odpowiedniego rodzaju
+iteratora za pomocą “taga”, który umożliwia przeciążenie tych funkcji.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Iterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance_impl</span><span class="p">(</span><span class="n">Iterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">input_iterator_tag</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// complexity - O(N)</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">        </span><span class="o">++</span><span class="n">x</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="o">--</span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Iterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance_impl</span><span class="p">(</span><span class="n">Iterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">random_access_iterator_tag</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// complexity - O(1)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Funkcja <code class="docutils literal notranslate"><span class="pre">advance()</span></code> po prostu przyjmuje argumenty i przekazuje je do funkcji pomocniczej. Na podstawie “taga”
+odbywa się dopasowanie odpowiedniej implementacji.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Iterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance</span><span class="p">(</span><span class="n">Iterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">advance_impl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span>
+<span class="w">        </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">iterator_category</span><span class="p">{});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="cechy-iteratorow">
+<h3>Cechy iteratorów<a class="headerlink" href="#cechy-iteratorow" title="Link to this heading">#</a></h3>
+<p>Klasa cech <code class="docutils literal notranslate"><span class="pre">std::iterator_traits</span></code> umożliwia dostęp do informacji o iteratorze, takich jak:</p>
+<ul class="simple">
+<li><p>typ elementu, na który wskazuje iterator - <code class="docutils literal notranslate"><span class="pre">std::iterator_traits&lt;Iterator&gt;::value_type</span></code></p></li>
+<li><p>kategoria iteratora - <code class="docutils literal notranslate"><span class="pre">std::iterator_traits&lt;Iterator&gt;::iterator_category</span></code></p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Iterator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">value_type</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Biblioteka standardowa definiuje zbiór typów opisujących kategorię iteratora:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">input_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">output_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">forward_iterator_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">input_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">bidirectional_iterator_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">forward_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">random_access_iterator_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">bidirectional_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">static_assert</span><span class="p">(</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span>
+<span class="w">    </span><span class="o">&lt;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">iterator_category</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">random_access_iterator_tag</span>
+<span class="w">    </span><span class="o">&gt;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sfinae-enable-if">
+<h2>SFINAE + enable_if<a class="headerlink" href="#sfinae-enable-if" title="Link to this heading">#</a></h2>
+<p>Jednym z podstawowych narzędzi w meta-programowaniu w C++ jest szablon
+<strong>enable if</strong> wykorzystujący mechanizm <strong>SFINAE</strong>.</p>
+<p>Motywacją dla stosowania <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> jest chęć dostarczenia dla
+klientów uniwersalnego interfejsu, bez zmuszania ich do podejmowania
+decyzji o wyborze określonych implementacji. Decyzje takie są
+podejmowane przez twórców bibliotek. Dobór optymalnych
+implementacji w zależności od typów danych dokonywany jest na etapie
+kompilacji.</p>
+<p>Chcemy uniknąć kodu, który często wygląda tak:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Don&#39;t even dare to pass an array of complex objects to this function!!!</span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">store_blob</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="o">*</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// impl</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="sfinae">
+<h3>SFINAE<a class="headerlink" href="#sfinae" title="Link to this heading">#</a></h3>
+<p><strong>Substitition Failure Is Not An Error (SFINAE)</strong> jest mechanizmem
+wykorzystywanym przez kompilator w trakcie dedukcji typów dla argumentów
+szablonu. Szablony, dla których nie udaje się podstawić określonego typu
+jako typu argumentu szablonu są ignorowane i nie powodują błędów
+kompilacji.</p>
+<p>W praktyce jeśli dedukcja typów argumentów dla szablonu funkcji znajdzie
+przynajmniej jedno dopasowanie, błędne podstawienia są usuwane z listy
+funkcji kandydujących do wywołania (<em>overload resolution</em>) i nie
+zgłaszają błędów kompilacji.</p>
+<p>Załóżmy następującą implementację szablonów funkcji:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{}</span>
+</pre></div>
+</div>
+<p>Wywołanie <code class="docutils literal notranslate"><span class="pre">foo(42)</span></code> powoduje utworzenie instancji szablonu funkcji
+<code class="docutils literal notranslate"><span class="pre">foo&lt;int&gt;(int)</span></code>. Ponieważ kompilatorowi nie udaje się podstawić
+prawidłowo typu <code class="docutils literal notranslate"><span class="pre">int</span></code> dla drugiej implementacji działa SFINAE -
+nieudane podstawienie nie generuje błędów kompilacji a implementacja
+znika z listy funkcji kandydujących do wywołania. Jeśli brakowałoby
+pierwszej implementacji funkcji (tej prawidłowo dopasowanej) kompilator
+zgłosiłby błąd.</p>
+</section>
+<section id="szablon-enable-if">
+<h3>Szablon enable_if<a class="headerlink" href="#szablon-enable-if" title="Link to this heading">#</a></h3>
+<p>Rozważmy dwie implementacje funkcji z identycznymi interfejsami, ale
+różnymi wymaganiami odnośnie typu danych:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">do_stuff</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w">       </span><span class="c1">// for small objects</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//~~~</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">do_stuff</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="c1">// for large objects</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//~~~</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Sygnatury tych funkcji są zbyt podobne, aby można było zastosować
+klasyczne przeciążenie funkcji. Rozwiązaniem tego problemu jest
+zastosowanie szablonu <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> i mechanizmu SFINAE.</p>
+<p>Typowa implementacja szablonu <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> wygląda następująco:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">bool</span><span class="w"> </span><span class="n">Condition</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">void</span><span class="o">&gt;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">enable_if</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">enable_if</span><span class="o">&lt;</span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span>
+<span class="p">{};</span>
+</pre></div>
+</div>
+<p>Szablon ogólny jest sparametryzowany wartością logiczną (zwykle
+wyrażeniem logicznym, które jest ewaluowane na etapie kompilacji) oraz
+typem (domyślnie <code class="docutils literal notranslate"><span class="pre">void</span></code>). Wewnątrz struktury definiowany jest typ
+<code class="docutils literal notranslate"><span class="pre">type</span></code>. W wersji specjalizowanej dla wartości logicznej <code class="docutils literal notranslate"><span class="pre">false</span></code>
+takiej definicji typu brakuje.</p>
+<ul class="simple">
+<li><p>Jeśli wyrażenie <code class="docutils literal notranslate"><span class="pre">Condition</span></code> przekazane jako pierwszy argument
+szablonu ewaluowane jest do wartości <code class="docutils literal notranslate"><span class="pre">true</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable_if&lt;Condition&gt;</span></code> ma składową <code class="docutils literal notranslate"><span class="pre">type</span></code></p></li>
+<li><p>i <code class="docutils literal notranslate"><span class="pre">enable_if&lt;Condition&gt;::type</span></code> odnosi się do tego typu</p></li>
+</ul>
+</li>
+<li><p>Jeśli wyrażenie <code class="docutils literal notranslate"><span class="pre">Condition</span></code> ewaluowane jest do <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable_if&lt;Condition&gt;</span></code> nie ma składowej <code class="docutils literal notranslate"><span class="pre">type</span></code></p></li>
+<li><p>i <code class="docutils literal notranslate"><span class="pre">enable_if&lt;Condition&gt;::type</span></code> jest nieprawidłowym odwołaniem</p></li>
+<li><p>w rezultacie podstawienie nie udaje się (działa SFINAE)</p></li>
+</ul>
+</li>
+</ul>
+<p>W celu ułatwienia korzystania z <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> C++14 definiuje poniższy
+alias szablonu:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">bool</span><span class="w"> </span><span class="n">Condition</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">void</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">enable_if_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">enable_if</span><span class="o">&lt;</span><span class="n">Condition</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Wykorzystanie szablonu <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> do problemu wyboru implementacji
+wygląda następująco:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">do_stuff</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="o">&gt;</span><span class="w">  </span><span class="c1">// for small objects</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;do_stuff(Small Object)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">do_stuff</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="c1">// for large objects</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;do_stuff(Large Object)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">do_stuff</span><span class="p">(</span><span class="sc">&#39;A&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK, small object</span>
+<span class="n">do_stuff</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// OK, large object</span>
+</pre></div>
+</div>
+<p>W zależności od rozmiaru typu wydedukowanego w procesie tworzenia
+instancji szablonu jest tworzona i później wywoływana odpowiednia
+instancja szablonu funkcji <code class="docutils literal notranslate"><span class="pre">do_stuff()</span></code>.</p>
+<p>Próba utworzenia instancji dla typu <code class="docutils literal notranslate"><span class="pre">double</span></code> zgłasza błąd
+kompilacji.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">do_stuff</span><span class="p">(</span><span class="mf">3.14</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>error:<span class="w"> </span>no<span class="w"> </span>matching<span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>call<span class="w"> </span>to<span class="w"> </span>do_stuff
+<span class="w"> </span>note:<span class="w"> </span>candidate<span class="w"> </span>template<span class="w"> </span>ignored:<span class="w"> </span>disabled<span class="w"> </span>by<span class="w"> </span>enable_if<span class="w"> </span><span class="o">[</span>with<span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>double<span class="o">]</span>
+</pre></div>
+</div>
+<p>Kompilator nie jest w stanie wygenerować żadnej instancji szablonu dla
+typu o rozmiarze 8 bajtów.</p>
+<p>Mechanizm SFINAE zapewnia dwufazowe dopasowanie funkcji do wywołania
+(<em>two-phase overload resolution</em>):</p>
+<ol class="arabic simple">
+<li><p>W fazie pierwszej <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> i SFINAE eliminują funkcje kandydujące, dla których nie można zrealizować podstawienia</p></li>
+<li><p>W fazie drugiej dopasowana może zostać tylko jedna funkcja z grupy funkcji kandydujących do wywołania</p></li>
+</ol>
+</section>
+<section id="cechy-typow-i-enable-if">
+<h3>Cechy typów i enable_if<a class="headerlink" href="#cechy-typow-i-enable-if" title="Link to this heading">#</a></h3>
+<p>Często jako w wyrażeniu logicznym, będącym pierwszym argumentem szablonu
+<code class="docutils literal notranslate"><span class="pre">enable_if</span></code>, wykorzystywane są cechy typów:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;type_traits&gt;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">store_item</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_trivially_copyable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// memcpy or other low-level operation are allowed</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">store_item</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;!</span><span class="n">std</span><span class="o">::</span><span class="n">is_pod</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// memcpy or other low-level operation are not allowed</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>SFINAE może zostać użyte również do wprowadzenia ograniczeń jeśli chodzi
+i zakres typów, dla których realizowane jest tworzenie instancji
+szablonu:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Shape</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//...</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Rectangle</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Shape</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//...</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">do_stuff_with_shape</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">shape</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_base_of_v</span><span class="o">&lt;</span><span class="n">Shape</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="domyslne-argumenty-szablonow-funkcji">
+<h3>Domyślne argumenty szablonów funkcji<a class="headerlink" href="#domyslne-argumenty-szablonow-funkcji" title="Link to this heading">#</a></h3>
+<p>W C++11 argumenty szablonów funkcji mogą przyjmować wartości domyślne.</p>
+<p>Pozwala to na czytelniejszą dla programisty implementację SFINAE z
+<code class="docutils literal notranslate"><span class="pre">enable_if</span></code>:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_base_of_v</span><span class="o">&lt;</span><span class="n">Shape</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;&gt;</span>
+<span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">do_other_stuff_with_shape</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">shape</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//...    </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Aby podnieść jeszcze bardziej czytelność kodu możemy zdefiniować
+pomocniczy alias:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">IsShape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_base_of</span><span class="o">&lt;</span><span class="n">Shape</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>i wykorzystać go do implementacji szablonu funkcji z ograniczeniem
+SFINAE:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IsShape</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">do_other_stuff_with_shape_alt</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">shape</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//...    </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ograniczenia-w-szablonach-klas">
+<h3>Ograniczenia w szablonach klas<a class="headerlink" href="#ograniczenia-w-szablonach-klas" title="Link to this heading">#</a></h3>
+<p>SFINAE oraz <code class="docutils literal notranslate"><span class="pre">enable_if</span></code> mogą również zostać użyte dla szablonów klas.</p>
+<p>Możemy na przykład ograniczyć możliwość tworzenia instancji szablonów
+dla typów zmiennoprzecinkowych:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">FloatingPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_floating_point_v</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FloatingPoint</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="o">&gt;</span><span class="w"> </span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Data</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//... rest of the class</span>
+<span class="p">};</span>
+
+
+<span class="n">Data</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">d1</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK</span>
+
+<span class="n">Data</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">d2</span><span class="p">;</span><span class="w">    </span><span class="c1">// ERROR: no type named type in std::enable_if&lt;false, void&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="sfinae-i-przeciazone-konstruktory">
+<h3>SFINAE i przeciążone konstruktory<a class="headerlink" href="#sfinae-i-przeciazone-konstruktory" title="Link to this heading">#</a></h3>
+<p>SFINAE może rozwiązać problemy związane z przeciążonymi konstruktorami
+klas i ich czasami zaskakującym zachowaniem.</p>
+<p>Załóżmy, że implementujemy klasę <code class="docutils literal notranslate"><span class="pre">Heap</span></code>, która potrzebuje dwóch wersji
+konstruktorów:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Heap</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Heap</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Heap(size_t, T)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">InputIt</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="n">Heap</span><span class="p">(</span><span class="n">InputIt</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">InputIt</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w">  </span><span class="c1">// range init using pair of input iterators</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Heap(InputIt, InputIt)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Obecność konstruktora definiowanego jako szablon może dać zaskakujący
+rezultat:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Heap</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">h</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// range init constructor called - output: Heap(InIt, InIt)</span>
+</pre></div>
+</div>
+<p>Powyższy kod spowoduje wywołanie konstruktora przyjmującego jako
+argumenty parę iteratorów, ponieważ ta wersja konstruktora gwarantuje
+lepsze dopasowanie argumentów.</p>
+<p>Możemy uniknąć takiego zachowania wprowadzając ograniczenie dla
+konstruktora wykorzystującego iteratory:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iterator&gt;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">It</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">IteratorCategory_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">It</span><span class="o">&gt;::</span><span class="n">iterator_category</span><span class="p">;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">It</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">InputIterator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">is_base_of</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">input_iterator_tag</span><span class="p">,</span><span class="w"> </span><span class="n">IteratorCategory_t</span><span class="o">&lt;</span><span class="n">It</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">It</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">IsInputIterator_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">InputIterator</span><span class="o">&lt;</span><span class="n">It</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Heap</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Heap</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Heap(size_t, T)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span>
+<span class="w">        </span><span class="k">typename</span><span class="w"> </span><span class="nc">InputIt</span><span class="p">,</span>
+<span class="w">        </span><span class="k">typename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IsInputIterator_t</span><span class="o">&lt;</span><span class="n">InputIt</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&gt;</span>
+<span class="w">    </span><span class="n">Heap</span><span class="p">(</span><span class="n">InputIt</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">InputIt</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w">  </span><span class="c1">// range init using pair of input iterators</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Heap(InputIt, InputIt)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Teraz przy wywołaniu</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Heap</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// output: Heap(size_t, T)</span>
+</pre></div>
+</div>
+<p>konstruktor z iteratorami znika z funkcji kandydujących do wywołania.</p>
+<p>Natomiast, gdy przekażemy konstruktorowi zakres zdefiniowany przez
+iteratory, to odpowiednia wersja konstruktora jest instancjonowana i
+później wywołana.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span>
+<span class="n">Heap</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">range</span><span class="p">.</span><span class="n">end</span><span class="p">());</span><span class="w"> </span><span class="c1">// output: Heap(InputIt, InputIt)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="crtp">
+<h2>CRTP<a class="headerlink" href="#crtp" title="Link to this heading">#</a></h2>
+<p><strong>Curiously Recurring Template Pattern (CRTP)</strong> to idiom, który polega na utworzeniu klasy bazowej, która jest szablonem, a następnie dziedziczenie po niej w klasie pochodnej, podając jako argument szablonu klasę pochodną.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Derived</span><span class="o">&gt;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">interface</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">        </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">implementation</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">static_interface</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">        </span><span class="n">Derived</span><span class="o">::</span><span class="n">static_sub_func</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Derived</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Base</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span><span class="w"> </span><span class="c1">// CRTP pattern</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">implementation</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Derived::implementation()</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">static_sub_func</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Derived::static_sub_func()</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Derived</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+<span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">interface</span><span class="p">();</span><span class="w"> </span><span class="c1">// output: Derived::implementation()</span>
+<span class="w">    </span><span class="n">Derived</span><span class="o">::</span><span class="n">static_interface</span><span class="p">();</span><span class="w"> </span><span class="c1">// output: Derived::static_sub_func()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>W powyższym przykładzie klasa <code class="docutils literal notranslate"><span class="pre">Base</span></code> używa CRTP do wywołania metody <code class="docutils literal notranslate"><span class="pre">implementation()</span></code> z klasy pochodnej <code class="docutils literal notranslate"><span class="pre">Derived</span></code>. Metoda <code class="docutils literal notranslate"><span class="pre">Base::static_interface()</span></code> wywołuje statyczną metodę <code class="docutils literal notranslate"><span class="pre">static_sub_func()</span></code> z klasy pochodnej.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="type-traits.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Type traits</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tag-dispatching">Tag dispatching</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cechy-iteratorow">Cechy iteratorów</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sfinae-enable-if">SFINAE + enable_if</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sfinae">SFINAE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#szablon-enable-if">Szablon enable_if</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cechy-typow-i-enable-if">Cechy typów i enable_if</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#domyslne-argumenty-szablonow-funkcji">Domyślne argumenty szablonów funkcji</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ograniczenia-w-szablonach-klas">Ograniczenia w szablonach klas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sfinae-i-przeciazone-konstruktory">SFINAE i przeciążone konstruktory</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crtp">CRTP</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Krystian Piękoś - Infotraining
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
