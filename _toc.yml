@@ -7,3 +7,6 @@ chapters:
 - file: policy-based-design
 - file: type-traits
 - file: template-techniques
+- file: variadic-templates
+  sections:
+  - file: fold-expressions
