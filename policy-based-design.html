@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Type traits" href="type-traits.html" />
-    <link rel="prev" title="Szablony" href="templates.html" />
+    <link rel="prev" title="Statyczny polimorfizm" href="static-polymorphism.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,9 +184,15 @@
 <li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Policy Based Design</a></li>
-<li class="toctree-l1"><a class="reference internal" href="type-traits.html">Type traits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="static-polymorphism.html">Statyczny polimorfizm</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Policy Based Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type-traits.html">Type traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tag-dispatching.html">Tag dispatching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sfinae.html">SFINAE + enable_if</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crtp.html">CRTP</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="fold-expressions.html">Fold expressions - C++17</a></li>
 </ul>
@@ -364,9 +370,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -382,15 +386,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statyczny-polimorfizm">Statyczny polimorfizm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Policy Based Design</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -402,71 +397,6 @@ document.write(`
                   
   <section id="policy-based-design">
 <h1>Policy Based Design<a class="headerlink" href="#policy-based-design" title="Link to this heading">#</a></h1>
-<section id="statyczny-polimorfizm">
-<h2>Statyczny polimorfizm<a class="headerlink" href="#statyczny-polimorfizm" title="Link to this heading">#</a></h2>
-<p><strong>Statyczny polimorfizm</strong> to technika programowania, która pozwala na wybór zachowania w czasie kompilacji. W C++ statyczny polimorfizm jest realizowany za pomocą szablonów klas.</p>
-<p>Zalety statycznego polimorfizmu:</p>
-<ul class="simple">
-<li><p>lepsza wydajność w porównaniu do dynamicznego polimorfizmu (nie ma kosztów związanych z wywołaniem funkcji wirtualnych)</p></li>
-<li><p>brak konieczności dziedziczenia po klasie bazowej - klasa musi jedynie posiadać odpowiednie metody</p></li>
-</ul>
-<p>Wadą statycznego polimorfizmu jest jego statyczność - wybór zachowania odbywa się w czasie kompilacji, co oznacza, że nie można zmienić zachowania w czasie działania programu.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">UpperCaseFormatter</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span>
-<span class="w">                       </span><span class="n">result</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="p">});</span><span class="w">   </span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-
-<span class="k">struct</span><span class="w"> </span><span class="nc">CapitalizeFormatter</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
-<span class="w">        </span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-
-<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">TFormatter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UpperCaseFormatter</span><span class="o">&gt;</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Logger</span><span class="w"> </span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">TFormatter</span><span class="w"> </span><span class="n">formatter_</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span><span class="w">   </span>
-<span class="w">    </span><span class="n">Logger</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
-
-<span class="w">    </span><span class="n">Logger</span><span class="p">(</span><span class="n">TFormatter</span><span class="w"> </span><span class="n">formatter</span><span class="p">)</span>
-<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">formatter_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">formatter</span><span class="p">))</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span><span class="w">        </span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">formatter_</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Logger</span><span class="o">&lt;</span><span class="n">UpperCaseFormatter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">upper_case_logger</span><span class="p">;</span>
-<span class="n">upper_case_logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
-
-<span class="n">Logger</span><span class="o">&lt;</span><span class="n">CapitalizeFormatter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">capitalize_logger</span><span class="p">;</span>
-<span class="n">capitalize_logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
-
-<span class="n">Logger</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">default_logger</span><span class="p">;</span>
-<span class="n">default_logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
-
-<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="p">{</span><span class="n">CapitalizeFormatter</span><span class="p">{}};</span>
-<span class="n">logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
-<section id="id1">
-<h2>Policy Based Design<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p><strong>Policy Based Design</strong> to technika programowania, która pozwala na wybór zachowania w czasie kompilacji. W C++ jest realizowana za pomocą szablonów klas i techniki statycznego polimorfizmu.</p>
 <p>Polega ona na rozdzieleniu klasy algorytmu od tzw. klasy wytycznej, która określa szczegóły implementacyjne (<em>policy</em>). Klasa wytycznej jest przekazywana jako parametr szablonu klasy.</p>
 <p>Każda wytyczna:</p>
@@ -576,7 +506,6 @@ document.write(`
 </pre></div>
 </div>
 </section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -609,12 +538,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="templates.html"
+       href="static-polymorphism.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Szablony</p>
+        <p class="prev-next-title">Statyczny polimorfizm</p>
       </div>
     </a>
     <a class="right-next"
@@ -632,22 +561,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statyczny-polimorfizm">Statyczny polimorfizm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Policy Based Design</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

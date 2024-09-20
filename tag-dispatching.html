@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Zaawansowane programowanie w języku C++ &#8212; Zaawansowane programowanie w C++</title>
+    <title>Tag dispatching &#8212; Zaawansowane programowanie w C++</title>
   
   
   
@@ -58,11 +58,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tag-dispatching';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Semantyka przenoszenia" href="move-semantics.html" />
+    <link rel="next" title="SFINAE + enable_if" href="sfinae.html" />
+    <link rel="prev" title="Type traits" href="type-traits.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -145,7 +143,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -176,21 +174,21 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
                     Zaawansowane programowanie w języku C++
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="static-polymorphism.html">Statyczny polimorfizm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="type-traits.html">Type traits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tag-dispatching.html">Tag dispatching</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tag dispatching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sfinae.html">SFINAE + enable_if</a></li>
 <li class="toctree-l2"><a class="reference internal" href="crtp.html">CRTP</a></li>
 </ul>
@@ -271,7 +269,7 @@
       
       
       
-      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Ftag-dispatching.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -301,7 +299,7 @@
       
       
       
-      <li><a href="_sources/index.md" target="_blank"
+      <li><a href="_sources/tag-dispatching.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +370,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -383,11 +383,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Zaawansowane programowanie w języku C++</h1>
+    <h1>Tag dispatching</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cechy-iteratorow">Cechy iteratorów</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -397,11 +405,89 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="zaawansowane-programowanie-w-jezyku-c">
-<h1>Zaawansowane programowanie w języku C++<a class="headerlink" href="#zaawansowane-programowanie-w-jezyku-c" title="Link to this heading">#</a></h1>
-<p>Materiały do szkolenia <a class="reference external" href="https://www.infotraining.pl/szkolenie/c-plus-plus/zaawansowane">Zaawansowane programowanie w języku C++</a></p>
-<div class="toctree-wrapper compound">
+  <section id="tag-dispatching">
+<h1>Tag dispatching<a class="headerlink" href="#tag-dispatching" title="Link to this heading">#</a></h1>
+<p>Czasami pożądane jest dostarczenie wyspecjalizowanych implementacji
+dla wybranej funkcji lub klasy w celu poprawy wydajności lub uniknięcia problemów.</p>
+<p>Przykładem może być implementacja funkcji <code class="docutils literal notranslate"><span class="pre">advance()</span></code>, która przesuwa
+iterator <code class="docutils literal notranslate"><span class="pre">it</span></code> o zadaną <code class="docutils literal notranslate"><span class="pre">n</span></code> ilość kroków.</p>
+<p>Generyczna implementacja może operować na dowolnym typie iteratora:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">InputIterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance</span><span class="p">(</span><span class="n">InputIterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">        </span><span class="o">++</span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="o">--</span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
+<p>Nie jest to implementacja optymalna dla iteratorów o swobodnym dostępie (np. <code class="docutils literal notranslate"><span class="pre">vector&lt;int&gt;::iterator</span></code>).</p>
+<p>Optymalizacja funkcji polega na utworzeniu grupy funkcji pomocniczych, które mogą być dopasowane do odpowiedniego rodzaju
+iteratora za pomocą “taga”, który umożliwia przeciążenie tych funkcji.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Iterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance_impl</span><span class="p">(</span><span class="n">Iterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">input_iterator_tag</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// complexity - O(N)</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">        </span><span class="o">++</span><span class="n">x</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="o">--</span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Iterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance_impl</span><span class="p">(</span><span class="n">Iterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">random_access_iterator_tag</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// complexity - O(1)</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Funkcja <code class="docutils literal notranslate"><span class="pre">advance()</span></code> po prostu przyjmuje argumenty i przekazuje je do funkcji pomocniczej. Na podstawie “taga”
+odbywa się dopasowanie odpowiedniej implementacji.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Iterator</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Distance</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">advance</span><span class="p">(</span><span class="n">Iterator</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Distance</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">advance_impl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span>
+<span class="w">        </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">iterator_category</span><span class="p">{});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="cechy-iteratorow">
+<h2>Cechy iteratorów<a class="headerlink" href="#cechy-iteratorow" title="Link to this heading">#</a></h2>
+<p>Klasa cech <code class="docutils literal notranslate"><span class="pre">std::iterator_traits</span></code> umożliwia dostęp do informacji o iteratorze, takich jak:</p>
+<ul class="simple">
+<li><p>typ elementu, na który wskazuje iterator - <code class="docutils literal notranslate"><span class="pre">std::iterator_traits&lt;Iterator&gt;::value_type</span></code></p></li>
+<li><p>kategoria iteratora - <code class="docutils literal notranslate"><span class="pre">std::iterator_traits&lt;Iterator&gt;::iterator_category</span></code></p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Iterator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">value_type</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Biblioteka standardowa definiuje zbiór typów opisujących kategorię iteratora:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">input_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">output_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">forward_iterator_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">input_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">bidirectional_iterator_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">forward_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">random_access_iterator_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">bidirectional_iterator_tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">static_assert</span><span class="p">(</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span>
+<span class="w">    </span><span class="o">&lt;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">iterator_category</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">random_access_iterator_tag</span>
+<span class="w">    </span><span class="o">&gt;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -434,12 +520,21 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="type-traits.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Type traits</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="move-semantics.html"
+       href="sfinae.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Semantyka przenoszenia</p>
+        <p class="prev-next-title">SFINAE + enable_if</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -449,6 +544,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cechy-iteratorow">Cechy iteratorów</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

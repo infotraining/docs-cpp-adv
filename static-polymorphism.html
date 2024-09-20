@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Zaawansowane programowanie w języku C++ &#8212; Zaawansowane programowanie w C++</title>
+    <title>Statyczny polimorfizm &#8212; Zaawansowane programowanie w C++</title>
   
   
   
@@ -58,11 +58,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'static-polymorphism';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Semantyka przenoszenia" href="move-semantics.html" />
+    <link rel="next" title="Policy Based Design" href="policy-based-design.html" />
+    <link rel="prev" title="Szablony - techniki programowania" href="template-techniques.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -145,7 +143,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -176,18 +174,18 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
                     Zaawansowane programowanie w języku C++
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="static-polymorphism.html">Statyczny polimorfizm</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Statyczny polimorfizm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="type-traits.html">Type traits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tag-dispatching.html">Tag dispatching</a></li>
@@ -271,7 +269,7 @@
       
       
       
-      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Fstatic-polymorphism.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -301,7 +299,7 @@
       
       
       
-      <li><a href="_sources/index.md" target="_blank"
+      <li><a href="_sources/static-polymorphism.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -383,7 +381,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Zaawansowane programowanie w języku C++</h1>
+    <h1>Statyczny polimorfizm</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -397,10 +395,67 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="zaawansowane-programowanie-w-jezyku-c">
-<h1>Zaawansowane programowanie w języku C++<a class="headerlink" href="#zaawansowane-programowanie-w-jezyku-c" title="Link to this heading">#</a></h1>
-<p>Materiały do szkolenia <a class="reference external" href="https://www.infotraining.pl/szkolenie/c-plus-plus/zaawansowane">Zaawansowane programowanie w języku C++</a></p>
-<div class="toctree-wrapper compound">
+  <section id="statyczny-polimorfizm">
+<h1>Statyczny polimorfizm<a class="headerlink" href="#statyczny-polimorfizm" title="Link to this heading">#</a></h1>
+<p><strong>Statyczny polimorfizm</strong> to technika programowania, która pozwala na wybór zachowania w czasie kompilacji. W C++ statyczny polimorfizm jest realizowany za pomocą szablonów klas.</p>
+<p>Zalety statycznego polimorfizmu:</p>
+<ul class="simple">
+<li><p>lepsza wydajność w porównaniu do dynamicznego polimorfizmu (nie ma kosztów związanych z wywołaniem funkcji wirtualnych)</p></li>
+<li><p>brak konieczności dziedziczenia po klasie bazowej - klasa musi jedynie posiadać odpowiednie metody</p></li>
+</ul>
+<p>Wadą statycznego polimorfizmu jest jego statyczność - wybór zachowania odbywa się w czasie kompilacji, co oznacza, że nie można zmienić zachowania w czasie działania programu.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">UpperCaseFormatter</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span>
+<span class="w">                       </span><span class="n">result</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="p">});</span><span class="w">   </span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">CapitalizeFormatter</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">        </span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">TFormatter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UpperCaseFormatter</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Logger</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">TFormatter</span><span class="w"> </span><span class="n">formatter_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w">   </span>
+<span class="w">    </span><span class="n">Logger</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Logger</span><span class="p">(</span><span class="n">TFormatter</span><span class="w"> </span><span class="n">formatter</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">formatter_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">formatter</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span><span class="w">        </span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">formatter_</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Logger</span><span class="o">&lt;</span><span class="n">UpperCaseFormatter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">upper_case_logger</span><span class="p">;</span>
+<span class="n">upper_case_logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
+
+<span class="n">Logger</span><span class="o">&lt;</span><span class="n">CapitalizeFormatter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">capitalize_logger</span><span class="p">;</span>
+<span class="n">capitalize_logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
+
+<span class="n">Logger</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">default_logger</span><span class="p">;</span>
+<span class="n">default_logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
+
+<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="p">{</span><span class="n">CapitalizeFormatter</span><span class="p">{}};</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;this is a sample message&quot;</span><span class="p">);</span>
+</pre></div>
 </div>
 </section>
 
@@ -434,12 +489,21 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="template-techniques.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Szablony - techniki programowania</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="move-semantics.html"
+       href="policy-based-design.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Semantyka przenoszenia</p>
+        <p class="prev-next-title">Policy Based Design</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
