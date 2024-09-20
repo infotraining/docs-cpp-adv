@@ -30,9 +30,10 @@ std::array<int, n> a1;  // error: n is not a constant expression
 const int cn = 2;
 std::array<int, cn> a2; // OK: cn is a constant expression
 
-const size_t tab_size = 1024; // tab_size is usable in constant expressions
-constexpr size_t buffer_size = tab_size * 2; // OK - constant expression
-std::array<int, buffer_size> a3; // OK: buffer_size is a constant expression
+const size_t tab_size = 1024;              // tab_size is usable in constant expressions
+constexpr size_t buff_size = tab_size * 2; // OK - constant expression
+
+std::array<int, buff_size> a3; // OK: buffer_size is a constant expression
 ```
 
 W wyrażeniu ``contexpr`` można użyć:
