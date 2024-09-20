@@ -413,6 +413,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uzycie-szablonu-klasy">Użycie szablonu klasy</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasy-szablonow">Aliasy szablonów</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasy-typow">Aliasy typów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Aliasy szablonów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasy-i-typename">Aliasy i typename</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#szablony-zmiennych">Szablony zmiennych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zmienne-szablonowe-a-jednostki-translacji">Zmienne szablonowe a jednostki translacji</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-szablonow-niebedace-typami-nttp">Parametry szablonów niebędące typami - NTTP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-szablonow-z-wartosciami-domyslnymi">Parametry szablonów z wartościami domyślnymi</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#szablony-jako-parametry-szablonow">Szablony jako parametry szablonów</a></li>
@@ -603,9 +613,9 @@ zapisać w sposób następujący:</p>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w">	</span><span class="c1">// sqrt&lt;int&gt;(int) </span>
-<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">);</span><span class="w"> </span><span class="c1">// sqrt(double) </span>
-<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="n">z</span><span class="p">);</span><span class="w">	</span><span class="c1">// sqrt&lt;double&gt;(complex&lt;double&gt;)</span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w">	 </span><span class="c1">// sqrt&lt;int&gt;(int) </span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">);</span><span class="w">   </span><span class="c1">// sqrt(double) </span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="n">z</span><span class="p">);</span><span class="w">	 </span><span class="c1">// sqrt&lt;double&gt;(complex&lt;double&gt;)</span>
 <span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.14f</span><span class="p">);</span><span class="w"> </span><span class="c1">// sqrt&lt;float&gt;(float)</span>
 <span class="p">}</span>
 </pre></div>
@@ -787,6 +797,149 @@ zastosować następujące rozwiązania:</p>
 </pre></div>
 </div>
 <p>Od C++17 kompilator potrafi wydedukować typy argumentów szablonu klasy na podstawie wartości przekazanych do konstruktora. Mechanizm ten nazywany jest <em>dedukcją typu argumentów szablonu - CTAD</em>.</p>
+</section>
+</section>
+<section id="aliasy-szablonow">
+<h2>Aliasy szablonów<a class="headerlink" href="#aliasy-szablonow" title="Link to this heading">#</a></h2>
+<section id="aliasy-typow">
+<h3>Aliasy typów<a class="headerlink" href="#aliasy-typow" title="Link to this heading">#</a></h3>
+<p>W C++11 deklaracja <code class="docutils literal notranslate"><span class="pre">using</span></code> może zostać użyta do tworzenia bardziej czytelnych aliasów dla typów - zamiennik dla <code class="docutils literal notranslate"><span class="pre">typedef</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span>
+
+<span class="k">using</span><span class="w"> </span><span class="n">Func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">);</span>
+
+<span class="k">using</span><span class="w"> </span><span class="n">DictionaryDesc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">greater</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>Aliasy szablonów<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Aliasy typów mogą być parametryzowane typem. Można je wykorzystać do tworzenia częściowo związanych typów szablonowych.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">StrKeyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="n">StrKeyMap</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">my_map</span><span class="p">;</span><span class="w"> </span><span class="c1">// std::map&lt;std::string, int&gt;</span>
+</pre></div>
+</div>
+<p>Parametrem aliasu typu szablonowego może być także stała znana w czasie kompilacji:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">StringArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="n">StringArray</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="w"> </span><span class="n">arr1</span><span class="p">;</span><span class="w"> </span><span class="c1">// std::array&lt;std::string, 1024&gt;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Aliasy szablonów nie mogą być specjalizowane.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MyAllocList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">MyAllocator</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MyAllocList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">MyAllocator</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// ERRROR</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="aliasy-i-typename">
+<h3>Aliasy i typename<a class="headerlink" href="#aliasy-i-typename" title="Link to this heading">#</a></h3>
+<p>Od C++14 biblioteka standardowa używa aliasów dla wszystkich cech typów, które zwracają typ.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">remove_reference_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>W rezultacie kod odwołujący się do cechy:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">typename</span><span class="w"> </span><span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">move</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>możemy uprościć do:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span><span class="w"> </span><span class="n">move</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="szablony-zmiennych">
+<h2>Szablony zmiennych<a class="headerlink" href="#szablony-zmiennych" title="Link to this heading">#</a></h2>
+<p>Od C++14 zmienne mogą być parametryzowane przy pomocy typu.</p>
+<p>Takie zmienne nazywamy <strong>zmiennymi szablonowymi</strong> (<em>variable templates</em>).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">pi</span><span class="p">{</span><span class="mf">3.1415926535897932385</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>Aby użyć zmiennej szablonowej, należy podać jej typ:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pi</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pi</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Parametrami zmiennych szablonowych mogą być stałe znane na etapie kompilacji:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span><span class="w"> </span><span class="n">integers</span><span class="p">{};</span><span class="w">    </span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">integers</span><span class="o">&lt;</span><span class="mi">10</span><span class="o">&gt;</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span><span class="w"> </span><span class="c1">// sets value for a global array of 10 integers</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">integers</span><span class="o">&lt;</span><span class="mi">10</span><span class="o">&gt;</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span><span class="w">   </span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">integers</span><span class="o">&lt;</span><span class="mi">10</span><span class="o">&gt;</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span><span class="w">    </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="zmienne-szablonowe-a-jednostki-translacji">
+<h3>Zmienne szablonowe a jednostki translacji<a class="headerlink" href="#zmienne-szablonowe-a-jednostki-translacji" title="Link to this heading">#</a></h3>
+<p>Deklaracja zmiennych szablonowych może być używana w innych jednostkach translacji.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text">Plik - <code class="docutils literal notranslate"><span class="pre">header.hpp</span></code></p>
+</div>
+<div class="sd-card-body docutils">
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">{};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text">Plik - <code class="docutils literal notranslate"><span class="pre">unit1.cpp</span></code></p>
+</div>
+<div class="sd-card-body docutils">
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;header.hpp&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">value</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<span class="w">    </span><span class="n">print</span><span class="p">();</span>
+<span class="p">}</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text">Plik - <code class="docutils literal notranslate"><span class="pre">unit2.cpp</span></code></p>
+</div>
+<div class="sd-card-body docutils">
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;header.hpp&quot;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">value</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK: prints 42</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="parametry-szablonow-niebedace-typami-nttp">
@@ -1246,6 +1399,16 @@ parametru szablonu odnosi się do zmiennej, funkcji lub obiektu.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#szablony-klas">Szablony klas</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-funkcji-skladowych">Implementacja funkcji składowych</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uzycie-szablonu-klasy">Użycie szablonu klasy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasy-szablonow">Aliasy szablonów</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasy-typow">Aliasy typów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Aliasy szablonów</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasy-i-typename">Aliasy i typename</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#szablony-zmiennych">Szablony zmiennych</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zmienne-szablonowe-a-jednostki-translacji">Zmienne szablonowe a jednostki translacji</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametry-szablonow-niebedace-typami-nttp">Parametry szablonów niebędące typami - NTTP</a></li>

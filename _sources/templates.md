@@ -193,9 +193,9 @@ double sqrt(double); // overloaded function sqrt(double)
 
 void f(complex<double> z)
 {
-    sqrt(2);	// sqrt<int>(int) 
-    sqrt(2.0); // sqrt(double) 
-    sqrt(z);	// sqrt<double>(complex<double>)
+    sqrt(2);	 // sqrt<int>(int) 
+    sqrt(2.0);   // sqrt(double) 
+    sqrt(z);	 // sqrt<double>(complex<double>)
     sqrt(3.14f); // sqrt<float>(float)
 }
 ```
@@ -389,6 +389,158 @@ Vector<Vector<int>> matrix(10);
 ```
 
 Od C++17 kompilator potrafi wydedukować typy argumentów szablonu klasy na podstawie wartości przekazanych do konstruktora. Mechanizm ten nazywany jest *dedukcją typu argumentów szablonu - CTAD*.
+
+## Aliasy szablonów
+
+### Aliasy typów
+
+W C++11 deklaracja `using` może zostać użyta do tworzenia bardziej czytelnych aliasów dla typów - zamiennik dla `typedef`.
+
+```{code-block} cpp
+using Id = unsigned int;
+
+using Func = int(*)(double, double);
+
+using DictionaryDesc = std::map<std::string, std::string, std::greater<std::string>>;
+```
+
+### Aliasy szablonów
+
+Aliasy typów mogą być parametryzowane typem. Można je wykorzystać do tworzenia częściowo związanych typów szablonowych.
+
+```{code-block} cpp
+template <typename T>
+using StrKeyMap = std::map<std::string, T>;
+
+StrKeyMap<int> my_map; // std::map<std::string, int>
+```
+
+Parametrem aliasu typu szablonowego może być także stała znana w czasie kompilacji:
+
+```{code-block} cpp
+template <std::size_t N>
+using StringArray = std::array<std::string, N>;
+
+StringArray<1024> arr1; // std::array<std::string, 1024>
+```
+
+```{important}
+Aliasy szablonów nie mogą być specjalizowane.
+
+````{code-block} cpp
+template <typename T>
+using MyAllocList = std::list<T, MyAllocator>;
+
+template <typename T>
+using MyAllocList = std::list<T*, MyAllocator>; // ERRROR
+````
+
+### Aliasy i typename
+
+Od C++14 biblioteka standardowa używa aliasów dla wszystkich cech typów, które zwracają typ.
+
+```{code-block} cpp
+template <typename T>
+using remove_reference_t = typename remove_reference<T>::type;
+```
+
+W rezultacie kod odwołujący się do cechy:
+
+```{code-block} cpp
+template <typename T>
+typename remove_reference<T>::type&& move(T&& arg)
+{
+    return static_cast<typename remove_reference<T>::type&&>(arg);
+}
+```
+
+możemy uprościć do:
+
+```{code-block} cpp
+template <typename T>
+remove_reference_t<T>&& move(T&& arg)
+{
+    return static_cast<remove_reference_t<T>&&>(arg);
+}
+```
+
+## Szablony zmiennych
+
+Od C++14 zmienne mogą być parametryzowane przy pomocy typu. 
+
+Takie zmienne nazywamy **zmiennymi szablonowymi** (*variable templates*).
+
+```{code-block} cpp
+template<typename T>
+constexpr T pi{3.1415926535897932385};
+```
+
+Aby użyć zmiennej szablonowej, należy podać jej typ:
+
+```{code-block} cpp
+std::cout << pi<double> << '\n';
+std::cout << pi<float> << '\n';
+```
+
+Parametrami zmiennych szablonowych mogą być stałe znane na etapie kompilacji:
+
+```{code-block} cpp
+template<int N>
+std::array<int, N> integers{};    
+
+int main()
+{
+    integers<10>[0] = 42; // sets value for a global array of 10 integers
+    
+    for (std::size_t i = 0; i < integers<10>.size(); ++i) 
+    {   
+        std::cout << integers<10>[i] << '\n';    
+    }
+}
+```
+
+### Zmienne szablonowe a jednostki translacji
+
+Deklaracja zmiennych szablonowych może być używana w innych jednostkach translacji.
+
+````{card}
+Plik - ``header.hpp``
+^^^
+```{code-block} cpp
+template <typename T>
+T value{};
+
+void print();
+```
+````
+
+
+````{card}
+Plik - ``unit1.cpp``
+^^^
+```{code-block} cpp
+#include "header.hpp"
+
+int main()
+{
+    value<long> = 42;
+    print();
+} 
+```
+````
+
+````{card}
+Plik - ``unit2.cpp``
+^^^
+```{code-block} cpp
+#include "header.hpp"
+
+void print()
+{
+    std::cout << value<long> << '\n'; // OK: prints 42
+}
+```
+````
 
 ## Parametry szablonów niebędące typami - NTTP
 
