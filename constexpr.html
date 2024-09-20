@@ -1,0 +1,758 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Programowanie na etapie kompilacji - constexpr &#8212; Zaawansowane programowanie w C++</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cbef0915" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'constexpr';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Fold expressions - C++17" href="fold-expressions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Zaawansowane programowanie w języku C++
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type-traits.html">Type traits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="fold-expressions.html">Fold expressions - C++17</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Programowanie na etapie kompilacji - constexpr</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Fconstexpr.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/constexpr.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Programowanie na etapie kompilacji - constexpr</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stale-wyrazenia-constant-expressions">Stałe wyrażenia - constant expressions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stale-constexpr">Stałe constexpr</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-constexpr">Funkcje constexpr</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instrukcje-warunkowe-w-funkcjach-constexpr">Instrukcje warunkowe w funkcjach constexpr</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-literalne">Typy literalne</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obliczenia-na-etapie-kompilacji-lookup-tables">Obliczenia na etapie kompilacji - lookup tables</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="programowanie-na-etapie-kompilacji-constexpr">
+<h1>Programowanie na etapie kompilacji - constexpr<a class="headerlink" href="#programowanie-na-etapie-kompilacji-constexpr" title="Link to this heading">#</a></h1>
+<p>C++11 wprowadza dwa znaczenia dla “stałej”:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">constexpr</span></code> - stała ewaluowana na etapie kompilacji</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span></code> - stała, której wartość może zostać ustalona w czasie wykonywania programu i nie może ulec zmianie</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Modyfikator <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> użyty w deklaracji zmiennej implikuje, że jest ona <code class="docutils literal notranslate"><span class="pre">const</span></code>.</p>
+<p>Modyfikator <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> użyty e deklaracji funkcji lub składowej statycznej klasy implikuje również deklarację <code class="docutils literal notranslate"><span class="pre">inline</span></code>.</p>
+</div>
+<section id="stale-wyrazenia-constant-expressions">
+<h2>Stałe wyrażenia - constant expressions<a class="headerlink" href="#stale-wyrazenia-constant-expressions" title="Link to this heading">#</a></h2>
+<p>Stałe wyrażenie (<strong>constant expression</strong>) jest wyrażeniem ewaluowanym
+przez kompilator na etapie kompilacji. Nie może zawierać wartości, które
+nie są znane na etapie kompilacji i nie może mieć także efektów ubocznych.</p>
+<p>Stałe wyrażenia mogą być używane jako wartości parametrów NTTP szablonów, rozmiarów tablic, itp.</p>
+<p>Jeśli wyrażenie inicjalizujące dla <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> nie będzie mogło być
+wyliczone na etapie kompilacji kompilator zgłosi błąd:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a1</span><span class="p">;</span><span class="w">  </span><span class="c1">// error: n is not a constant expression</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">cn</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a2</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK: cn is a constant expression</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">tab_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span><span class="w"> </span><span class="c1">// tab_size is usable in constant expressions</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab_size</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK - constant expression</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_size</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a3</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK: buffer_size is a constant expression</span>
+</pre></div>
+</div>
+<p>W wyrażeniu <code class="docutils literal notranslate"><span class="pre">contexpr</span></code> można użyć:</p>
+<ul class="simple">
+<li><p>Wartości typów całkowitych, zmiennoprzecinkowych oraz wyliczeniowych</p></li>
+<li><p>Operatorów nie modyfikujących stanu (np. <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">?</span></code> i <code class="docutils literal notranslate"><span class="pre">[]</span></code> ale nie <code class="docutils literal notranslate"><span class="pre">--</span></code> lub <code class="docutils literal notranslate"><span class="pre">++</span></code>)</p></li>
+<li><p>Funkcji <code class="docutils literal notranslate"><span class="pre">constexpr</span></code></p></li>
+<li><p>Typów literalnych</p></li>
+<li><p>Stałych <code class="docutils literal notranslate"><span class="pre">const</span></code> zainicjowanych stałym wyrażeniem</p></li>
+</ul>
+</section>
+<section id="stale-constexpr">
+<h2>Stałe constexpr<a class="headerlink" href="#stale-constexpr" title="Link to this heading">#</a></h2>
+<p>W C++11 <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> przed definicją zmiennej definiuje ją jako stałą,
+która musi zostać zainicjowana wyrażeniem stałym.</p>
+<p>Stała <code class="docutils literal notranslate"><span class="pre">const</span></code> w odróżnieniu od stałej <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> nie musi być
+zainicjowana wyrażeniem stałym.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Data&quot;</span><span class="p">;</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.1415</span><span class="p">;</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">pi_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="funkcje-constexpr">
+<h2>Funkcje constexpr<a class="headerlink" href="#funkcje-constexpr" title="Link to this heading">#</a></h2>
+<p>W C++11 funkcje mogą zostać zadeklarowane jako <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> jeśli spełniają dwa wymagania:</p>
+<ul class="simple">
+<li><p>Ciało funkcji zawiera tylko jedną instrukcję <code class="docutils literal notranslate"><span class="pre">return</span></code> zwracającą wartość, która nie jest typu <code class="docutils literal notranslate"><span class="pre">void</span></code></p></li>
+<li><p>Typ wartości zwracanej oraz typy parametrów powinny być typami dozwolonymi dla wyrażeń <code class="docutils literal notranslate"><span class="pre">constexpr</span></code></p></li>
+</ul>
+<p>C++14 znacznie poluzowuje wymagania stawiane przed funkcjami <code class="docutils literal notranslate"><span class="pre">constexpr</span></code>. Funkcją <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> może zostać dowolna funkcja o ile:</p>
+<ul class="simple">
+<li><p>nie jest wirtualna</p></li>
+<li><p>typ wartości zwracanej oraz typy parametrów są typami literalnymi</p></li>
+<li><p>zmienne użyte wewnątrz funkcji są zmiennymi typów literalnych</p></li>
+<li><p>nie zawiera instrukcji <code class="docutils literal notranslate"><span class="pre">asm</span></code>, <code class="docutils literal notranslate"><span class="pre">goto</span></code>, etykiet oraz bloków <code class="docutils literal notranslate"><span class="pre">try-catch</span></code></p></li>
+<li><p>zmienne użyte wewnątrz funkcji nie są statyczne oraz nie są <code class="docutils literal notranslate"><span class="pre">thread-local</span></code></p></li>
+<li><p>zmienne użyte wewnątrz funkcji są zainicjowane</p></li>
+<li><p>nie alokuje dynamicznie pamięci (używa <code class="docutils literal notranslate"><span class="pre">new</span></code> oraz <code class="docutils literal notranslate"><span class="pre">delete</span></code>)</p></li>
+</ul>
+<p><strong>Funkcje <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> nie mogą mieć żadnych efektów ubocznych.</strong>
+Zapisywanie stanu do nielokalnych zmiennych jest błędem kompilacji.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>W C++20 znacznie poluzowano wymagania stawiane przed funkcjami <code class="docutils literal notranslate"><span class="pre">constexpr</span></code>. Od C++20 Funkcja <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> może:</p>
+<ul class="simple">
+<li><p>być wirtualna</p></li>
+<li><p>zawierać instrukcje <code class="docutils literal notranslate"><span class="pre">asm</span></code> oraz bloki <code class="docutils literal notranslate"><span class="pre">try-catch</span></code> (wciąż nie może zawierać instrukcji <code class="docutils literal notranslate"><span class="pre">throw</span></code>)</p></li>
+<li><p>alokować pamięć dynamicznie przy pomocy <code class="docutils literal notranslate"><span class="pre">new</span></code> oraz <code class="docutils literal notranslate"><span class="pre">delete</span></code> pod warunkiem, że cała zaalokowana pamięć zostanie zwolniona przed opuszczeniem funkcji (można wykorzystywać obiekty <code class="docutils literal notranslate"><span class="pre">std:vector</span></code> i <code class="docutils literal notranslate"><span class="pre">std::string</span></code>, ale nie można ich zwrócić z funkcji)</p></li>
+</ul>
+</div>
+<p>Przykład funkcji <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> w C++11:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">factorial</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="mi">-1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Przykład funkcji <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> w C++14:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// C++14 constexpr functions may use local variables and loops</span>
+<span class="cp">#if __cplusplus &gt;= 201402L</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">factorial_cxx14</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="n">res</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">n</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">#endif </span><span class="c1">// C++14</span>
+</pre></div>
+</div>
+<p>Funkcja <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> może zostać użyta w kontekście, w którym wymagana
+jest stała ewaluowana na etapie kompilacji (np. rozmiar tablicy natywnej
+lub stała będąca parametrem szablonu):</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;array&gt;</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">tab_1</span><span class="p">[</span><span class="n">factorial</span><span class="p">(</span><span class="mi">2</span><span class="p">)];</span><span class="w"> </span>
+<span class="kt">int</span><span class="w"> </span><span class="n">tab_2</span><span class="p">[</span><span class="n">factorial</span><span class="p">(</span><span class="n">size</span><span class="p">)];</span><span class="w"> </span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tab_3</span><span class="p">;</span>
+</pre></div>
+</div>
+<section id="instrukcje-warunkowe-w-funkcjach-constexpr">
+<h3>Instrukcje warunkowe w funkcjach constexpr<a class="headerlink" href="#instrukcje-warunkowe-w-funkcjach-constexpr" title="Link to this heading">#</a></h3>
+<p>Pominięty blok kodu w instrukcji warunkowej nie jest ewaluowany na
+etapie kompilacji.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span><span class="p">;</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">low</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">high</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">out_of_range</span><span class="p">(</span><span class="s">&quot;range error&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">check</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span><span class="w">  </span><span class="c1">// OK</span>
+
+<span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">check</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span><span class="w">  </span><span class="c1">// ERROR</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="typy-literalne">
+<h2>Typy literalne<a class="headerlink" href="#typy-literalne" title="Link to this heading">#</a></h2>
+<p>C++11 wprowadza pojęcie <strong>typu literalnego</strong> (<em>literal type</em>), który
+może być użyty w stałym wyrażeniu <code class="docutils literal notranslate"><span class="pre">constexpr</span></code>:</p>
+<p>Typem literalnym jest:</p>
+<ul class="simple">
+<li><p>Typ arytmetyczny (całkowity, zmiennoprzecinkowy, znakowy lub logiczny)</p></li>
+<li><p>Typ referencyjny do typu literalnego (np: <code class="docutils literal notranslate"><span class="pre">int&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">double&amp;</span></code>)</p></li>
+<li><p>Tablica typów literalnych</p></li>
+<li><p>Klasa, która:</p>
+<ul>
+<li><p>ma trywialny destruktor (może być <code class="docutils literal notranslate"><span class="pre">default</span></code>)</p></li>
+<li><p>wszystkie niestatyczne składowe i typy bazowe są typami literalnymi</p></li>
+<li><p>jest agregatem lub ma przynajmniej jeden konstruktor <code class="docutils literal notranslate"><span class="pre">contexpr</span></code>, który nie jest konstruktorem kopiującym lub przenoszącym (konstruktor musi mieć pustą implementację, ale umożliwia inicjalizację składowych na liście inicjalizującej)</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x_</span><span class="p">,</span><span class="w"> </span><span class="n">y_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x_</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y_</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="nf">p1</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Typy literalne mogą być używane w funkcjach <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> jako:</p>
+<ul class="simple">
+<li><p>typy parametrów funkcji</p></li>
+<li><p>typy zwracane przez funkcje</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Od C++17 <code class="docutils literal notranslate"><span class="pre">std::array&lt;T,</span> <span class="pre">N&gt;</span></code> i <code class="docutils literal notranslate"><span class="pre">std::string_view</span></code> są typami literalnymi.</p>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">result</span><span class="p">{};</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">};</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// result = 15: evaluated at compile time</span>
+</pre></div>
+</div>
+</section>
+<section id="obliczenia-na-etapie-kompilacji-lookup-tables">
+<h2>Obliczenia na etapie kompilacji - lookup tables<a class="headerlink" href="#obliczenia-na-etapie-kompilacji-lookup-tables" title="Link to this heading">#</a></h2>
+<p>Funkcje <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> mogą być wykorzystane do obliczeń na etapie kompilacji, co pozwala na optymalizację kodu i zwiększenie wydajności programu.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">fibonacci</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">size_t</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">F</span><span class="o">&gt;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">create_lookup_table</span><span class="p">(</span><span class="n">F</span><span class="w"> </span><span class="n">f</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="p">{};</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">fibonacci_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_lookup_table</span><span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">(</span><span class="n">fibonacci</span><span class="p">);</span><span class="w"> </span><span class="c1">// evaluated at compile time</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="fold-expressions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fold expressions - C++17</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stale-wyrazenia-constant-expressions">Stałe wyrażenia - constant expressions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stale-constexpr">Stałe constexpr</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-constexpr">Funkcje constexpr</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instrukcje-warunkowe-w-funkcjach-constexpr">Instrukcje warunkowe w funkcjach constexpr</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typy-literalne">Typy literalne</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obliczenia-na-etapie-kompilacji-lookup-tables">Obliczenia na etapie kompilacji - lookup tables</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Krystian Piękoś - Infotraining
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
