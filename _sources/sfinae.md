@@ -1,4 +1,4 @@
-## SFINAE + enable_if
+# SFINAE + enable_if
 
 Jednym z podstawowych narzędzi w meta-programowaniu w C++ jest szablon
 **enable if** wykorzystujący mechanizm **SFINAE**.
@@ -21,7 +21,7 @@ void store_blob(const T* src, size_t n)
 }
 ```
 
-### SFINAE
+## SFINAE
 
 **Substitition Failure Is Not An Error (SFINAE)** jest mechanizmem
 wykorzystywanym przez kompilator w trakcie dedukcji typów dla argumentów
@@ -52,7 +52,7 @@ znika z listy funkcji kandydujących do wywołania. Jeśli brakowałoby
 pierwszej implementacji funkcji (tej prawidłowo dopasowanej) kompilator
 zgłosiłby błąd.
 
-### Szablon enable_if
+## Szablon enable_if
 
 Rozważmy dwie implementacje funkcji z identycznymi interfejsami, ale
 różnymi wymaganiami odnośnie typu danych:
@@ -164,7 +164,7 @@ Mechanizm SFINAE zapewnia dwufazowe dopasowanie funkcji do wywołania
 1. W fazie pierwszej `enable_if` i SFINAE eliminują funkcje kandydujące, dla których nie można zrealizować podstawienia
 2. W fazie drugiej dopasowana może zostać tylko jedna funkcja z grupy funkcji kandydujących do wywołania
 
-### Cechy typów i enable_if
+## Cechy typów i enable_if
 
 Często jako w wyrażeniu logicznym, będącym pierwszym argumentem szablonu
 `enable_if`, wykorzystywane są cechy typów:
@@ -207,7 +207,7 @@ auto do_stuff_with_shape(T const& shape) -> std::enable_if_t<std::is_base_of_v<S
 }
 ```
 
-### Domyślne argumenty szablonów funkcji
+## Domyślne argumenty szablonów funkcji
 
 W C++11 argumenty szablonów funkcji mogą przyjmować wartości domyślne.
 
@@ -247,7 +247,7 @@ void do_other_stuff_with_shape_alt(T const& shape)
 }
 ```
 
-### Ograniczenia w szablonach klas
+## Ograniczenia w szablonach klas
 
 SFINAE oraz `enable_if` mogą również zostać użyte dla szablonów klas.
 
@@ -273,7 +273,7 @@ Data<double> d1; // OK
 Data<int> d2;    // ERROR: no type named type in std::enable_if<false, void>
 ```
 
-### SFINAE i przeciążone konstruktory
+## SFINAE i przeciążone konstruktory
 
 SFINAE może rozwiązać problemy związane z przeciążonymi konstruktorami
 klas i ich czasami zaskakującym zachowaniem.
@@ -364,4 +364,3 @@ auto range = { 1, 2, 3 };
     
 Heap<int>(range.begin(), range.end()); // output: Heap(InputIt, InputIt)
 ```
-
