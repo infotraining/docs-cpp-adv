@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="./" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Inteligentne wskaźniki &#8212; Zaawansowane programowanie w C++</title>
   
@@ -14,53 +15,54 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cbef0915" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'smart-pointers';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -68,7 +70,6 @@
     <link rel="prev" title="Semantyka przenoszenia" href="move-semantics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -76,16 +77,32 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -93,6 +110,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -100,25 +118,16 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
+</form></div>
+  </div>
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -133,8 +142,6 @@
         <div class="sidebar-primary-item">
 
   
-    
-  
 
 <a class="navbar-brand logo" href="index.html">
   
@@ -148,18 +155,11 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -173,7 +173,7 @@
 <li class="toctree-l1"><a class="reference internal" href="move-semantics.html">Semantyka przenoszenia</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Inteligentne wskaźniki</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="static-polymorphism.html">Statyczny polimorfizm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="type-traits.html">Type traits</a></li>
@@ -181,11 +181,11 @@
 <li class="toctree-l2"><a class="reference internal" href="sfinae.html">SFINAE + enable_if</a></li>
 <li class="toctree-l2"><a class="reference internal" href="crtp.html">CRTP</a></li>
 </ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="fold-expressions.html">Fold expressions - C++17</a></li>
 </ul>
-</details></li>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="constexpr.html">Programowanie na etapie kompilacji - constexpr</a></li>
 </ul>
 
@@ -202,7 +202,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -211,14 +211,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -341,19 +341,27 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -384,8 +392,8 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inteligentne wskaźniki</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr">Semantyka przenoszenia dla std::unique_ptr<t></t></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr-t">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla std::unique_ptr<t></t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealokatory">Dealokatory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idiom-pimpl">Idiom PIMPL</a><ul class="nav section-nav flex-column">
@@ -396,10 +404,10 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-shared-ptr">std::shared_ptr</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przydatne-metody-z-interfejsu-shared-ptr">Przydatne metody z interfejsu shared_ptr<t></t></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcja-std-make-shared">Funkcja std::make_shared<t>()</t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przydatne-metody-z-interfejsu-shared-ptr-t">Przydatne metody z interfejsu shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcja-std-make-shared-t">Funkcja std::make_shared<t>()</t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Dealokatory</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr">Rzutowania między wskaźnikami std::shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr-t">Rzutowania między wskaźnikami std::shared_ptr<t></t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr">Zależności cykliczne między wskaźnikami std::shared_ptr</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this">Tworzenie wskaźnika std::shared_ptr ze wskaźnika this</a></li>
 </ul>
@@ -418,14 +426,14 @@
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section id="inteligentne-wskazniki">
-<h1>Inteligentne wskaźniki<a class="headerlink" href="#inteligentne-wskazniki" title="Link to this heading">#</a></h1>
+<h1>Inteligentne wskaźniki<a class="headerlink" href="#inteligentne-wskazniki" title="Permalink to this heading">#</a></h1>
 <section id="zarzadzanie-zasobami-w-c-raii">
-<h2>Zarządzanie zasobami w C++ - RAII<a class="headerlink" href="#zarzadzanie-zasobami-w-c-raii" title="Link to this heading">#</a></h2>
+<h2>Zarządzanie zasobami w C++ - RAII<a class="headerlink" href="#zarzadzanie-zasobami-w-c-raii" title="Permalink to this heading">#</a></h2>
 <section id="mechanizm-wyjatkow-a-zasoby">
-<h3>Mechanizm wyjątków a zasoby<a class="headerlink" href="#mechanizm-wyjatkow-a-zasoby" title="Link to this heading">#</a></h3>
+<h3>Mechanizm wyjątków a zasoby<a class="headerlink" href="#mechanizm-wyjatkow-a-zasoby" title="Permalink to this heading">#</a></h3>
 <p>Jawne zarządzanie zasobami w C++ jest trudne, ponieważ wymaga ręcznego zarządzania zasobami. W przypadku wystąpienia wyjątku, zasoby mogą nie zostać zwolnione, co prowadzi do wycieków zasobów.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">leaky_send</span><span class="p">(</span><span class="n">Data</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span>
 <span class="p">{</span>
@@ -443,7 +451,7 @@
 </div>
 </section>
 <section id="raii-resource-acquisition-is-initialization">
-<h3>RAII - Resource Acquisition Is Initialization<a class="headerlink" href="#raii-resource-acquisition-is-initialization" title="Link to this heading">#</a></h3>
+<h3>RAII - Resource Acquisition Is Initialization<a class="headerlink" href="#raii-resource-acquisition-is-initialization" title="Permalink to this heading">#</a></h3>
 <p>Technika łączy przejęcie i zwolnienie zasobu z inicjalizacją zmiennych lokalnych i ich automatyczną destrukcją.</p>
 <ul class="simple">
 <li><p>Pozyskanie zasobu jest połączone z konstrukcją, a zwolnienie z automatyczną destrukcją obiektu.</p></li>
@@ -463,7 +471,7 @@
 </pre></div>
 </div>
 <section id="klasy-raii">
-<h4>Klasy RAII<a class="headerlink" href="#klasy-raii" title="Link to this heading">#</a></h4>
+<h4>Klasy RAII<a class="headerlink" href="#klasy-raii" title="Permalink to this heading">#</a></h4>
 <p>Klasa RAII to klasa, która pozyskuje zasób w konstruktorze a w destruktorze go zwalnia:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Port</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">PortHandle</span><span class="w"> </span><span class="n">port_</span><span class="p">;</span>
@@ -498,7 +506,7 @@
 </div>
 </section>
 <section id="kopiowanie-obiektow-raii">
-<h4>Kopiowanie obiektów RAII<a class="headerlink" href="#kopiowanie-obiektow-raii" title="Link to this heading">#</a></h4>
+<h4>Kopiowanie obiektów RAII<a class="headerlink" href="#kopiowanie-obiektow-raii" title="Permalink to this heading">#</a></h4>
 <p>Klasy implementujące RAII posiadają destruktor, dlatego należy określić sposób zachowania obiektów przy ich kopiowaniu.
 Możliwe są następujące strategie:</p>
 <ul class="simple">
@@ -510,13 +518,13 @@ Możliwe są następujące strategie:</p>
 </section>
 </section>
 <section id="id1">
-<h2>Inteligentne wskaźniki<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>Inteligentne wskaźniki<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>Inteligentne wskaźniki umożliwiają wygodne zarządzanie obiektami, które zostały zaalokowane na stercie za pomocą operatora <code class="docutils literal notranslate"><span class="pre">new</span></code>.
 Przejmują odpowiedzialność za wywołanie destruktora dla zarządzanego obiektu oraz zwolnienie pamięci - poprzez wywołanie operatora <code class="docutils literal notranslate"><span class="pre">delete</span></code>.
 Inteligentne wskaźniki w C++11 umożliwiają reprezentację prawa własności do zaalokowanego zasobu.
 Przeciążając operatory <code class="docutils literal notranslate"><span class="pre">operator*</span></code> oraz <code class="docutils literal notranslate"><span class="pre">operator-&gt;</span></code> umożliwiają korzystanie z nich w taki sam sposób, jak wskaźników natywnych.</p>
 <p>Dostępne implementacje inteligentnych wskaźników w bibliotece standardowej C++ oraz w bibliotece Boost.</p>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Klasa wskaźnika</p></th>
 <th class="head text-center"><p>Kopiowanie</p></th>
@@ -557,10 +565,9 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 </tr>
 </tbody>
 </table>
-</div>
 </section>
-<section id="std-unique-ptr">
-<h2>std::unique_ptr<T><a class="headerlink" href="#std-unique-ptr" title="Link to this heading">#</a></h2>
+<section id="std-unique-ptr-t">
+<h2>std::unique_ptr<T><a class="headerlink" href="#std-unique-ptr-t" title="Permalink to this heading">#</a></h2>
 <p>Klasa szablonowa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> służy do zapewnienia właściwego usuwania przydzielanego dynamicznie obiektu.</p>
 <p>Implementuje RAII - destruktor inteligentnego wskaźnika usuwa wskazywany obiekt. Wskaźnik <code class="docutils literal notranslate"><span class="pre">unique_ptr</span></code> nie może być ani kopiowany ani przypisywany, może być jednakże przenoszony.</p>
 <p>Przeniesienie prawa własności odbywa się zgodnie z <em>move semantics</em> w C++11 - wymaga dla referencji do lvalue jawnego transferu przy pomocy funkcji <code class="docutils literal notranslate"><span class="pre">std::move()</span></code>.</p>
@@ -582,8 +589,8 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">ptr_gadget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ipod&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<section id="semantyka-przenoszenia-dla-std-unique-ptr">
-<h3>Semantyka przenoszenia dla std::unique_ptr<T><a class="headerlink" href="#semantyka-przenoszenia-dla-std-unique-ptr" title="Link to this heading">#</a></h3>
+<section id="semantyka-przenoszenia-dla-std-unique-ptr-t">
+<h3>Semantyka przenoszenia dla std::unique_ptr<T><a class="headerlink" href="#semantyka-przenoszenia-dla-std-unique-ptr-t" title="Permalink to this heading">#</a></h3>
 <p>Obiekt <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> nie może być kopiowany. Ale dzięki semantyce przenoszenia, może być stosowany tam, gdzie zgodne ze standardem C++03 niekopiowalne obiekty nie mogły działać:</p>
 <ul class="simple">
 <li><p>może być zwracany z funkcji</p></li>
@@ -638,7 +645,7 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 </div>
 </section>
 <section id="wskazniki-klas-pochodnych">
-<h3>Wskaźniki klas pochodnych<a class="headerlink" href="#wskazniki-klas-pochodnych" title="Link to this heading">#</a></h3>
+<h3>Wskaźniki klas pochodnych<a class="headerlink" href="#wskazniki-klas-pochodnych" title="Permalink to this heading">#</a></h3>
 <p>Wskaźnik do klasy pochodnej może zostać przypisany do wskaźnika do klasy bazowej (<em>upcasting</em>). Daje to możliwość stosowania polimorfizmu z wykorzystaniem funkcji wirtualnych.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Gadget</span><span class="o">*</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SuperGadget</span><span class="p">();</span>
 <span class="n">g</span><span class="o">-&gt;</span><span class="n">do_something</span><span class="p">();</span>
@@ -654,7 +661,7 @@ Przeciążając operatory <code class="docutils literal notranslate"><span class
 </div>
 </section>
 <section id="dealokatory">
-<h3>Dealokatory<a class="headerlink" href="#dealokatory" title="Link to this heading">#</a></h3>
+<h3>Dealokatory<a class="headerlink" href="#dealokatory" title="Permalink to this heading">#</a></h3>
 <p>Używając wskaźnika <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> można zdefiniować własny dealokator, który będzie odpowiedzialny za prawidłowe zwolnienie zasobu. Umożliwia to
 kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub wymagającymi specjalnej obsługi w fazie destrukcji.</p>
 <p>Aby użyć własnego dealokatora należy podać jego typ jako drugi parametr szablonu <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T,</span> <span class="pre">Dealloc&gt;</span></code> oraz przekazać instancję dealokatora jako drugi parametr konstruktora:</p>
@@ -675,10 +682,10 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </div>
 </section>
 <section id="idiom-pimpl">
-<h3>Idiom PIMPL<a class="headerlink" href="#idiom-pimpl" title="Link to this heading">#</a></h3>
+<h3>Idiom PIMPL<a class="headerlink" href="#idiom-pimpl" title="Permalink to this heading">#</a></h3>
 <p>Wskaźnik <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> świetnie nadaje się do stosowania tam, gdzie wcześniej stosowane były wskaźniki zwykłe albo obiekty typu <code class="docutils literal notranslate"><span class="pre">std::auto_ptr</span></code> (obecnie mający status <em>deprecated</em>), np. do implementacji idiomu PIMPL</p>
 <section id="pimpl-private-implementation">
-<h4>PIMPL - Private Implementation:<a class="headerlink" href="#pimpl-private-implementation" title="Link to this heading">#</a></h4>
+<h4>PIMPL - Private Implementation:<a class="headerlink" href="#pimpl-private-implementation" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p>minimalizuje zależności na etapie kompilacji</p></li>
 <li><p>separuje interfejs od implementacji</p></li>
@@ -721,7 +728,7 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </section>
 </section>
 <section id="specjalizacja-std-unique-ptr-t-dla-tablic">
-<h3>Specjalizacja std::unique_ptr&lt;T[]&gt; dla tablic<a class="headerlink" href="#specjalizacja-std-unique-ptr-t-dla-tablic" title="Link to this heading">#</a></h3>
+<h3>Specjalizacja std::unique_ptr&lt;T[]&gt; dla tablic<a class="headerlink" href="#specjalizacja-std-unique-ptr-t-dla-tablic" title="Permalink to this heading">#</a></h3>
 <p>Klasa <code class="docutils literal notranslate"><span class="pre">std::unique_ptr&lt;T[]&gt;</span></code> jest specjalizacją szablonu <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> dla tablic obiektów typu <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
 <ul class="simple">
 <li><p>Klasa ta stanowi lepszą alternatywę dla klasycznych tablic przydzielanych dynamicznie.</p></li>
@@ -760,7 +767,7 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </section>
 </section>
 <section id="std-shared-ptr">
-<h2>std::shared_ptr<a class="headerlink" href="#std-shared-ptr" title="Link to this heading">#</a></h2>
+<h2>std::shared_ptr<a class="headerlink" href="#std-shared-ptr" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">std::shared_ptr&lt;T&gt;</span></code> jest szablonem nieingerencyjnego wskaźnika zliczającego odniesienia do wskazywanych obiektów.</p>
 <p>Działanie:</p>
 <ul class="simple">
@@ -806,8 +813,8 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="przydatne-metody-z-interfejsu-shared-ptr">
-<h3>Przydatne metody z interfejsu shared_ptr<T><a class="headerlink" href="#przydatne-metody-z-interfejsu-shared-ptr" title="Link to this heading">#</a></h3>
+<section id="przydatne-metody-z-interfejsu-shared-ptr-t">
+<h3>Przydatne metody z interfejsu shared_ptr<T><a class="headerlink" href="#przydatne-metody-z-interfejsu-shared-ptr-t" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">T*</span> <span class="pre">get()</span> <span class="pre">const</span></code></p>
 <ul>
@@ -846,8 +853,8 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </li>
 </ul>
 </section>
-<section id="funkcja-std-make-shared">
-<h3>Funkcja std::make_shared<T>()<a class="headerlink" href="#funkcja-std-make-shared" title="Link to this heading">#</a></h3>
+<section id="funkcja-std-make-shared-t">
+<h3>Funkcja std::make_shared<T>()<a class="headerlink" href="#funkcja-std-make-shared-t" title="Permalink to this heading">#</a></h3>
 <p>Używanie <code class="docutils literal notranslate"><span class="pre">std::shared_ptr``</span> <span class="pre">eliminuje</span> <span class="pre">konieczność</span> <span class="pre">jawnego</span> <span class="pre">stosowanie</span> <span class="pre">operatora</span> <span class="pre">``delete``</span>&#160; <span class="pre">Aby</span> <span class="pre">uniknąć</span> <span class="pre">także</span> <span class="pre">używania</span> <span class="pre">operatora</span> <span class="pre">``new``</span> <span class="pre">należy</span> <span class="pre">stosować</span> <span class="pre">funkcję</span> <span class="pre">pomocniczą</span> <span class="pre">``make_shared()``,</span> <span class="pre">która</span> <span class="pre">pełni</span> <span class="pre">rolę</span> <span class="pre">fabryki</span> <span class="pre">wskaźników</span> </code>std::shared_ptr``. Funkcja przekazuje (przez <em>perfect forwarding</em>) swoj parametry do konstruktora obiektu typu <code class="docutils literal notranslate"><span class="pre">T</span></code>, który jest alokowany na stercie.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span>
 <span class="p">{</span>
@@ -882,7 +889,7 @@ kontrolę nad zasobami innymi niż obiekty dynamicznie alokowane na stercie lub 
 </div>
 </section>
 <section id="id2">
-<h3>Dealokatory<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h3>Dealokatory<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>Niekiedy pojawia się potrzeba zastosowania wskaźnika <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> do kontroli zasobu takiego typu, że jego zwolnienie nie sprowadza się do prostego wywołania operatora <code class="docutils literal notranslate"><span class="pre">delete</span></code>.
 Takie przypadki <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> obsługuje przy pomocy dealokatorów użytkownika.</p>
 <p>Dealokator jest:</p>
@@ -911,8 +918,8 @@ Takie przypadki <code class="docutils literal notranslate"><span class="pre">std
 </pre></div>
 </div>
 </section>
-<section id="rzutowania-miedzy-wskaznikami-std-shared-ptr">
-<h3>Rzutowania między wskaźnikami std::shared_ptr<T><a class="headerlink" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr" title="Link to this heading">#</a></h3>
+<section id="rzutowania-miedzy-wskaznikami-std-shared-ptr-t">
+<h3>Rzutowania między wskaźnikami std::shared_ptr<T><a class="headerlink" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr-t" title="Permalink to this heading">#</a></h3>
 <p>Problemy związane z rzutowaniami między wskaźnikami <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> rozwiązują trzy funkcje szablonowe:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">template&lt;class</span> <span class="pre">T,</span> <span class="pre">class</span> <span class="pre">U&gt;</span> <span class="pre">shared_ptr&lt;T&gt;</span> <span class="pre">static_pointer_cast(shared_ptr&lt;U&gt;</span> <span class="pre">const</span> <span class="pre">&amp;</span> <span class="pre">r)</span></code></p>
@@ -961,7 +968,7 @@ Takie przypadki <code class="docutils literal notranslate"><span class="pre">std
 </div>
 </section>
 <section id="zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr">
-<h3>Zależności cykliczne między wskaźnikami std::shared_ptr<a class="headerlink" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr" title="Link to this heading">#</a></h3>
+<h3>Zależności cykliczne między wskaźnikami std::shared_ptr<a class="headerlink" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr" title="Permalink to this heading">#</a></h3>
 <p>Problemem dla wskaźników <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> są zależności cykliczne, które powodują wycieki zasobów (pamięci).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Cyclic</span>
 <span class="p">{</span>
@@ -982,7 +989,7 @@ Takie przypadki <code class="docutils literal notranslate"><span class="pre">std
 </div>
 </section>
 <section id="tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this">
-<h3>Tworzenie wskaźnika std::shared_ptr ze wskaźnika this<a class="headerlink" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this" title="Link to this heading">#</a></h3>
+<h3>Tworzenie wskaźnika std::shared_ptr ze wskaźnika this<a class="headerlink" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this" title="Permalink to this heading">#</a></h3>
 <p>Niekiedy istnieje konieczność utworzenia inteligentnego wskaźnika <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> ze wskaźnika <code class="docutils literal notranslate"><span class="pre">this</span></code>.
 Oznacza to, że obiekt danej klasy będzie zarządzany za pośrednictwem inteligentnego wskaźnika.
 W ogólności rozwiązaniem problemu konwersji <code class="docutils literal notranslate"><span class="pre">this</span></code> do <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> jest użycie wskaźnika typu <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code>, który jest obserwatorem wskaźników <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> (pozwala na obserwowanie wskazywanego obiektu bez ingerowania w wartość licznika odwołań).
@@ -1043,7 +1050,7 @@ Aby nie trzeba było za każdym razem pisać tego samego kodu, można wykorzysta
 </section>
 </section>
 <section id="std-weak-ptr">
-<h2>std::weak_ptr<a class="headerlink" href="#std-weak-ptr" title="Link to this heading">#</a></h2>
+<h2>std::weak_ptr<a class="headerlink" href="#std-weak-ptr" title="Permalink to this heading">#</a></h2>
 <p>Najbardziej znanym problemem, związanym ze wskaźnikami opartymi na zliczaniu odniesień, są odniesienia cykliczne.
 Występują one w sytuacji, gdy kilka obiektów trzyma wskaźniki do siebie nawzajem, przez co licznik odniesień nie spada do zera i wskazywane obiekty nie są nigdy kasowane.
 Rozwiązaniem tego problemu jest zastosowanie słabych wskaźników – obiektów <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code>.</p>
@@ -1088,7 +1095,7 @@ Rozwiązaniem tego problemu jest zastosowanie słabych wskaźników – obiektó
 </li>
 </ul>
 <section id="przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych">
-<h3>Przechowywanie std::weak_ptr w kontenerach asocjacyjnych<a class="headerlink" href="#przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych" title="Link to this heading">#</a></h3>
+<h3>Przechowywanie std::weak_ptr w kontenerach asocjacyjnych<a class="headerlink" href="#przechowywanie-std-weak-ptr-w-kontenerach-asocjacyjnych" title="Permalink to this heading">#</a></h3>
 <p>Aby przechować wskaźniki <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> w kontenerach asocjacyjnych należy klasy <code class="docutils literal notranslate"><span class="pre">std::owner_less</span></code> jako parameteru definiującego sposób porównania
 wskaźników.</p>
 <p>Klasa <code class="docutils literal notranslate"><span class="pre">std::owner_less</span></code> dostarcza implementację umożliwiającą porównanie wskaźników <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code> oraz <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> na podstawie prawa własności, a nie wartości
@@ -1103,7 +1110,7 @@ przechowywanych wskaźników. Dwa wskaźniki są uznane za równoważne tylko wt
 </div>
 </section>
 <section id="zastosowanie-std-weak-ptr">
-<h3>Zastosowanie std::weak_ptr<a class="headerlink" href="#zastosowanie-std-weak-ptr" title="Link to this heading">#</a></h3>
+<h3>Zastosowanie std::weak_ptr<a class="headerlink" href="#zastosowanie-std-weak-ptr" title="Permalink to this heading">#</a></h3>
 <p>Wskaźniki <code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code> stosuje się do:</p>
 <ul class="simple">
 <li><p>zrywania cyklicznych zależności dla <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code></p></li>
@@ -1141,7 +1148,7 @@ przechowywanych wskaźników. Dwa wskaźniki są uznane za równoważne tylko wt
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1169,9 +1176,7 @@ przechowywanych wskaźników. Dwa wskaźniki są uznane za równoważne tylko wt
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1189,8 +1194,8 @@ przechowywanych wskaźników. Dwa wskaźniki są uznane za równoważne tylko wt
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inteligentne wskaźniki</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr">Semantyka przenoszenia dla std::unique_ptr<t></t></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-unique-ptr-t">std::unique_ptr<t></t></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantyka-przenoszenia-dla-std-unique-ptr-t">Semantyka przenoszenia dla std::unique_ptr<t></t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wskazniki-klas-pochodnych">Wskaźniki klas pochodnych</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealokatory">Dealokatory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idiom-pimpl">Idiom PIMPL</a><ul class="nav section-nav flex-column">
@@ -1201,10 +1206,10 @@ przechowywanych wskaźników. Dwa wskaźniki są uznane za równoważne tylko wt
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-shared-ptr">std::shared_ptr</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przydatne-metody-z-interfejsu-shared-ptr">Przydatne metody z interfejsu shared_ptr<t></t></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcja-std-make-shared">Funkcja std::make_shared<t>()</t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przydatne-metody-z-interfejsu-shared-ptr-t">Przydatne metody z interfejsu shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcja-std-make-shared-t">Funkcja std::make_shared<t>()</t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Dealokatory</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr">Rzutowania między wskaźnikami std::shared_ptr<t></t></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rzutowania-miedzy-wskaznikami-std-shared-ptr-t">Rzutowania między wskaźnikami std::shared_ptr<t></t></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zaleznosci-cykliczne-miedzy-wskaznikami-std-shared-ptr">Zależności cykliczne między wskaźnikami std::shared_ptr</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tworzenie-wskaznika-std-shared-ptr-ze-wskaznika-this">Tworzenie wskaźnika std::shared_ptr ze wskaźnika this</a></li>
 </ul>
@@ -1238,7 +1243,7 @@ By Krystian Piękoś - Infotraining
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2022.
       <br/>
     
   </p>
@@ -1262,8 +1267,8 @@ By Krystian Piękoś - Infotraining
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

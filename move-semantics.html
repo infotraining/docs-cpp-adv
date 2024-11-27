@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="./" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Semantyka przenoszenia &#8212; Zaawansowane programowanie w C++</title>
   
@@ -14,53 +15,54 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cbef0915" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'move-semantics';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -68,7 +70,6 @@
     <link rel="prev" title="Zaawansowane programowanie w języku C++" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -76,16 +77,32 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -93,6 +110,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -100,25 +118,16 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
+</form></div>
+  </div>
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -133,8 +142,6 @@
         <div class="sidebar-primary-item">
 
   
-    
-  
 
 <a class="navbar-brand logo" href="index.html">
   
@@ -148,18 +155,11 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -173,7 +173,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Semantyka przenoszenia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="static-polymorphism.html">Statyczny polimorfizm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="type-traits.html">Type traits</a></li>
@@ -181,11 +181,11 @@
 <li class="toctree-l2"><a class="reference internal" href="sfinae.html">SFINAE + enable_if</a></li>
 <li class="toctree-l2"><a class="reference internal" href="crtp.html">CRTP</a></li>
 </ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="fold-expressions.html">Fold expressions - C++17</a></li>
 </ul>
-</details></li>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="constexpr.html">Programowanie na etapie kompilacji - constexpr</a></li>
 </ul>
 
@@ -202,7 +202,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -211,14 +211,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -341,19 +341,27 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -413,12 +421,12 @@
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section id="semantyka-przenoszenia">
-<h1>Semantyka przenoszenia<a class="headerlink" href="#semantyka-przenoszenia" title="Link to this heading">#</a></h1>
+<h1>Semantyka przenoszenia<a class="headerlink" href="#semantyka-przenoszenia" title="Permalink to this heading">#</a></h1>
 <section id="motywacja-dla-semantyki-przenoszenia">
-<h2>Motywacja dla semantyki przenoszenia<a class="headerlink" href="#motywacja-dla-semantyki-przenoszenia" title="Link to this heading">#</a></h2>
+<h2>Motywacja dla semantyki przenoszenia<a class="headerlink" href="#motywacja-dla-semantyki-przenoszenia" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Optymalizacja wydajności:</p>
 <ul>
@@ -455,7 +463,7 @@ wygasa (<em>expiring object</em>)</p></li>
 </div>
 </section>
 <section id="lvalues-i-rvalues">
-<h2>lvalues i rvalues<a class="headerlink" href="#lvalues-i-rvalues" title="Link to this heading">#</a></h2>
+<h2>lvalues i rvalues<a class="headerlink" href="#lvalues-i-rvalues" title="Permalink to this heading">#</a></h2>
 <p>Aby umożliwić implementację semantyki przenoszenia C++11 wykorzystuje podział obiektów na:</p>
 <ul class="simple">
 <li><p><strong>lvalue</strong></p>
@@ -493,7 +501,7 @@ takiej operacji.</p></li>
 </ul>
 </section>
 <section id="referencje-rvalue-rvalue-references">
-<h2>Referencje rvalue - <em>rvalue references</em><a class="headerlink" href="#referencje-rvalue-rvalue-references" title="Link to this heading">#</a></h2>
+<h2>Referencje rvalue - <em>rvalue references</em><a class="headerlink" href="#referencje-rvalue-rvalue-references" title="Permalink to this heading">#</a></h2>
 <p>C++11 wprowadza referencje do rvalue - <strong>rvalue references</strong>, które zachowują się podobnie jak klasyczne referencje z C++98 (zwane od C++11 <strong>lvalue references</strong>).</p>
 <ul class="simple">
 <li><p>składnia: <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code></p></li>
@@ -535,9 +543,9 @@ takiej operacji.</p></li>
 </div>
 </section>
 <section id="implementacja-semantyki-przenoszenia">
-<h2>Implementacja semantyki przenoszenia<a class="headerlink" href="#implementacja-semantyki-przenoszenia" title="Link to this heading">#</a></h2>
+<h2>Implementacja semantyki przenoszenia<a class="headerlink" href="#implementacja-semantyki-przenoszenia" title="Permalink to this heading">#</a></h2>
 <section id="przeciazanie-funkcji-za-pomoca-referencji-rvalue">
-<h3>Przeciążanie funkcji za pomocą referencji rvalue<a class="headerlink" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue" title="Link to this heading">#</a></h3>
+<h3>Przeciążanie funkcji za pomocą referencji rvalue<a class="headerlink" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue" title="Permalink to this heading">#</a></h3>
 <p>Przy pomocy lvalue referencji i  rvalue referencji możemy przeciążać funkcje. W ten sposób możemy zaimplementować funkcje, które przyjmują obiekty tymczasowe (rvalue) i obiekty, które będą dalej używane (lvalue).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">vector</span>
@@ -568,7 +576,7 @@ takiej operacji.</p></li>
 </div>
 </section>
 <section id="implementacja-semantyki-przenoszenia-w-klasach">
-<h3>Implementacja semantyki przenoszenia w klasach<a class="headerlink" href="#implementacja-semantyki-przenoszenia-w-klasach" title="Link to this heading">#</a></h3>
+<h3>Implementacja semantyki przenoszenia w klasach<a class="headerlink" href="#implementacja-semantyki-przenoszenia-w-klasach" title="Permalink to this heading">#</a></h3>
 <p>Aby zaimplementować semantykę przenoszenia dla klasy należy zapewnić jej:</p>
 <ul class="simple">
 <li><p>konstruktor przenoszący - przyjmujący jako argument <strong>rvalue reference</strong></p></li>
@@ -579,7 +587,7 @@ takiej operacji.</p></li>
 <p>Konstruktor przenoszący i przenoszący operator przypisania są nowymi specjalnymi funkcjami składowymi klas w C++11.</p>
 </div>
 <section id="funkcje-specjalne-klas-w-c-11">
-<h4>Funkcje specjalne klas w C++11<a class="headerlink" href="#funkcje-specjalne-klas-w-c-11" title="Link to this heading">#</a></h4>
+<h4>Funkcje specjalne klas w C++11<a class="headerlink" href="#funkcje-specjalne-klas-w-c-11" title="Permalink to this heading">#</a></h4>
 <p>Od C++11 istnieje sześć specjalnych funkcji składowych klasy:</p>
 <ul class="simple">
 <li><p>konstruktor domyślny - <code class="docutils literal notranslate"><span class="pre">X();</span></code></p></li>
@@ -596,7 +604,7 @@ takiej operacji.</p></li>
 </section>
 </section>
 <section id="implementacja-konstruktora-przenoszacego">
-<h3>Implementacja konstruktora przenoszącego<a class="headerlink" href="#implementacja-konstruktora-przenoszacego" title="Link to this heading">#</a></h3>
+<h3>Implementacja konstruktora przenoszącego<a class="headerlink" href="#implementacja-konstruktora-przenoszacego" title="Permalink to this heading">#</a></h3>
 <p>Implementacja konstruktora przenoszącego powinna przenieść zasoby obiektu tymczasowego do obiektu docelowego i pozostawić obiekt tymczasowy w poprawnym, ale nieokreślonym stanie.</p>
 <p>Implementując przenoszący operator przypisania należy najpierw zwolnić zasoby obiektu docelowego, a następnie przenieść zasoby obiektu źródłowego do obiektu docelowego.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
@@ -649,7 +657,7 @@ takiej operacji.</p></li>
 </pre></div>
 </div>
 <section id="implementacja-z-std-exchange">
-<h4>Implementacja z std::exchange()<a class="headerlink" href="#implementacja-z-std-exchange" title="Link to this heading">#</a></h4>
+<h4>Implementacja z std::exchange()<a class="headerlink" href="#implementacja-z-std-exchange" title="Permalink to this heading">#</a></h4>
 <p>Przy samodzielnej implementacji konstruktora przenoszącego i przenoszącego operatora przypisania można skorzystać z funkcji <code class="docutils literal notranslate"><span class="pre">std::exchange()</span></code> z biblioteki standardowej C++.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span>
 
@@ -680,7 +688,7 @@ takiej operacji.</p></li>
 </section>
 </section>
 <section id="domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania">
-<h3>Domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania<a class="headerlink" href="#domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania" title="Link to this heading">#</a></h3>
+<h3>Domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania<a class="headerlink" href="#domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania" title="Permalink to this heading">#</a></h3>
 <p>Kompilator jest w stanie wygenerować domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania, jeśli klasa nie posiada własnych implementacji.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -746,7 +754,7 @@ takiej operacji.</p></li>
 </ul>
 </section>
 <section id="regula-rule-of-five">
-<h3>Reguła “Rule of Five”<a class="headerlink" href="#regula-rule-of-five" title="Link to this heading">#</a></h3>
+<h3>Reguła “Rule of Five”<a class="headerlink" href="#regula-rule-of-five" title="Permalink to this heading">#</a></h3>
 <p>Jeśli w klasie jest konieczna implementacja jednej z poniższych specjalnych funkcji składowych:</p>
 <ul class="simple">
 <li><p>konstruktora kopiującego</p></li>
@@ -789,7 +797,7 @@ takiej operacji.</p></li>
 </section>
 </section>
 <section id="std-move">
-<h2>std::move()<a class="headerlink" href="#std-move" title="Link to this heading">#</a></h2>
+<h2>std::move()<a class="headerlink" href="#std-move" title="Permalink to this heading">#</a></h2>
 <p>Funkcja <code class="docutils literal notranslate"><span class="pre">std::move()</span></code> jest jednym z kluczowych elementów semantyki przenoszenia w C++11. Służy ona do konwersji obiektu lvalue na obiekt tymczasowy rvalue - dokładnie na <strong>xvalue</strong> (<em>expiring value</em>). Konwersja jest realizowana poprzez rzutowanie na rvalue referencję.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
 <span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">move</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span>
@@ -817,10 +825,10 @@ takiej operacji.</p></li>
 </div>
 </section>
 <section id="perfect-forwarding">
-<h2>Perfect forwarding<a class="headerlink" href="#perfect-forwarding" title="Link to this heading">#</a></h2>
+<h2>Perfect forwarding<a class="headerlink" href="#perfect-forwarding" title="Permalink to this heading">#</a></h2>
 <p><strong>Perfect forwarding</strong> pozwala na optymalne przekazywanie argumentów funkcji do innych funkcji zachowując ich oryginalny typ. Jest to możliwe dzięki referencjom uniwersalnym - <strong>universal references</strong>.</p>
 <section id="reference-collapsing">
-<h3>Reference collapsing<a class="headerlink" href="#reference-collapsing" title="Link to this heading">#</a></h3>
+<h3>Reference collapsing<a class="headerlink" href="#reference-collapsing" title="Permalink to this heading">#</a></h3>
 <p>W procesie tworzenia instancji szablonu następuje często zwijanie referencji (tzw. <strong>reference collapsing</strong>)</p>
 <p>Jeśli mamy szablon:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
@@ -839,7 +847,7 @@ takiej operacji.</p></li>
 </pre></div>
 </div>
 <p>W C++11 obowiązują następujące reguły <strong>reference collapsing</strong></p>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Referencje</p></th>
 <th class="head"><p>Wynik kolapsu</p></th>
@@ -860,10 +868,9 @@ takiej operacji.</p></li>
 </tr>
 </tbody>
 </table>
-</div>
 </section>
 <section id="mechanizm-dedukcji-typow-w-szablonach">
-<h3>Mechanizm dedukcji typów w szablonach<a class="headerlink" href="#mechanizm-dedukcji-typow-w-szablonach" title="Link to this heading">#</a></h3>
+<h3>Mechanizm dedukcji typów w szablonach<a class="headerlink" href="#mechanizm-dedukcji-typow-w-szablonach" title="Permalink to this heading">#</a></h3>
 <p>Dla szablonu</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
 <span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="p">)</span>
@@ -886,7 +893,7 @@ takiej operacji.</p></li>
 </div>
 </section>
 <section id="universal-reference-aka-forwarding-reference">
-<h3>Universal reference aka forwarding reference<a class="headerlink" href="#universal-reference-aka-forwarding-reference" title="Link to this heading">#</a></h3>
+<h3>Universal reference aka forwarding reference<a class="headerlink" href="#universal-reference-aka-forwarding-reference" title="Permalink to this heading">#</a></h3>
 <p>Referencja rvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> użyta w kontekście dedukcji typu dla argumentu funkcji szablonowej ma szczególne zastosowanie:</p>
 <ul class="simple">
 <li><p>dla argumentów lvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> zamienia się w <code class="docutils literal notranslate"><span class="pre">T&amp;</span></code> - wiąże się z wartościami lvalue</p></li>
@@ -903,7 +910,7 @@ takiej operacji.</p></li>
 </div>
 </section>
 <section id="perfect-forwarding-z-std-forward">
-<h3>Perfect forwarding z std::forward()<a class="headerlink" href="#perfect-forwarding-z-std-forward" title="Link to this heading">#</a></h3>
+<h3>Perfect forwarding z std::forward()<a class="headerlink" href="#perfect-forwarding-z-std-forward" title="Permalink to this heading">#</a></h3>
 <p>Przeciążanie funkcji w celu optymalizacji wydajności z wykorzystaniem semantyki przenoszenia i referencji rvalue może prowadzić do nadmiernego rozrostu interfejsów:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="p">;</span>
 
@@ -965,7 +972,7 @@ takiej operacji.</p></li>
 </section>
 </section>
 <section id="noexcept">
-<h2>noexcept<a class="headerlink" href="#noexcept" title="Link to this heading">#</a></h2>
+<h2>noexcept<a class="headerlink" href="#noexcept" title="Permalink to this heading">#</a></h2>
 <p>Słowo kluczowe <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> może być użyte</p>
 <ul class="simple">
 <li><p>w deklaracji funkcji - aby określić, że funkcja nie może rzucić wyjątku</p></li>
@@ -1008,7 +1015,7 @@ takiej operacji.</p></li>
 </li>
 </ul>
 <section id="funkcje-specjalne-i-noexcept">
-<h3>Funkcje specjalne i noexcept<a class="headerlink" href="#funkcje-specjalne-i-noexcept" title="Link to this heading">#</a></h3>
+<h3>Funkcje specjalne i noexcept<a class="headerlink" href="#funkcje-specjalne-i-noexcept" title="Permalink to this heading">#</a></h3>
 <p>Wprowadzenie <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> do C++ umożliwia optymalizację wydajności - np. implementacja <code class="docutils literal notranslate"><span class="pre">push_back()</span></code> w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie rzuci wyjątku.</p>
 <p>Implementując konstruktor przenoszący i przenoszący operator przypisania warto przeanalizować pisany kod i jeżeli tylko można dodać specyfikator <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>.
 W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal notranslate"><span class="pre">type_traits</span></code>. Dostarcza ona klasy cech, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:
@@ -1068,7 +1075,7 @@ W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal no
 </div>
 </section>
 <section id="noexcept-w-specyfikacji-typu-funkcji-od-c-17">
-<h3>noexcept w specyfikacji typu funkcji (od C++17)<a class="headerlink" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17" title="Link to this heading">#</a></h3>
+<h3>noexcept w specyfikacji typu funkcji (od C++17)<a class="headerlink" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17" title="Permalink to this heading">#</a></h3>
 <ul>
 <li><p>Od C++17 <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> jest częścią specyfikacji typu funkcji</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// foo is noexcept</span>
@@ -1133,7 +1140,7 @@ W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal no
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1161,9 +1168,7 @@ W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal no
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1225,7 +1230,7 @@ By Krystian Piękoś - Infotraining
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2022.
       <br/>
     
   </p>
@@ -1249,8 +1254,8 @@ By Krystian Piękoś - Infotraining
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
