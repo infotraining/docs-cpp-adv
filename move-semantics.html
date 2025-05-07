@@ -1,0 +1,1274 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Semantyka przenoszenia &#8212; Zaawansowane programowanie w C++</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cbef0915" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'move-semantics';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Inteligentne wskaźniki" href="smart-pointers.html" />
+    <link rel="prev" title="Zaawansowane programowanie w języku C++" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Zaawansowane programowanie w C++ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Zaawansowane programowanie w C++ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Zaawansowane programowanie w języku C++
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semantyka przenoszenia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart-pointers.html">Inteligentne wskaźniki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Szablony</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="template-techniques.html">Szablony - techniki programowania</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="static-polymorphism.html">Statyczny polimorfizm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy-based-design.html">Policy Based Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type-traits.html">Type traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tag-dispatching.html">Tag dispatching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sfinae.html">SFINAE + enable_if</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crtp.html">CRTP</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="variadic-templates.html">Variadic templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="fold-expressions.html">Fold expressions - C++17</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="constexpr.html">Programowanie na etapie kompilacji - constexpr</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/infotraining/docs-cpp-adv/issues/new?title=Issue%20on%20page%20%2Fmove-semantics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/move-semantics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semantyka przenoszenia</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motywacja-dla-semantyki-przenoszenia">Motywacja dla semantyki przenoszenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lvalues-i-rvalues">lvalues i rvalues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencje-rvalue-rvalue-references">Referencje rvalue - <em>rvalue references</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia">Implementacja semantyki przenoszenia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue">Przeciążanie funkcji za pomocą referencji rvalue</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia-w-klasach">Implementacja semantyki przenoszenia w klasach</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-klas-w-c-11">Funkcje specjalne klas w C++11</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-konstruktora-przenoszacego">Implementacja konstruktora przenoszącego</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-z-std-exchange">Implementacja z std::exchange()</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania">Domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regula-rule-of-five">Reguła “Rule of Five”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-move">std::move()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding">Perfect forwarding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-collapsing">Reference collapsing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mechanizm-dedukcji-typow-w-szablonach">Mechanizm dedukcji typów w szablonach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-reference-aka-forwarding-reference">Universal reference aka forwarding reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-i-noexcept">Funkcje specjalne i noexcept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17">noexcept w specyfikacji typu funkcji (od C++17)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="semantyka-przenoszenia">
+<h1>Semantyka przenoszenia<a class="headerlink" href="#semantyka-przenoszenia" title="Link to this heading">#</a></h1>
+<section id="motywacja-dla-semantyki-przenoszenia">
+<h2>Motywacja dla semantyki przenoszenia<a class="headerlink" href="#motywacja-dla-semantyki-przenoszenia" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Optymalizacja wydajności:</p>
+<ul>
+<li><p>unikanie zbędnego kopiowania obiektów tymczasowych (<em>temporary objects</em>)</p></li>
+<li><p>możliwość wskazania, że obiekt nie będzie dalej używany - jego czas życia
+wygasa (<em>expiring object</em>)</p></li>
+</ul>
+</li>
+<li><p>Implementacja obiektów, które kontrolują zasoby systemowe (np. pamięć, uchwyty do plików, muteksy, itp.). Takie obiektu, nie powinny być kopiowane, ale powinny umożliwiać transfer prawa własności do zasobu:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">auto_ptr&lt;T&gt;</span></code> w C++98 symulował semantykę przenoszenia za pomocą konstruktora kopiującego i operatora przypisania</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">create_and_insert</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">coll</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// insert a copy of str</span>
+<span class="w">                         </span><span class="c1">// str is used later</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// insert a copy of temporary value</span>
+<span class="w">                               </span><span class="c1">// unnecessary copy in C++98</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// insert a copy of temporary value</span>
+<span class="w">                            </span><span class="c1">// unnecessary copy in C++98</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w">  </span><span class="c1">// insert a copy of str</span>
+<span class="w">                          </span><span class="c1">// unnecessary copy in C++98</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// str is no longer used</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="lvalues-i-rvalues">
+<h2>lvalues i rvalues<a class="headerlink" href="#lvalues-i-rvalues" title="Link to this heading">#</a></h2>
+<p>Aby umożliwić implementację semantyki przenoszenia C++11 wykorzystuje podział obiektów na:</p>
+<ul class="simple">
+<li><p><strong>lvalue</strong></p>
+<ul>
+<li><p>obiekt posiada nazwę lub jest referencją <code class="docutils literal notranslate"><span class="pre">&amp;</span></code></p></li>
+<li><p>można pobrać adres obiektu</p></li>
+</ul>
+</li>
+<li><p><strong>rvalue</strong></p>
+<ul>
+<li><p>nie można pobrać adresu</p></li>
+<li><p>zwykle nienazwany obiekt tymczasowy (np. obiekt zwrócony z funkcji przez wartość)</p></li>
+<li><p>z obiektów rvalue możemy transferować stan pozostawiając je w poprawnym, ale nieokreślonym stanie</p></li>
+</ul>
+</li>
+</ul>
+<p>Przykłady:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">dx</span><span class="p">;</span>
+<span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// dx and ptr are lvalues</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// foo and str are lvalues</span>
+
+<span class="c1">// foo&#39;s return is rvalue</span>
+<span class="n">foo</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// temp string created for call is rvalue</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span><span class="w"> </span><span class="c1">// vec is lvalue</span>
+
+<span class="n">vi</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// vi[5] is lvalue - returns int&amp;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Operacja przenoszenia, która wiąże się ze zmianą stanu, jest niebezpieczna dla obiektów lvalue, ponieważ obiekt może zostać użyty po wykonaniu
+takiej operacji.</p></li>
+<li><p>Operacje przenoszenia są bezpieczne dla obiektów rvalue. Takie obiekty są tymczasowe i nie będą używane po wykonaniu operacji przenoszenia.</p></li>
+</ul>
+</section>
+<section id="referencje-rvalue-rvalue-references">
+<h2>Referencje rvalue - <em>rvalue references</em><a class="headerlink" href="#referencje-rvalue-rvalue-references" title="Link to this heading">#</a></h2>
+<p>C++11 wprowadza referencje do rvalue - <strong>rvalue references</strong>, które zachowują się podobnie jak klasyczne referencje z C++98 (zwane od C++11 <strong>lvalue references</strong>).</p>
+<ul class="simple">
+<li><p>składnia: <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code></p></li>
+<li><p>muszą zostać zainicjowane i nie mogą zmienić odniesienia</p></li>
+<li><p>służą do identyfikacji operacji, które implementują przenoszenie</p></li>
+</ul>
+<p>Wprowadzenie referencji do rvalue rozszerza reguły wiązania referencji:</p>
+<ul class="simple">
+<li><p>Tak jak w C++98:</p>
+<ul>
+<li><p><strong>lvalues</strong> mogą być wiązane do <strong>lvalue references</strong></p></li>
+<li><p><strong>rvalues</strong> mogą być wiązanie do <strong>const lvalue references</strong></p></li>
+</ul>
+</li>
+<li><p>W C++11:</p>
+<ul>
+<li><p><strong>rvalues</strong> mogą być wiązane do <strong>rvalue references</strong></p></li>
+<li><p><strong>lvalues</strong> nie mogą być wiązane do <strong>rvalue references</strong></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">full_name</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">last</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">last</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">fname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;John&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// fname is lvalue</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ref_fname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fname</span><span class="p">;</span><span class="w"> </span><span class="c1">// lvalue reference is bound to an lvalue</span>
+<span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cref_full_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">full_name</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Doe&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// const lvalue reference is bound to an rvalue</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rref_full_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">full_name</span><span class="p">(</span><span class="s">&quot;John&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Doe&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// rvalue reference is bound to an rvalue</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rref_fname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fname</span><span class="p">;</span><span class="w"> </span><span class="c1">// ERROR - rvalue reference cannot be bound to an lvalue</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Teoretycznie możliwe jest tworzenie referencji typu <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">T&amp;&amp;</span></code>. Są one poprawne składniowo, ale nie mają sensu.</p>
+</div>
+</section>
+<section id="implementacja-semantyki-przenoszenia">
+<h2>Implementacja semantyki przenoszenia<a class="headerlink" href="#implementacja-semantyki-przenoszenia" title="Link to this heading">#</a></h2>
+<section id="przeciazanie-funkcji-za-pomoca-referencji-rvalue">
+<h3>Przeciążanie funkcji za pomocą referencji rvalue<a class="headerlink" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue" title="Link to this heading">#</a></h3>
+<p>Przy pomocy lvalue referencji i rvalue referencji możemy przeciążać funkcje. W ten sposób możemy zaimplementować funkcje, które przyjmują obiekty tymczasowe (rvalue) i obiekty, które będą dalej używane (lvalue).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">vector</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">push_back</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span><span class="w">  </span><span class="c1">// accepts lvalue - inserts a copy of item into a vector</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">push_back</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span><span class="w">       </span><span class="c1">// accepts rvalue - moves item into container</span>
+<span class="p">};</span>
+
+<span class="c1">// ...</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">create_and_insert</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">coll</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// coll.push_back(const string&amp;) - inserts a copy of str (lvalue)</span>
+<span class="w">                         </span><span class="c1">// str is used later</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// coll.push_back(string&amp;&amp;) - moves temporary object into container</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">);</span><span class="w">    </span><span class="c1">//coll.push_back(string&amp;&amp;) - moves temporary object into container</span>
+
+<span class="w">    </span><span class="n">coll</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">str</span><span class="p">));</span><span class="w">  </span><span class="c1">// coll.push_back(string&amp;&amp;) - moves expiring str into container</span>
+<span class="w">                                     </span><span class="c1">// str is no longer used</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="implementacja-semantyki-przenoszenia-w-klasach">
+<h3>Implementacja semantyki przenoszenia w klasach<a class="headerlink" href="#implementacja-semantyki-przenoszenia-w-klasach" title="Link to this heading">#</a></h3>
+<p>Aby zaimplementować semantykę przenoszenia dla klasy należy zapewnić jej:</p>
+<ul class="simple">
+<li><p>konstruktor przenoszący - przyjmujący jako argument <strong>rvalue reference</strong></p></li>
+<li><p>przenoszący operator przypisania - przyjmujący jako argument <strong>rvalue reference</strong></p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Konstruktor przenoszący i przenoszący operator przypisania są nowymi specjalnymi funkcjami składowymi klas w C++11.</p>
+</div>
+<section id="funkcje-specjalne-klas-w-c-11">
+<h4>Funkcje specjalne klas w C++11<a class="headerlink" href="#funkcje-specjalne-klas-w-c-11" title="Link to this heading">#</a></h4>
+<p>Od C++11 istnieje sześć specjalnych funkcji składowych klasy:</p>
+<ul class="simple">
+<li><p>konstruktor domyślny - <code class="docutils literal notranslate"><span class="pre">X();</span></code></p></li>
+<li><p>destruktor - <code class="docutils literal notranslate"><span class="pre">~X();</span></code></p></li>
+<li><p>konstruktor kopiujący - <code class="docutils literal notranslate"><span class="pre">X(const</span> <span class="pre">X&amp;);</span></code></p></li>
+<li><p>kopiujący operator przypisania - <code class="docutils literal notranslate"><span class="pre">X&amp;</span> <span class="pre">operator=(const</span> <span class="pre">X&amp;);</span></code></p></li>
+<li><p>konstruktor przenoszący - <code class="docutils literal notranslate"><span class="pre">X(X&amp;&amp;);</span></code></p></li>
+<li><p>przenoszący operator przypisania - <code class="docutils literal notranslate"><span class="pre">X&amp;</span> <span class="pre">operator=(X&amp;&amp;);</span></code></p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Klasa wspiera semantykę przenoszenia, jeśli posiada konstruktor przenoszący i przenoszący operator przypisania.</p>
+</div>
+</section>
+</section>
+<section id="implementacja-konstruktora-przenoszacego">
+<h3>Implementacja konstruktora przenoszącego<a class="headerlink" href="#implementacja-konstruktora-przenoszacego" title="Link to this heading">#</a></h3>
+<p>Implementacja konstruktora przenoszącego powinna przenieść zasoby obiektu tymczasowego do obiektu docelowego i pozostawić obiekt tymczasowy w poprawnym, ale nieokreślonym stanie.</p>
+<p>Implementując przenoszący operator przypisania należy najpierw zwolnić zasoby obiektu docelowego, a następnie przenieść zasoby obiektu źródłowego do obiektu docelowego.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w"> </span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">name</span><span class="p">)),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()]),</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">data_</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">DataSet</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move constructor</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">))</span><span class="w"> </span><span class="c1">// move string using its move constructor</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr - no longer owns the resource</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move assignment operator</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
+
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move assignment operator</span>
+<span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_</span>
+<span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_</span>
+
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr - no longer owns the resource</span>
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">//... rest of the class</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<section id="implementacja-z-std-exchange">
+<h4>Implementacja z std::exchange()<a class="headerlink" href="#implementacja-z-std-exchange" title="Link to this heading">#</a></h4>
+<p>Przy samodzielnej implementacji konstruktora przenoszącego i przenoszącego operatora przypisania można skorzystać z funkcji <code class="docutils literal notranslate"><span class="pre">std::exchange()</span></code> z biblioteki standardowej C++.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">));</span><span class="w"> </span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">))</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_ and set source.data_ to nullptr</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"> </span><span class="c1">// move size from source.size_ to size_ and set source.size_ to 0</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
+
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move assignment operator</span>
+<span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"> </span><span class="c1">// move pointer from source.data_ to data_  and set source.data_ to nullptr</span>
+<span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exchange</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// move size from source.size_ to size_ and set source.size_ to 0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania">
+<h3>Domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania<a class="headerlink" href="#domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania" title="Link to this heading">#</a></h3>
+<p>Kompilator jest w stanie wygenerować domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania, jeśli klasa nie posiada własnych implementacji.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul class="simple">
+<li><p>Domyślny konstruktor przenoszący przenosi każdą składową klasy.</p></li>
+<li><p>Domyślny przenoszący operator przypisania deleguje semantykę przenoszenia do każdej składowej klasy</p></li>
+</ul>
+</div>
+<p>Konceptualny kod domyślnego konstruktora przenoszącego i przenoszącego operatora przypisania wygląda następująco:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">X</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Member</span><span class="w"> </span><span class="n">m_</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">X</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Base</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&amp;&amp;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="w"> </span><span class="n">m_</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Member</span><span class="o">&amp;&amp;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">m_</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Base</span><span class="o">::</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Base</span><span class="o">&amp;&amp;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="w">        </span><span class="n">m_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">X</span><span class="o">&amp;&amp;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">m_</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania są generowane, jeśli:</p>
+<ul>
+<li><p>użytkownik nie zadeklarował destruktora, konstruktora kopiującego, kopiującego operatora przypisania, konstruktora przenoszącego i przenoszącego operatora przypisania</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">name</span><span class="p">)),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="c1">// move constructor &amp; move assignment operator are generated by the compiler</span>
+<span class="w">    </span><span class="c1">// copy constructor &amp; copy assignment operator are generated by the compiler</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p>użytkownik zadeklarował konstruktor przenoszący lub przenoszący operator przypisania jako <code class="docutils literal notranslate"><span class="pre">=default</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">name</span><span class="p">)),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"> </span><span class="c1">// user declared but with default implementation</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"> </span><span class="c1">// user declared but with default implementation</span>
+
+<span class="w">    </span><span class="c1">// copy constructor &amp; copy assignment are implicitly deleted</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="regula-rule-of-five">
+<h3>Reguła “Rule of Five”<a class="headerlink" href="#regula-rule-of-five" title="Link to this heading">#</a></h3>
+<p>Jeśli w klasie jest konieczna implementacja jednej z poniższych specjalnych funkcji składowych:</p>
+<ul class="simple">
+<li><p>konstruktora kopiującego</p></li>
+<li><p>konstruktora przenoszącego</p></li>
+<li><p>kopiującego operatora przypisania</p></li>
+<li><p>przenoszącego operatora przypisania</p></li>
+<li><p>destruktora</p></li>
+</ul>
+<p>najprawdopodobniej <strong>należy zaimplementować wszystkie</strong>.</p>
+<p>Ta regułą stosuje się również do funkcji specjalnych zadeklarowanych jako <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p>
+<p>Klasa:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span><span class="w"> </span><span class="c1">// default copy and move semantics enabled</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>nie jest równoważna klasie:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span><span class="w"> </span><span class="c1">// default move semantics disabled (copy is still allowed)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="o">~</span><span class="n">Gadget</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Aby umożliwić przenoszenie należy zdefiniować lub zadeklarować jako <code class="docutils literal notranslate"><span class="pre">=default</span></code> wszystkie funkcje specjalne.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">  </span>
+
+<span class="w">    </span><span class="n">Gadget</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Gadget</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="o">~</span><span class="n">Gadget</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="std-move">
+<h2>std::move()<a class="headerlink" href="#std-move" title="Link to this heading">#</a></h2>
+<p>Funkcja <code class="docutils literal notranslate"><span class="pre">std::move()</span></code> jest jednym z kluczowych elementów semantyki przenoszenia w C++11. Służy ona do konwersji obiektu lvalue na obiekt tymczasowy rvalue - dokładnie na <strong>xvalue</strong> (<em>expiring value</em>). Konwersja jest realizowana poprzez rzutowanie na rvalue referencję.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">move</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">ReturnType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Funkcja <code class="docutils literal notranslate"><span class="pre">std::move()</span></code> nie wykonuje żadnych operacji przenoszenia. Jest to jedynie mechanizm, który pozwala na wywołanie konstruktora przenoszącego lub przenoszącego operatora przypisania.</p>
+<p>Dla zmiennych typu prymitywnego, <code class="docutils literal notranslate"><span class="pre">std::move()</span></code> nie ma żadnego efektu - zmienne będą kopiowane.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w"> </span><span class="c1">// move constructor is called</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">666</span><span class="p">,</span><span class="w"> </span><span class="mi">667</span><span class="w"> </span><span class="p">};</span>
+<span class="n">vec2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">vec1</span><span class="p">);</span><span class="w"> </span><span class="c1">// move assignment operator is called</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// x is copied to y</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">ptr1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ptr2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ptr1</span><span class="p">);</span><span class="w"> </span><span class="c1">// ptr1 is copied to ptr2</span>
+</pre></div>
+</div>
+</section>
+<section id="perfect-forwarding">
+<h2>Perfect forwarding<a class="headerlink" href="#perfect-forwarding" title="Link to this heading">#</a></h2>
+<p><strong>Perfect forwarding</strong> pozwala na optymalne przekazywanie argumentów funkcji do innych funkcji zachowując ich oryginalny typ. Jest to możliwe dzięki referencjom uniwersalnym - <strong>universal references</strong>.</p>
+<section id="reference-collapsing">
+<h3>Reference collapsing<a class="headerlink" href="#reference-collapsing" title="Link to this heading">#</a></h3>
+<p>W procesie tworzenia instancji szablonu następuje często zwijanie referencji (tzw. <strong>reference collapsing</strong>)</p>
+<p>Jeśli mamy szablon:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Jeśli przekażemy jako parametr szablonu <code class="docutils literal notranslate"><span class="pre">int&amp;</span></code>, to tworzona początkowo instancja szablonu wygląda następująco:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Reguła zwijania referencji powoduje, że <code class="docutils literal notranslate"><span class="pre">int&amp;</span> <span class="pre">&amp;</span></code> <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">int&amp;</span></code>. W rezultacie instancja szablonu wygląda tak:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>W C++11 obowiązują następujące reguły <strong>reference collapsing</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Referencje</p></th>
+<th class="head"><p>Wynik kolapsu</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">T&amp;</span> <span class="pre">&amp;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">T&amp;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span> <span class="pre">&amp;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">T&amp;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">T&amp;</span> <span class="pre">&amp;&amp;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">T&amp;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span> <span class="pre">&amp;&amp;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="mechanizm-dedukcji-typow-w-szablonach">
+<h3>Mechanizm dedukcji typów w szablonach<a class="headerlink" href="#mechanizm-dedukcji-typow-w-szablonach" title="Link to this heading">#</a></h3>
+<p>Dla szablonu</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">foo</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>typ <code class="docutils literal notranslate"><span class="pre">T</span></code> jest dedukowany w zależności od tego co zostanie przekazane jako argument wywołania funkcji:</p>
+<ul class="simple">
+<li><p>jeśli przekazany zostanie obiekt <em>lvalue</em> - to parametr szablonu jest referencją lvalue - <code class="docutils literal notranslate"><span class="pre">T&amp;</span></code></p></li>
+<li><p>jeśli przekazany zostanie obiekt <em>rvalue</em> - to parametr szablonu nie jest referencją - <code class="docutils literal notranslate"><span class="pre">T</span></code></p></li>
+</ul>
+<p>W połączeniu z regułami zwijania referencji:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">;</span>
+<span class="n">foo</span><span class="p">(</span><span class="n">str</span><span class="p">);</span><span class="w">  </span><span class="c1">// argument is lvalue : f&lt;std::string&amp;&gt;(std::string&amp; &amp;&amp;) -&gt; f&lt;string&amp;&gt;(string&amp;)</span>
+
+<span class="n">f</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// argument is rvalue : f&lt;string&gt;(string&amp;&amp;)</span>
+</pre></div>
+</div>
+</section>
+<section id="universal-reference-aka-forwarding-reference">
+<h3>Universal reference aka forwarding reference<a class="headerlink" href="#universal-reference-aka-forwarding-reference" title="Link to this heading">#</a></h3>
+<p>Referencja rvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> użyta w kontekście dedukcji typu dla argumentu funkcji szablonowej ma szczególne zastosowanie:</p>
+<ul class="simple">
+<li><p>dla argumentów lvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> zamienia się w <code class="docutils literal notranslate"><span class="pre">T&amp;</span></code> - wiąże się z wartościami lvalue</p></li>
+<li><p>dla argumentów rvalue <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> pozostaje <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> - wiąże się z wartościami rvalue</p></li>
+</ul>
+<p>Ponieważ mechanizm dedukcji typów w <code class="docutils literal notranslate"><span class="pre">auto</span></code> jest taki sam jak w szablonach:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">string</span><span class="w"> </span><span class="nf">get_line</span><span class="p">(</span><span class="n">istream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">in</span><span class="p">);</span>
+
+<span class="k">auto</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_line</span><span class="p">(</span><span class="n">cin</span><span class="p">);</span><span class="w">  </span><span class="c1">// type of line: string&amp;&amp;</span>
+
+<span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Ola&quot;</span><span class="p">;</span>
+<span class="k">auto</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">alias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w"> </span><span class="c1">// type of alias: string&amp;</span>
+</pre></div>
+</div>
+</section>
+<section id="perfect-forwarding-z-std-forward">
+<h3>Perfect forwarding z std::forward()<a class="headerlink" href="#perfect-forwarding-z-std-forward" title="Link to this heading">#</a></h3>
+<p>Przeciążanie funkcji w celu optymalizacji wydajności z wykorzystaniem semantyki przenoszenia i referencji rvalue może prowadzić do nadmiernego rozrostu interfejsów:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">have_fun</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">have_fun</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;</span><span class="p">);</span><span class="w"> </span><span class="c1">// copy semantics</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">have_fun</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;&amp;</span><span class="p">);</span><span class="w"> </span><span class="c1">// move semantics</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="w"> </span><span class="n">g</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">have_fun</span><span class="p">(</span><span class="n">g</span><span class="p">);</span><span class="w"> </span><span class="c1">// calls have_fun(const Gadget&amp;)</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;</span><span class="w"> </span><span class="n">g</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">have_fun</span><span class="p">(</span><span class="n">g</span><span class="p">);</span><span class="w"> </span><span class="c1">// calls have_fun(Gadget&amp;)</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">g</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">have_fun</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">g</span><span class="p">));</span><span class="w"> </span><span class="c1">// calls have_fun(Gadget&amp;&amp;)</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="w"> </span><span class="n">cg</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Gadget</span><span class="w"> </span><span class="n">g</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">use</span><span class="p">(</span><span class="n">cg</span><span class="p">);</span><span class="w">  </span><span class="c1">// calls use(const Gadget&amp;) then calls have_fun(const Gadget&amp;)</span>
+<span class="w">    </span><span class="n">use</span><span class="p">(</span><span class="n">g</span><span class="p">);</span><span class="w">   </span><span class="c1">// calls use(Gadget&amp;) then calls have_fun(Gadget&amp;)</span>
+<span class="w">    </span><span class="n">use</span><span class="p">(</span><span class="n">Gadget</span><span class="p">());</span><span class="w"> </span><span class="c1">// calls use(Gadget&amp;&amp;) then calls have_fun(Gadget&amp;&amp;)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Rozwiązaniem jest szablonowa funkcja przyjmująca jako parametr wywołania <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code> (<strong>forwarding reference</strong>) i przekazująca argument do następnej funkcji z wykorzystaniem funkcji <code class="docutils literal notranslate"><span class="pre">std::forward&lt;T&gt;()</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">have_fun</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="o">&amp;</span><span class="p">);</span><span class="w"> </span><span class="c1">// accepts const lvalue </span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">have_fun</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;</span><span class="p">);</span><span class="w">       </span><span class="c1">// accepts mutable lvalue </span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">have_fun</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;&amp;</span><span class="p">);</span><span class="w">      </span><span class="c1">// accepts rvalue</span>
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">TGadget</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">use</span><span class="p">(</span><span class="n">TGadget</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">g</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">have_fun</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">TGadget</span><span class="o">&gt;</span><span class="p">(</span><span class="n">g</span><span class="p">));</span><span class="w"> </span><span class="c1">// forwards the argument to have_fun with the same value category</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">Gadget</span><span class="w"> </span><span class="n">cg</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Gadget</span><span class="w"> </span><span class="n">g</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">use</span><span class="p">(</span><span class="n">cg</span><span class="p">);</span><span class="w">       </span><span class="c1">// calls use(const Gadget&amp;) then calls have_fun(const Gadget&amp;)</span>
+<span class="w">    </span><span class="n">use</span><span class="p">(</span><span class="n">g</span><span class="p">);</span><span class="w">        </span><span class="c1">// calls use(Gadget&amp;) then calls have_fun(Gadget&amp;)</span>
+<span class="w">    </span><span class="n">use</span><span class="p">(</span><span class="n">Gadget</span><span class="p">());</span><span class="w"> </span><span class="c1">// calls use(Gadget&amp;&amp;) then calls have_fun(Gadget&amp;&amp;)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Funkcja <code class="docutils literal notranslate"><span class="pre">std::forward()</span></code> działa jak warunkowe rzutowanie na <code class="docutils literal notranslate"><span class="pre">T&amp;&amp;</span></code>, gdy dedukowanym parametrem szablonu jest typ nie będący referencją.</p>
+</section>
+</section>
+<section id="noexcept">
+<h2>noexcept<a class="headerlink" href="#noexcept" title="Link to this heading">#</a></h2>
+<p>Słowo kluczowe <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> może być użyte</p>
+<ul class="simple">
+<li><p>w deklaracji funkcji - aby określić, że funkcja nie może rzucić wyjątku</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">vector</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">iterator</span><span class="w"> </span><span class="n">begin</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// it can&#39;t throw an exception</span>
+<span class="w">    </span><span class="n">iterator</span><span class="w"> </span><span class="nf">end</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// the same as noexcept - it can&#39;t throw an exception</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>jako operator - który zwraca <code class="docutils literal notranslate"><span class="pre">true</span></code> jeśli podane jako parametr wyrażenie zostało zadeklarowane, że nie może rzucić wyjątku</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Gadget</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="n">Gadget</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// it can&#39;t throw an exception</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">();</span><span class="w">                        </span><span class="c1">// it can throw an exception</span>
+<span class="p">};</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="k">noexcept</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">().</span><span class="n">swap</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&amp;&gt;</span><span class="p">())),</span><span class="w"> </span><span class="s">&quot;Gadget::swap() must be noexcept&quot;</span><span class="p">);</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="k">noexcept</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">declval</span><span class="o">&lt;</span><span class="n">Gadget</span><span class="o">&gt;</span><span class="p">().</span><span class="n">use</span><span class="p">()),</span><span class="w"> </span><span class="s">&quot;Gadget::use() can throw an exception&quot;</span><span class="p">);</span>
+
+
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">(</span><span class="k">noexcept</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span><span class="w"> </span><span class="c1">// it can&#39;t throw an exception if x.swap(y) can&#39;t throw an exception</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">noexcept</span></code> zastępuje specyfikację rzucanych wyjątków z funkcji z C++03</p>
+<ul>
+<li><p>nie ma narzutu w czasie wykonania programu</p></li>
+<li><p>jeśli funkcja zadeklarowana jako <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> rzuci wyjątek wywoływana jest funkcja <code class="docutils literal notranslate"><span class="pre">std::terminate()</span></code></p></li>
+</ul>
+</li>
+</ul>
+<section id="funkcje-specjalne-i-noexcept">
+<h3>Funkcje specjalne i noexcept<a class="headerlink" href="#funkcje-specjalne-i-noexcept" title="Link to this heading">#</a></h3>
+<p>Wprowadzenie <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> do C++ umożliwia optymalizację wydajności - np. implementacja <code class="docutils literal notranslate"><span class="pre">push_back()</span></code> w wektorze może być bardziej wydajna, jeśli wiadomo, że konstruktor przenoszący typu przechowywanego w kontenerze nie rzuci wyjątku.</p>
+<p>Implementując konstruktor przenoszący i przenoszący operator przypisania warto przeanalizować pisany kod i jeżeli tylko można dodać specyfikator <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>.
+W pisaniu funkcji pomocna może być biblioteka <code class="docutils literal notranslate"><span class="pre">type_traits</span></code>. Dostarcza ona klasy cech, które sprawdzają, czy dana funkcja specjalna może rzucić wyjątek lub nie:
+* <code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_constructible_v&lt;T&gt;</span></code>
+* <code class="docutils literal notranslate"><span class="pre">std::is_nothrow_move_assignable_v&lt;T&gt;</span></code></p>
+<ul class="simple">
+<li><p>Przykład implementacji konstruktora przenoszącego i przenoszącego operatora przypisania z użyciem <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>:</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span><span class="w"> </span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()]),</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">data_</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">DataSet</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move constructor</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">name_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">))</span><span class="w"> </span><span class="c1">// move ctor of std::string is noexcept</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">data_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_ cannot throw - noexcept</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">size_</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">)</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_ cannot throw - noexcept</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr cannot throw - noexcept</span>
+<span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">  </span><span class="c1">// set source.size_ to 0 cannot throw - noexcept</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// move assignment operator</span>
+<span class="w">    </span><span class="n">DataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DataSet</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_nothrow_move_assignable_v</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// release the resource</span>
+
+<span class="w">            </span><span class="n">name_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">name_</span><span class="p">);</span><span class="w"> </span><span class="c1">// move string using its move assignment operator</span>
+<span class="w">            </span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy pointer from source.data_ to data_ - noexcept</span>
+<span class="w">            </span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="p">;</span><span class="w"> </span><span class="c1">// copy size from source.size_ to size_ - noexcept</span>
+
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">data_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.data_ to nullptr - noexcept</span>
+<span class="w">            </span><span class="n">source</span><span class="p">.</span><span class="n">size_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// set source.size_ to 0 - noexcept</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">//... rest of the class</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="noexcept-w-specyfikacji-typu-funkcji-od-c-17">
+<h3>noexcept w specyfikacji typu funkcji (od C++17)<a class="headerlink" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Od C++17 <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> jest częścią specyfikacji typu funkcji</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span><span class="w"> </span><span class="c1">// foo is noexcept</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">bar</span><span class="p">();</span><span class="w"> </span><span class="c1">// bar is not noexcept</span>
+
+<span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">foo</span><span class="p">),</span><span class="w"> </span><span class="k">decltype</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo and bar have different types&quot;</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ptr_safe</span><span class="p">)()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK</span>
+<span class="n">ptr_safe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bar</span><span class="p">;</span><span class="w"> </span><span class="c1">// ERROR - bar is not noexcept</span>
+</pre></div>
+</div>
+</li>
+<li><p>W przypadku nadpisywania wirtualnych funkcji <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> w klasach pochodnych, specyfikacja <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> musi być zgodna z deklaracją funkcji w klasie bazowej</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">// f is noexcept</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Base</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Derived1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">// f is noexcept</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Derived2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Base</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">// ERROR - f is declared as noexcept in the base class</span>
+<span class="w">                         </span><span class="c1">// and must be declared as noexcept in the derived class</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Zaawansowane programowanie w języku C++</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="smart-pointers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Inteligentne wskaźniki</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motywacja-dla-semantyki-przenoszenia">Motywacja dla semantyki przenoszenia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lvalues-i-rvalues">lvalues i rvalues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencje-rvalue-rvalue-references">Referencje rvalue - <em>rvalue references</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia">Implementacja semantyki przenoszenia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#przeciazanie-funkcji-za-pomoca-referencji-rvalue">Przeciążanie funkcji za pomocą referencji rvalue</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-semantyki-przenoszenia-w-klasach">Implementacja semantyki przenoszenia w klasach</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-klas-w-c-11">Funkcje specjalne klas w C++11</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-konstruktora-przenoszacego">Implementacja konstruktora przenoszącego</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacja-z-std-exchange">Implementacja z std::exchange()</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#domyslne-implementacje-konstruktora-przenoszacego-i-przenoszacego-operatora-przypisania">Domyślne implementacje konstruktora przenoszącego i przenoszącego operatora przypisania</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regula-rule-of-five">Reguła “Rule of Five”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#std-move">std::move()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding">Perfect forwarding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-collapsing">Reference collapsing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mechanizm-dedukcji-typow-w-szablonach">Mechanizm dedukcji typów w szablonach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-reference-aka-forwarding-reference">Universal reference aka forwarding reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfect-forwarding-z-std-forward">Perfect forwarding z std::forward()</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept">noexcept</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funkcje-specjalne-i-noexcept">Funkcje specjalne i noexcept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noexcept-w-specyfikacji-typu-funkcji-od-c-17">noexcept w specyfikacji typu funkcji (od C++17)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Krystian Piękoś - Infotraining
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
