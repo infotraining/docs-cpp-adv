@@ -220,7 +220,6 @@ constexpr auto result = sum(data); // result = 15: evaluated at compile time
 
 Funkcje `constexpr` mogą być wykorzystane do obliczeń na etapie kompilacji, co pozwala na optymalizację kodu i zwiększenie wydajności programu. 
 
-
 ```{code-block} cpp
 constexpr size_t fibonacci(size_t n)
 {

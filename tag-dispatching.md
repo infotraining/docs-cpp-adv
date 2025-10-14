@@ -1,4 +1,4 @@
-## Tag dispatching
+# Tag dispatching
 
 Czasami pożądane jest dostarczenie wyspecjalizowanych implementacji
 dla wybranej funkcji lub klasy w celu poprawy wydajności lub uniknięcia problemów.
@@ -57,7 +57,7 @@ void advance(Iterator& x, Distance n)
 }
 ```
 
-### Cechy iteratorów
+## Cechy iteratorów
 
 Klasa cech `std::iterator_traits` umożliwia dostęp do informacji o iteratorze, takich jak:
 

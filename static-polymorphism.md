@@ -1,4 +1,4 @@
-## Statyczny polimorfizm
+# Statyczny polimorfizm
 
 **Statyczny polimorfizm** to technika programowania, która pozwala na wybór zachowania w czasie kompilacji. W C++ statyczny polimorfizm jest realizowany za pomocą szablonów klas.
 

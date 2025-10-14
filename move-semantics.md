@@ -111,7 +111,7 @@ Teoretycznie możliwe jest tworzenie referencji typu ``const T&&``. Są one popr
 
 ### Przeciążanie funkcji za pomocą referencji rvalue
 
-Przy pomocy lvalue referencji i  rvalue referencji możemy przeciążać funkcje. W ten sposób możemy zaimplementować funkcje, które przyjmują obiekty tymczasowe (rvalue) i obiekty, które będą dalej używane (lvalue).
+Przy pomocy lvalue referencji i rvalue referencji możemy przeciążać funkcje. W ten sposób możemy zaimplementować funkcje, które przyjmują obiekty tymczasowe (rvalue) i obiekty, które będą dalej używane (lvalue).
 
 ```{code-block} cpp
 template <typename T>
