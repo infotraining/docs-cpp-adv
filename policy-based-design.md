@@ -1,4 +1,4 @@
-## Policy Based Design
+# Policy Based Design
 
 **Policy Based Design** to technika programowania, która pozwala na wybór zachowania w czasie kompilacji. W C++ jest realizowana za pomocą szablonów klas i techniki statycznego polimorfizmu.
 

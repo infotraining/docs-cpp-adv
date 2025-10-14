@@ -4,6 +4,7 @@
 title: Zaawansowane programowanie w C++
 author: Krystian Piękoś - Infotraining
 logo: logo.png
+copyright: "2025"
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
@@ -14,10 +15,6 @@ execute:
 latex:
   latex_documents:
     targetname: cpp-adv.tex
-
-html:
-  analytics:
-    google_analytics_id: G-M3XK1WZH7X
 
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
@@ -34,6 +31,8 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+  analytics:
+    google_analytics_id: G-M3XK1WZH7X
 
 # Configure your Binder links, such as the URL of the BinderHub.
 # launch_buttons:
