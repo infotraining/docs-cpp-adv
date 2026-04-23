@@ -12,25 +12,28 @@ project:
       template: plain_latex_book
       output: exports/cpp-adv.pdf
   toc:
-    - file: index.md
-    - file: move-semantics.md
-    - file: smart-pointers.md
-    - file: templates.md
-    - file: template-techniques.md
+    - file: content/index.md
+    - file: content/move-semantics.md
+    - file: content/smart-pointers.md
+    - file: content/templates.md
+    - file: content/template-techniques.md
       children:
-        - file: static-polymorphism.md
-        - file: policy-based-design.md
-        - file: type-traits
-        - file: tag-dispatching.md
-        - file: sfinae.md
-        - file: crtp.md
-    - file: variadic-templates.md
+        - file: content/static-polymorphism.md
+        - file: content/policy-based-design.md
+        - file: content/type-traits
+        - file: content/tag-dispatching.md
+        - file: content/sfinae.md
+        - file: content/crtp.md
+    - file: content/variadic-templates.md
       children:
-        - file: fold-expressions
-    - file: constexpr.md
+        - file: content/fold-expressions
+    - file: content/constexpr.md
 site:
-  options:
-    logo: logo.png
-    analytics_google: G-M3XK1WZH7X
-    folders: true
   template: book-theme
+  options:
+    style: ./css/custom.css
+    logo: ./content/images/logo-infotraining-light.svg     # path to your logo, shown top left at site
+    logo_dark: ./content/images/logo-infotraining-dark.svg # path to your logo for dark mode, shown top left at site
+    folders: false
+    hide_authors: true
+    analytics_google: G-M3XK1WZH7X
