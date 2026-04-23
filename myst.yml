@@ -1,0 +1,36 @@
+version: 1
+project:
+  title: Zaawansowane programowanie w C++
+  authors:
+    - name: Krystian Piękoś - Infotraining
+  copyright: '2025'
+  github: infotraining/docs-cpp-adv
+  bibliography:
+    - references.bib
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/cpp-adv.pdf
+  toc:
+    - file: index.md
+    - file: move-semantics.md
+    - file: smart-pointers.md
+    - file: templates.md
+    - file: template-techniques.md
+      children:
+        - file: static-polymorphism.md
+        - file: policy-based-design.md
+        - file: type-traits
+        - file: tag-dispatching.md
+        - file: sfinae.md
+        - file: crtp.md
+    - file: variadic-templates.md
+      children:
+        - file: fold-expressions
+    - file: constexpr.md
+site:
+  options:
+    logo: logo.png
+    analytics_google: G-M3XK1WZH7X
+    folders: true
+  template: book-theme

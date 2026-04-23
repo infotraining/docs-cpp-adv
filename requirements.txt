@@ -1,4 +1,1 @@
-jupyter-book==1.0.4
-pytest
-black
-pydata-sphinx-theme==0.15.3
+jupyter-book>=2
