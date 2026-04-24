@@ -1,0 +1,37 @@
+version: 1
+project:
+  title: Zaawansowane programowanie w C++
+  authors:
+    - name: Krystian Piękoś - Infotraining
+  copyright: '2025'
+  github: infotraining/docs-cpp-adv
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/cpp-adv.pdf
+  toc:
+    - file: content/index.md
+    - file: content/move-semantics.md
+    - file: content/smart-pointers.md
+    - file: content/templates.md
+    - file: content/template-techniques.md
+      children:
+        - file: content/static-polymorphism.md
+        - file: content/policy-based-design.md
+        - file: content/type-traits
+        - file: content/tag-dispatching.md
+        - file: content/sfinae.md
+        - file: content/crtp.md
+    - file: content/variadic-templates.md
+      children:
+        - file: content/fold-expressions
+    - file: content/constexpr.md
+site:
+  template: book-theme
+  options:
+    style: ./css/custom.css
+    logo: ./content/images/logo-infotraining-light.svg     # path to your logo, shown top left at site
+    logo_dark: ./content/images/logo-infotraining-dark.svg # path to your logo for dark mode, shown top left at site
+    folders: false
+    hide_authors: true
+    analytics_google: G-M3XK1WZH7X
