@@ -32,6 +32,7 @@ site:
     style: ./css/custom.css
     logo: ./content/images/logo-infotraining-light.svg     # path to your logo, shown top left at site
     logo_dark: ./content/images/logo-infotraining-dark.svg # path to your logo for dark mode, shown top left at site
+    favicon: ./content/images/favicon-infotraining.png     # path to your favicon, shown in browser tab
     folders: false
     hide_authors: true
     analytics_google: G-M3XK1WZH7X
