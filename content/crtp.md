@@ -2,7 +2,7 @@
 
 **Curiously Recurring Template Pattern (CRTP)** to idiom, który polega na utworzeniu klasy bazowej, która jest szablonem, a następnie dziedziczenie po niej w klasie pochodnej, podając jako argument szablonu klasę pochodną.
 
-```{code-block} c++
+```{code-block} cpp
 template <typename Derived>
 struct Base
 {

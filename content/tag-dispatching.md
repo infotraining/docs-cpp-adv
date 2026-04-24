@@ -8,7 +8,7 @@ iterator `it` o zadaną `n` ilość kroków.
 
 Generyczna implementacja może operować na dowolnym typie iteratora:
 
-```{code-block} c++
+```{code-block} cpp
 template<typename InputIterator, typename Distance>
 void advance(InputIterator& x, Distance n)
 {
