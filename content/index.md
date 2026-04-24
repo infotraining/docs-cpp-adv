@@ -13,7 +13,7 @@ site:
 </div>
 
 ```{figure} ./images/cpp-logo.svg
-:width: 40%
+:width: 35%
 :align: center
 ```
 

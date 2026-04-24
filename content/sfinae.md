@@ -12,7 +12,7 @@ kompilacji.
 
 Chcemy uniknąć kodu, który często wygląda tak:
 
-```{code-block} c++
+```{code-block} cpp
 // Don't even dare to pass an array of complex objects to this function!!!
 template <typename T>
 void store_blob(const T* src, size_t n)

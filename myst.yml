@@ -5,8 +5,6 @@ project:
     - name: Krystian Piękoś - Infotraining
   copyright: '2025'
   github: infotraining/docs-cpp-adv
-  bibliography:
-    - references.bib
   exports:
     - format: pdf
       template: plain_latex_book
