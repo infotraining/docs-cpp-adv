@@ -18,13 +18,13 @@ project:
       children:
         - file: content/static-polymorphism.md
         - file: content/policy-based-design.md
-        - file: content/type-traits
+        - file: content/type-traits.md
         - file: content/tag-dispatching.md
         - file: content/sfinae.md
         - file: content/crtp.md
     - file: content/variadic-templates.md
       children:
-        - file: content/fold-expressions
+        - file: content/fold-expressions.md
     - file: content/constexpr.md
 site:
   template: book-theme
