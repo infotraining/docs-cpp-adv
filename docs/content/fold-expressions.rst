@@ -227,7 +227,7 @@ Funkcja ``sum`` zwracająca sumę argumentów przekazanych do funkcji:
 .. code:: c++
 
     template <typename... TArgs>
-    constexpr auto sum(const TArgs&... args)
+    constexpr auto sum(TArgs&&... args)
     {
         return (... + std::forward<TArgs>(args));
     }
@@ -296,5 +296,3 @@ Implementacja wariadycznych wersji algorytmów ``count()`` oraz
     static_assert(count_if<std::is_pointer, float, unsigned, int, double*, long> == 1);
     
     static_assert(count<float, unsigned, int, double, long, float> == 1);
-
-
